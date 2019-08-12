@@ -1,0 +1,74 @@
+<template>
+    <div class="main-container">
+      <Form ref="loginForm" :model="loginForm" id="loginForm">
+        <FormItem prop="user">
+          <Input type="text" v-model="loginForm.account" placeholder="请输入用户名">
+            <Icon type="ios-person-outline" slot="prepend"></Icon>
+          </Input>
+        </FormItem>
+        <FormItem prop="pwd">
+          <Input type="password" v-model="loginForm.pwd" placeholder="请输入密码">
+            <Icon type="ios-locked-outline" slot="prepend"></Icon>
+          </Input>
+        </FormItem>
+        <FormItem prop="code">
+          <Input type="text" v-model="loginForm.code" placeholder="请输入验证码">
+            <Icon type="ios-locked-outline" slot="prepend"></Icon>
+          </Input>
+          <img :src="codeImgSrc" alt="">
+        </FormItem>
+        <FormItem>
+          <Button type="primary" @click="handleSubmit('formInline')">Signin</Button>
+        </FormItem>
+      </Form>
+    </div>
+</template>
+
+<script>
+export default {
+  name: 'index',
+  data () {
+    return {
+      codeImgSrc: '',
+      loginForm: {
+        account: '',
+        pwd: '',
+        code: '',
+        loginRandom: ''
+      }
+    }
+  },
+  created () {
+    this.getCode()
+  },
+  methods: {
+    handleSubmit () {
+      const _this = this
+      _this.$axios('login/doLogin', _this.loginForm).then(res => {
+        console.log(res)
+      })
+    },
+    getCode () {
+      const _this = this
+      let randomNo = Math.random()
+      let norand = _this.MathRand()
+      _this.loginForm.loginRandom = norand
+      _this.codeImgSrc = `${_this.API_PATH}?fun=login/captcha&random=${randomNo}&loginRandom=${norand}`
+    },
+    MathRand () {
+      let Num = ''
+      for (var i = 0; i < 6; i++) {
+        Num += Math.floor(Math.random() * 10)
+      }
+      return Num
+    }
+  }
+}
+</script>
+
+<style scoped lang="scss">
+  #loginForm{
+    width: 500px;
+    margin: 0 auto;
+  }
+</style>
