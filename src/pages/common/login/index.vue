@@ -46,6 +46,8 @@ export default {
       const _this = this
       _this.$axios('login/doLogin', _this.loginForm).then(res => {
         console.log(res)
+        this.$store.commit('LOGIN_IN', res.data)
+        this.$router.replace('/')
       })
     },
     getCode () {
