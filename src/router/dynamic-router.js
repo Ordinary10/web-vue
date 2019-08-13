@@ -2,6 +2,12 @@
 const Car = () => import('@/pages/car-manage')
 const CarList = () => import('@/pages/car-manage/car_list')
 const CarInsurance = () => import('@/pages/car-manage/insurance')
+const CarExamine = () => import('@/pages/car-manage/examine')
+const CarIllegal = () => import('@/pages/car-manage/illegal')
+const CarVersion = () => import('@/pages/car-manage/version')
+const CarWarehouse = () => import('@/pages/car-manage/warehouse')
+const CarArchives = () => import('@/pages/car-manage/archives')
+const CarMaintain = () => import('@/pages/car-manage/maintain')
 /* 业务管理 */
 const business = () => import('@/pages/business-manage')
 const OrderList = () => import('@/pages/business-manage/order-list')
@@ -15,7 +21,7 @@ const dynamicRoutes = [
     name: 'car-manage',
     meta: {
       name: '车辆管理',
-      icon: ''
+      icon: 'md-car'
     },
     children: [
       {
@@ -23,17 +29,63 @@ const dynamicRoutes = [
         name: 'car-list',
         component: CarList,
         meta: {
-          name: '车辆列表',
-          icon: 'icon-quit'
+          name: '车辆列表'
         }
       },
       {
         path: 'insurance',
-        name: 'insurance',
+        name: 'car-insurance',
         component: CarInsurance,
         meta: {
-          name: '保单管理',
-          icon: 'icon-product-manage'
+          name: '保单管理'
+        }
+      },
+      {
+        path: 'examine',
+        name: 'car-examine',
+        component: CarExamine,
+        meta: {
+          name: '年审管理'
+        }
+      },
+      {
+        path: 'illegal',
+        name: 'car-illegal',
+        component: CarIllegal,
+        meta: {
+          name: '违章管理'
+        }
+      },
+      {
+        path: 'version',
+        name: 'car-version',
+        component: CarVersion,
+        meta: {
+          name: '车型管理'
+        }
+      },
+      {
+        path: 'warehouse',
+        name: 'car-warehouse',
+        component: CarWarehouse,
+        meta: {
+          name: '在库车辆'
+        }
+      },
+      {
+        path: 'archives',
+        name: 'car-archives',
+        component: CarArchives,
+        meta: {
+          name: '档案管理'
+        }
+      },
+      {
+        path: 'maintain',
+        name: 'car-maintain',
+        component: CarMaintain,
+        meta: {
+          name: '维修保养'
         }
       }
     ]
@@ -44,7 +96,7 @@ const dynamicRoutes = [
     name: 'business-manage',
     meta: {
       name: '业务管理',
-      icon: ''
+      icon: 'md-clipboard'
     },
     children: [
       {
