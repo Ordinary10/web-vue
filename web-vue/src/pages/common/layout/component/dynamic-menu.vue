@@ -4,13 +4,14 @@
         <template v-for="v in menuList">
             <Submenu  v-if="v.children&&v.children.length>0" :key="v.name" :name="v.name">
                 <template slot="title">
-                  <Icon type="ios-paper"></Icon>
+                  <Icon :type="v.meta.icon"></Icon>
                  {{v.meta.name}}
                 </template>
                     <dynamic-menu :menuList="v.children"></dynamic-menu>
             </Submenu>
             <Menu-item :key="v.name"  @click.native="gotoRoute(v.name)"  v-else :name="v.name">
-                <div>{{v.meta.name}}</div>
+              <Icon :type="v.meta.icon"></Icon>
+                {{v.meta.name}}
             </Menu-item>
         </template>
     </div>
@@ -29,6 +30,7 @@ export default {
   },
   methods: {
     gotoRoute (name) {
+      // alert(name)
       this.$router.push({ name })
     }
   },
