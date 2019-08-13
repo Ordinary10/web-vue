@@ -9,7 +9,7 @@ import iView from 'iview'
 import 'iview/dist/styles/iview.css'
 import common from './utils/common'
 // 全局样式表
-import './styles/index.scss'
+import './assets/index.scss'
 Vue.use(iView)
 // 原型上注册请求方法
 Vue.prototype.$axios = request
