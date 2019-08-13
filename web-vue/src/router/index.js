@@ -25,7 +25,7 @@ export const DynamicRoutes = [
     redirect: 'home',
     meta: {
       requiresAuth: true,
-      name: '��ҳ'
+      name: '首页'
     },
     children: [
       {
@@ -33,7 +33,7 @@ export const DynamicRoutes = [
         component: Home,
         name: 'home',
         meta: {
-          name: '��ҳ',
+          name: '首页',
           icon: 'icon-home'
         }
       }
