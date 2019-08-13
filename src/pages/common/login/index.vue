@@ -15,7 +15,7 @@
           <Input type="text" v-model="loginForm.code" placeholder="请输入验证码">
             <i class="iconfont iconyanzhengma" slot="prepend"></i>
           </Input>
-          <img :src="codeImgSrc" alt="">
+          <img :src="codeImgSrc" alt="" @click="getCode">
         </FormItem>
         <FormItem>
           <Button type="primary" @click="handleSubmit('formInline')">Signin</Button>
@@ -55,7 +55,7 @@ export default {
       let randomNo = Math.random()
       let norand = _this.MathRand()
       _this.loginForm.loginRandom = norand
-      _this.codeImgSrc = `${_this.API_PATH}?fun=login/captcha&random=${randomNo}&loginRandom=${norand}`
+      _this.codeImgSrc = `${_this.$common.API_PATH}?fun=login/captcha&random=${randomNo}&loginRandom=${norand}`
     },
     MathRand () {
       let Num = ''

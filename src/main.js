@@ -17,7 +17,7 @@ Object.keys(filters).forEach(key => {
 })
 // 原型上注册请求方法
 Vue.prototype.$axios = request
-// 原型上注册全局方法对象
+// 原型上注册全局对象
 Vue.prototype.$common = common
 Vue.use(iView)
 Vue.config.productionTip = false

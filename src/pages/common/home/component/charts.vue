@@ -77,6 +77,9 @@
 export default {
   data () {
     return {}
+  },
+  created () {
+    this.$axios('Statistics/statisticsEntrance', {type: ['car_info', 'finance', 'finance_income']})
   }
 }
 </script>
