@@ -1,0 +1,39 @@
+<!--使用递归 动态渲染菜单  组件使用-->
+<template>
+    <div class="menu-container">
+        <template v-for="v in menuList">
+            <Submenu  v-if="v.children&&v.children.length>0" :key="v.name" :name="v.name">
+                <template slot="title">
+                  <Icon type="ios-paper"></Icon>
+                 {{v.meta.name}}
+                </template>
+                    <dynamic-menu :menuList="v.children"></dynamic-menu>
+            </Submenu>
+            <Menu-item :key="v.name"  @click.native="gotoRoute(v.name)"  v-else :name="v.name">
+                <div>{{v.meta.name}}</div>
+            </Menu-item>
+        </template>
+    </div>
+</template>
+
+<script>
+export default {
+  name: 'dynamic-menu',
+  props: {
+    menuList: {
+      type: Array,
+      default: function () {
+        return []
+      }
+    }
+  },
+  methods: {
+    gotoRoute (name) {
+      this.$router.push({ name })
+    }
+  },
+  mounted () {
+    console.log(this.menuList)
+  }
+}
+</script>
