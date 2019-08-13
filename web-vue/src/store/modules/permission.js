@@ -29,31 +29,15 @@ export default {
   },
   actions: {
     async FETCH_PERMISSION ({ commit, state }) {
-      let permissionList =
-         [
-           {
-             'name': '车辆管理',
-             'children': [
-               {
-                 'name': '车辆列表'
-               },
-               {
-                 'name': '保单管理'
-               }
-             ]
-           },
-           {
-             'name': '业务管理',
-             'children': [
-               {
-                 'name': '订单列表'
-               },
-               {
-                 'name': '提车退车'
-               }
-             ]
-           }
-         ]
+      let permissionList = []
+      let loginData = JSON.parse(sessionStorage.getItem('loginData'))
+      loginData.modules.forEach(e => {
+        e['spread'] = false
+        var item = e
+        item['children'] = e.name in loginData.menus ? loginData.menus[e.name] : []
+        permissionList.push(item)
+      })
+      // console.log(permissionList)
       /*  根据权限筛选出我们设置好的路由并加入到path=''的children */
       let routes = recursionRouter(permissionList, dynamicRouter)
       let MainContainer = DynamicRoutes.find(v => v.path === '')
@@ -61,7 +45,6 @@ export default {
       children.push(...routes)
       /* 生成左侧导航菜单 */
       commit('SET_MENU', children)
-
       /*
                 为所有有children的菜单路由设置第一个children为默认路由
                 主要是供面包屑用，防止点击面包屑后进入某个路由下的 '' 路由,比如/manage/
