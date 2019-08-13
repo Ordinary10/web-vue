@@ -1,5 +1,6 @@
 // 车辆管理
 const Car = () => import('@/pages/car-manage')
+const CarMain = () => import('@/pages/car-manage/main')
 const CarList = () => import('@/pages/car-manage/car_list')
 const CarInsurance = () => import('@/pages/car-manage/insurance')
 const CarExamine = () => import('@/pages/car-manage/examine')
@@ -24,6 +25,16 @@ const dynamicRoutes = [
       icon: 'md-car'
     },
     children: [
+      {
+        path: '',
+        name: 'car-main',
+        component: CarMain,
+        meta: {
+          // name: '统计',
+          name: '',
+          pass: true
+        }
+      },
       {
         path: 'list',
         name: 'car-list',

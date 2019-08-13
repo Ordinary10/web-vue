@@ -15,6 +15,10 @@ export function recursionRouter (userRouter = [], allRouter = []) {
         }
         realRoutes.push(v)
       }
+      if (v.meta.pass) {
+        realRoutes.push(v)
+        v.meta.pass = false
+      }
     })
   })
   return realRoutes
