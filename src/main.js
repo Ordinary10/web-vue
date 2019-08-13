@@ -15,13 +15,11 @@ import filters from './utils/global_filter'
 Object.keys(filters).forEach(key => {
   Vue.filter(key, filters[key])
 })
-Vue.use(iView)
 // 原型上注册请求方法
 Vue.prototype.$axios = request
-// 原型上注册全局方法
+// 原型上注册全局方法对象
 Vue.prototype.$common = common
-// 原型上绑定base_url,用于某些页面的静态资源访问
-Vue.prototype.API_PATH = 'http://test.c.zdxrchina.com/index/index'
+Vue.use(iView)
 Vue.config.productionTip = false
 /* eslint-disable no-new */
 router.beforeEach((to, from, next) => {
