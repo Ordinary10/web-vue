@@ -1,7 +1,8 @@
+import store from '../store'
 import axios from 'axios'
 import qs from 'qs'
 import { Message } from 'iview'
-const loginData = window.sessionStorage.getItem('loginData') || ''
+const loginData = JSON.parse(window.sessionStorage.getItem('loginData')) || ''
 // 创建axios实例
 const service = axios.create({
   headers: {
@@ -25,13 +26,17 @@ service.interceptors.response.use(
   response => {
     /* res.status不为1直接错误提示 */
     const res = response.data
-    if (res.status !== 1) {
+    if (res.status === 1) {
+      return res
+    } else if (res.status === -998) {
       Message.error({
         content: res.msg,
         duration: 3
       })
+      store.commit('LOGIN_OUT').then(() => {
+        location.reload()// 为了重新实例化vue-router对象 避免bug
+      })
     }
-    return res
   },
   error => {
     console.log('err' + error)// for debug
@@ -44,6 +49,7 @@ service.interceptors.response.use(
 )
 
 function request (fun, data) {
+  console.log(window.sessionStorage.getItem('loginData'))
   let params = {}
   params['fun'] = fun
   params['params'] = data
