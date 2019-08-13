@@ -1,6 +1,7 @@
 import axios from 'axios'
+import qs from 'qs'
 import { Message } from 'iview'
-
+const loginData = window.sessionStorage.getItem('loginData') || ''
 // 创建axios实例
 const service = axios.create({
   headers: {
@@ -46,9 +47,10 @@ function request (fun, data) {
   let params = {}
   params['fun'] = fun
   params['params'] = data
+  params['token'] = loginData.token || ''
   return service({
-    method: 'post',
-    params
+    'method': 'post',
+    'data': qs.stringify(params)
   })
 }
 

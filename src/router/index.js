@@ -6,9 +6,18 @@ Vue.use(Router)
 export default new Router({
   routes: [
     {
-      path: '*',
+      path: '/main',
+      name: 'Main',
+      component: () => import('@/pages/main/index')
+    },
+    {
+      path: '/login',
       name: 'Login',
       component: () => import('@/pages/login/index')
+    },
+    {
+      path: '*',
+      redirect: '/main'
     }
   ]
 })

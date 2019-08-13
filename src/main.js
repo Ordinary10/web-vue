@@ -17,7 +17,6 @@ Vue.prototype.$axios = request
 Vue.prototype.$common = common
 // 原型上绑定base_url,用于某些页面的静态资源访问
 Vue.prototype.API_PATH = 'http://test.c.zdxrchina.com/index/index'
-
 Vue.config.productionTip = false
 /* eslint-disable no-new */
 new Vue({
