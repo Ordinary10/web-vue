@@ -10,6 +10,11 @@ import 'iview/dist/styles/iview.css'
 import common from './utils/common'
 // 全局样式表
 import './assets/index.scss'
+// 全局过滤器
+import filters from './utils/global_filter'
+Object.keys(filters).forEach(key => {
+  Vue.filter(key, filters[key])
+})
 Vue.use(iView)
 // 原型上注册请求方法
 Vue.prototype.$axios = request
