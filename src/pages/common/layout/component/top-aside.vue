@@ -2,7 +2,7 @@
    <div class="top-wrapper">
      <template>
        <Breadcrumb>
-         <BreadcrumbItem :to="index?'':item.path||'/'" v-for="(item,index) in crumbList" :key="item"
+         <BreadcrumbItem :to="index?'':item.path||'/'" v-for="(item,index) in crumbList" :key="item.path"
          :class="{'BreadcrumbItemLast':index === crumbList.length-1}">
            {{item.meta.name}}
          </BreadcrumbItem>
