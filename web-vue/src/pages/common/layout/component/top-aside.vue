@@ -1,5 +1,14 @@
 <template>
-   <div class="top-wrapper">top</div>
+   <div class="top-wrapper">
+     <template>
+       <Breadcrumb>
+         <BreadcrumbItem :to="index?'':item.path||'/'" v-for="(item,index) in crumbList" :key="item"
+         :class="{'BreadcrumbItemLast':index === crumbList.length-1}">
+           {{item.meta.name}}
+         </BreadcrumbItem>
+       </Breadcrumb>
+     </template>
+   </div>
 </template>
 
 <script>
@@ -10,7 +19,7 @@ export default {
     return {}
   },
   computed: {
-    ...mapState(['isSidebarNavCollapse'])
+    ...mapState(['isSidebarNavCollapse', 'crumbList'])
   },
   methods: {
   },
