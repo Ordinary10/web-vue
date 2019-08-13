@@ -4,8 +4,8 @@
   left: 0;
   right: 0;
   height: 60px;
-  BreadcrumbItem /deep/ span{
-    color: #2c3e50
+  .ivu-breadcrumb{
+    color: inherit;
   }
   //最后一个url改成灰色的
   .BreadcrumbItemLast /deep/ span{
