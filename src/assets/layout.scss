@@ -1,0 +1,19 @@
+.top-wrapper{
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+}
+
+.sidebar-wrapper{
+  position: absolute;
+  left: 0;
+  width: 200px;
+  top: 60px;
+}
+
+.content-wrapper{
+  margin-top: 60px;
+  margin-left: 200px;
+}

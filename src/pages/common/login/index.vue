@@ -3,22 +3,22 @@
       <Form ref="loginForm" :model="loginForm" id="loginForm">
         <FormItem prop="user">
           <Input type="text" v-model="loginForm.account" placeholder="请输入用户名">
-            <i class="iconfont iconyonghu" slot="prepend"></i>
+            <Icon type="ios-person-outline" slot="prepend"></Icon>
           </Input>
         </FormItem>
         <FormItem prop="pwd">
           <Input type="password" v-model="loginForm.pwd" placeholder="请输入密码">
-            <i class="iconfont iconmima" slot="prepend"></i>
+            <Icon type="ios-locked-outline" slot="prepend"></Icon>
           </Input>
         </FormItem>
         <FormItem prop="code">
           <Input type="text" v-model="loginForm.code" placeholder="请输入验证码">
-            <i class="iconfont iconyanzhengma" slot="prepend"></i>
+            <Icon type="ios-locked-outline" slot="prepend"></Icon>
           </Input>
-          <img :src="codeImgSrc" alt="" @click="getCode">
+          <img :src="codeImgSrc" alt="">
         </FormItem>
         <FormItem>
-          <Button type="primary" @click="handleSubmit">登录</Button>
+          <Button type="primary" @click="handleSubmit('formInline')">Signin</Button>
         </FormItem>
       </Form>
     </div>
@@ -45,8 +45,7 @@ export default {
     handleSubmit () {
       const _this = this
       _this.$axios('login/doLogin', _this.loginForm).then(res => {
-        window.sessionStorage.setItem('loginData', res.data)
-        _this.$router.push('/main')
+        console.log(res)
       })
     },
     getCode () {
