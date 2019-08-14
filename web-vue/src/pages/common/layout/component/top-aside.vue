@@ -9,6 +9,11 @@
          <DynamicMenu :menuList="sidebarMenu"></DynamicMenu>
        </Menu>
      </div>
+     <template>
+       <div>
+         <button @click="loginOut">退出</button>
+       </div>
+     </template>
    </div>
 </template>
 
@@ -24,6 +29,11 @@ export default {
     ...mapState('permission', ['sidebarMenu', 'currentMenu'])
   },
   methods: {
+    loginOut () {
+      this.$store.commit('LOGIN_OUT').then(() => {
+        location.reload()
+      })
+    }
   },
   components: {
     DynamicMenu
