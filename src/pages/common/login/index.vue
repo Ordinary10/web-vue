@@ -74,7 +74,7 @@ export default {
         _this.$axios('login/doLogin', _this.loginForm).then(res => {
           if (res.status === 1) {
             this.$store.commit('LOGIN_IN', res.data)
-            this.$router.replace('/')
+            this.$router.push('/')
           } else if (res.msg === '验证码错误！') {
             this.getCode()
           }
