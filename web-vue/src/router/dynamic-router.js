@@ -30,8 +30,7 @@ const dynamicRoutes = [
         name: 'car-main',
         component: CarMain,
         meta: {
-          // name: '统计',
-          name: '',
+          name: '统计',
           pass: true
         }
       },
