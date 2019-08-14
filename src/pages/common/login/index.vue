@@ -14,7 +14,7 @@
           </div>
           <div class="form-item">
             <span class="form-label">验证码</span>
-            <input class="form-input" type="text" v-model="loginForm.code" placeholder="">
+            <input class="form-input" type="text" v-model="loginForm.code" placeholder="" @keydown="keyDown">
             <img class="code-img" :src="codeImgSrc" alt="" @click="getCode">
           </div>
           <div class="form-item">
@@ -47,8 +47,12 @@ export default {
       const _this = this
       _this.$axios('login/doLogin', _this.loginForm).then(res => {
         console.log(res)
-        this.$store.commit('LOGIN_IN', res.data)
-        this.$router.replace('/')
+        if (res.status === 1) {
+          this.$store.commit('LOGIN_IN', res.data)
+          this.$router.replace('/')
+        } else if (res.msg === '验证码错误！') {
+          this.getCode()
+        }
       })
     },
     getCode () {
@@ -64,6 +68,11 @@ export default {
         Num += Math.floor(Math.random() * 10)
       }
       return Num
+    },
+    keyDown (e) {
+      if (e.key === 'Enter') {
+        this.login()
+      }
     }
   }
 }

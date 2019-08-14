@@ -5,7 +5,7 @@
        <span>租车管家</span>
      </div>
      <div class="sidebar-wrapper">
-       <Menu mode="horizontal" theme="primary ">
+       <Menu mode="horizontal" theme="primary">
          <DynamicMenu :menuList="sidebarMenu"></DynamicMenu>
        </Menu>
      </div>
@@ -30,9 +30,8 @@ export default {
   },
   methods: {
     loginOut () {
-      this.$store.commit('LOGIN_OUT').then(() => {
-        location.reload()
-      })
+      this.$store.commit('LOGIN_OUT')
+      this.$router.push('/login')
     }
   },
   components: {

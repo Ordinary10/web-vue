@@ -25,8 +25,6 @@ export default new Router({
   ]
 })
 
-
-
 export const DynamicRoutes = [
   {
     path: '',
