@@ -86,6 +86,15 @@ export default {
     }
     /deep/ .ivu-menu-dark.ivu-menu-horizontal .ivu-menu-submenu,/deep/ .ivu-menu-dark.ivu-menu-horizontal .ivu-menu-item{
      color: #fff;
+      font-size: 16px;
+      .ivu-icon{
+        font-size: 18px;
+        transform: translateY(-2px);
+      }
+      .ivu-icon-ios-arrow-down{
+        font-size: 18px;
+        transform: translateY(0);
+      }
     }
     /deep/ .ivu-select-dropdown{
       background-color: rgba(76,124,243,1);;
