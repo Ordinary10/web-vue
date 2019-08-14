@@ -97,7 +97,9 @@ export default {
       }
     }
     /deep/ .ivu-select-dropdown{
-      background-color: rgba(76,124,243,1);;
+      background-color: rgba(76,124,243,1);
+      min-width: 80% !important;
+      text-align: center;
       .ivu-menu-item:hover{
         background-color:#054ff5;
       }

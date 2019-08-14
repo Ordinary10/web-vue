@@ -5,14 +5,14 @@
             <Submenu  v-if="v.children&&v.children.length>0" :key="v.name" :name="v.name">
               <template slot="title">
                 <div ref="title" :data-name="v.name">
-                  <Icon :type="v.meta.icon"></Icon>
+                  <Icon :type="v.meta.icon" v-if="v.meta.icon"></Icon>
                   {{v.meta.name}}
                 </div>
               </template>
                     <dynamic-menu :menuList="v.children"></dynamic-menu>
             </Submenu>
           <Menu-item :key="v.name"  @click.native="gotoRoute(v.name)"  v-else-if="v.meta.pass !== false" :name="v.name">
-              <Icon :type="v.meta.icon"></Icon>
+              <Icon :type="v.meta.icon" v-if="v.meta.icon"></Icon>
                 {{v.meta.name}}
             </Menu-item>
         </template>
