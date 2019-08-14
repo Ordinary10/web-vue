@@ -12,7 +12,9 @@
       </Breadcrumb>
     </template>
   </div>
-  <router-view class="content" v-if="refresh"></router-view>
+  <transition name="fade">
+    <router-view class="content" v-if="refresh"></router-view>
+  </transition>
 </div>
 </template>
 
@@ -45,6 +47,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  .fade-enter-active{
+    animation:bounce-in 0.3s;
+  }
+  .fade-leave-active{
+    animation:bounce-in 0.3s reverse;
+  }
+  @keyframes bounce-in{
+    0%{transform:scale(0);}
+    50%{transform:scale(1.5);}
+    100%{transform:scale(1);}
+  }
   .search-wrapper{
     margin: 20px;
     height:60px;
