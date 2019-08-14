@@ -11,10 +11,10 @@
      </div>
      <div class="user_info">
        <div class="refresh" @click.stop="refresh"><Icon type="md-refresh" /></div>
-       <Dropdown>
+       <Dropdown placement="bottom">
          <div class="Dropdown">
            <span class="user_img"></span>
-           公司名字公司名字
+           {{company_name}}
            <Icon type="ios-arrow-down"></Icon>
          </div>
          <DropdownMenu slot="list">
@@ -41,8 +41,15 @@ export default {
     return {}
   },
   computed: {
-    ...mapState(['isSidebarNavCollapse', 'crumbList']),
-    ...mapState('permission', ['sidebarMenu', 'currentMenu'])
+    ...mapState(['isSidebarNavCollapse', 'loginData', 'crumbList']),
+    ...mapState('permission', ['sidebarMenu', 'currentMenu']),
+    company_name () {
+      if (this.loginData) {
+        return this.loginData.userInfo.company_name
+      } else {
+        return ''
+      }
+    }
   },
   methods: {
     loginOut () {
@@ -102,6 +109,7 @@ export default {
   }
   .user_info{
     display: flex;
+    margin-right: 10px;
     .refresh{
       height: 100%;
       padding: 13px;

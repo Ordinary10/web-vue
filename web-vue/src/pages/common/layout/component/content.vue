@@ -20,6 +20,7 @@
 import { mapState } from 'vuex'
 export default {
   props: {
+    // 刷新组件
     active: {
     }
   },
@@ -28,8 +29,10 @@ export default {
       refresh: true
     }
   },
+  mounted () {
+  },
   computed: {
-    ...mapState(['isSidebarNavCollapse', 'crumbList'])
+    ...mapState(['crumbList'])
   },
   watch: {
     // 刷新组件
