@@ -69,8 +69,13 @@ export default {
 </script>
 
 <style scoped lang="scss">
-  #loginForm{
-    width: 500px;
-    margin: 0 auto;
+  .main-container{
+    height: 100%;
+    background: url("../../../../static/images/login_bg.jpg") no-repeat center center;
+    background-size: 100% 100%;
+    #loginForm{
+      width: 500px;
+      margin: 0 auto;
+    }
   }
 </style>
