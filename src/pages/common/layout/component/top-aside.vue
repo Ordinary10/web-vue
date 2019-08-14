@@ -14,7 +14,7 @@
        <Dropdown>
          <div class="Dropdown">
            <span class="user_img"></span>
-           公司名字
+           公司名字公司名字
            <Icon type="ios-arrow-down"></Icon>
          </div>
          <DropdownMenu slot="list">
@@ -101,11 +101,9 @@ export default {
     }
   }
   .user_info{
-    width: 15%;
     display: flex;
     .refresh{
       height: 100%;
-      width: 30%;
       padding: 13px;
       text-align: center;
       .ivu-icon-md-refresh{
