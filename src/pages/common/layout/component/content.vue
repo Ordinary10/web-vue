@@ -2,7 +2,6 @@
 <div class="content-wrapper">
   <div class="search-wrapper">
     <div class="search-input-wrapper">
-
     </div>
     <template>
       <Breadcrumb>
@@ -13,24 +12,36 @@
       </Breadcrumb>
     </template>
   </div>
-  <router-view class="content"></router-view>
+  <router-view class="content" v-if="refresh"></router-view>
 </div>
 </template>
 
 <script>
 import { mapState } from 'vuex'
 export default {
+  props: {
+    active: {
+    }
+  },
   data () {
-    return {}
+    return {
+      refresh: true
+    }
   },
   computed: {
     ...mapState(['isSidebarNavCollapse', 'crumbList'])
+  },
+  watch: {
+    // 刷新组件
+    active () {
+      this.refresh = false
+      this.$nextTick(() => (this.refresh = true))
+    }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-  @import "@/assets/layout.scss";
   .search-wrapper{
     margin: 20px;
     height:60px;
@@ -40,7 +51,6 @@ export default {
     display: flex;
     /*url设置*/
    .ivu-breadcrumb{
-      min-width: 13%;
       padding: 20px;
       color: inherit;
     }

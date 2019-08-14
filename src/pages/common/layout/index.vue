@@ -1,7 +1,7 @@
 <template>
   <div>
-    <TopAside></TopAside>
-    <mainContent/>
+    <TopAside @refresh="refresh"></TopAside>
+    <mainContent :active="active"/>
   </div>
 </template>
 
@@ -11,12 +11,19 @@ import TopAside from './component/top-aside'
 
 export default {
   data () {
-    return {}
+    return {
+      active: true
+    }
   },
   computed: {},
   components: {
     mainContent,
     TopAside
+  },
+  methods: {
+    refresh (e) {
+      this.active = !this.active
+    }
   }
 }
 </script>
