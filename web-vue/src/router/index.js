@@ -4,6 +4,7 @@ import Layout from '@/pages/common/layout/index'
 import Home from '@/pages/common/home/index'
 import NotFound from '@/pages/common/errorPage/404'
 import Forbidden from '@/pages/common/errorPage/403'
+
 Vue.use(Router)
 
 export default new Router({
@@ -13,9 +14,18 @@ export default new Router({
       name: 'Login',
       component: () => import('@/pages/common/login/index')
       // component: Layout
+    },
+    // 加载公共样式的页面-zhw
+    {
+      path: '/assembly',
+      name: 'assembly',
+      component: () => import('@/pages/assembly-style/assembly-style')
+      // component: Layout
     }
   ]
 })
+
+
 
 export const DynamicRoutes = [
   {
