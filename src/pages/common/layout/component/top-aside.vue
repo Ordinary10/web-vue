@@ -1,7 +1,11 @@
 <template>
    <div class="top-wrapper">
+     <div class="title">
+       <Icon type="ios-car-outline" />
+       <span>租车管家</span>
+     </div>
      <div class="sidebar-wrapper">
-       <Menu mode="horizontal">
+       <Menu mode="horizontal" theme="primary ">
          <DynamicMenu :menuList="sidebarMenu"></DynamicMenu>
        </Menu>
      </div>
@@ -38,13 +42,24 @@ export default {
   right: 0;
   height: 60px;
   background:rgba(76,124,243,1);
-  .ivu-breadcrumb{
-    color: inherit;
+  .sidebar-wrapper{
+    margin-left: 200px;
   }
-  //最后一个url改成灰色的
-  .BreadcrumbItemLast /deep/ span{
-    color: #a0a0a0;
-    font-weight: 300;
+  .title{
+    position: absolute;
+    left: 0;
+    width: 200px;
+    top: 0;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    color: #fff;
+    .ivu-icon-ios-car-outline{
+      margin: 0 10px;
+      font-size: 30px;
+    }
   }
 }
 </style>
