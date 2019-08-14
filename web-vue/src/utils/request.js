@@ -31,18 +31,22 @@ service.interceptors.response.use(
     } else if (res.status === -998) {
       Message.error({
         content: res.msg,
-        duration: 3
+        duration: 5
       })
-      store.commit('LOGIN_OUT').then(() => {
-        location.reload()// 为了重新实例化vue-router对象 避免bug
+      store.commit('LOGIN_OUT')
+    } else {
+      Message.error({
+        content: res.msg,
+        duration: 5
       })
+      return res
     }
   },
   error => {
     console.log('err' + error)// for debug
     Message.error({
       content: error.message,
-      duration: 3
+      duration: 5
     })
     return Promise.reject(error)
   }
