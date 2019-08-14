@@ -1,23 +1,30 @@
 <template>
     <div>
-        <router-view></router-view>
-        <Charts/>
+      <p>home</p>
+      <p>home</p>
+      <p>home</p>
+      <p>home</p>
+      <p>home</p>
+      <p>home</p>
+      <p>home</p>
+      <p>home</p>
+      <p>home</p>
+      <p>home</p>
+      <p>home</p>
+      <p>home</p>
+      <p>home</p>
     </div>
 </template>
 
 <script>
-import Charts from './component/charts'
 
 export default {
   data () {
     return {}
   },
   mounted () {
-
   },
   components: {
-
-    Charts
   }
 }
 </script>
