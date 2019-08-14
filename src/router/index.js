@@ -19,7 +19,7 @@ export default new Router({
     {
       path: '/assembly',
       name: 'assembly',
-      component: () => import('@/pages/assembly-style/assembly-style')
+      component: () => import('@/pages/assembly/assembly')
       // component: Layout
     }
   ]
