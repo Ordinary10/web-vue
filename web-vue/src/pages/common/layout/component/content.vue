@@ -1,19 +1,22 @@
 <template>
 <div class="content-wrapper">
-  <div class="search-wrapper">
-    <div class="search-input-wrapper">
-    </div>
-    <template>
-      <Breadcrumb>
-        <BreadcrumbItem :to="index?'':item.path||'/'" v-for="(item,index) in crumbList" :key="item.path"
-                        :class="{'BreadcrumbItemLast':index === crumbList.length-1}">
-          {{item.meta.name}}
-        </BreadcrumbItem>
-      </Breadcrumb>
-    </template>
-  </div>
   <transition name="fade">
-    <router-view class="content" v-if="refresh"></router-view>
+    <div v-if="refresh">
+      <div class="search-wrapper" >
+        <div class="search-input-wrapper">
+        </div>
+        <template>
+          <Breadcrumb>
+            <BreadcrumbItem  v-for="(item,index) in crumbList" :key="item.path"
+                             :class="{'BreadcrumbItemLast':index === crumbList.length-1}">
+              {{item.meta.name}}
+            </BreadcrumbItem>
+          </Breadcrumb>
+        </template>
+      </div>
+      <router-view class="content"></router-view>
+    </div>
+
   </transition>
 </div>
 </template>
@@ -69,6 +72,9 @@ export default {
    .ivu-breadcrumb{
       padding: 20px;
       color: inherit;
+     .BreadcrumbItemLast{
+       /*color: #ccc;*/
+     }
     }
     .search-input-wrapper{
       flex: 1;
