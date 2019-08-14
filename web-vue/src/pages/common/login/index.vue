@@ -5,16 +5,16 @@
         </div>
         <form action="" ref="form" class="form">
           <div class="form-item">
-            <span class="form-label">用户名</span>
-            <input class="form-input" type="text" v-model="loginForm.account" placeholder="">
+            <span class="form-label" :class="{'blur-label-style': accountFocus}">用户名</span>
+            <input class="form-input" ref="account" :class="{'blur-input-style': accountFocus}" type="text" @focus="inputFocus('account')" @blur="inputBlur('account')" v-model="loginForm.account" :placeholder="placeholder_account">
           </div>
           <div class="form-item">
-            <span class="form-label">密码</span>
-            <input class="form-input" type="password" v-model="loginForm.pwd" placeholder="">
+            <span class="form-label" :class="{'blur-label-style': pwdFocus}">密码</span>
+            <input class="form-input" ref="pwd" :class="{'blur-input-style': pwdFocus}" type="password" @focus="inputFocus('pwd')" @blur="inputBlur('pwd')" v-model="loginForm.pwd" :placeholder="placeholder_pwd">
           </div>
           <div class="form-item">
-            <span class="form-label">验证码</span>
-            <input class="form-input" type="text" v-model="loginForm.code" placeholder="" @keydown="keyDown">
+            <span class="form-label" :class="{'blur-label-style': codeFocus}">验证码</span>
+            <input class="form-input" ref="code" :class="{'blur-input-style': codeFocus}" type="text" @focus="inputFocus('code')" @blur="inputBlur('code')" v-model="loginForm.code" :placeholder="placeholder_code" @keydown="keyDown">
             <img class="code-img" :src="codeImgSrc" alt="" @click="getCode">
           </div>
           <div class="form-item">
@@ -31,6 +31,12 @@ export default {
   data () {
     return {
       codeImgSrc: '',
+      placeholder_account: '',
+      placeholder_pwd: '',
+      placeholder_code: '',
+      accountFocus: false,
+      pwdFocus: false,
+      codeFocus: false,
       loginForm: {
         account: '',
         pwd: '',
@@ -43,18 +49,39 @@ export default {
     this.getCode()
   },
   methods: {
+    /* 登录 */
     login () {
       const _this = this
-      _this.$axios('login/doLogin', _this.loginForm).then(res => {
-        console.log(res)
-        if (res.status === 1) {
-          this.$store.commit('LOGIN_IN', res.data)
-          this.$router.replace('/')
-        } else if (res.msg === '验证码错误！') {
-          this.getCode()
-        }
-      })
+      if (_this.loginForm.account === '') {
+        this.$Message.error({
+          content: '必填项不能为空',
+          duration: 5
+        })
+        this.$refs.account.focus()
+      } else if (_this.loginForm.pwd === '') {
+        this.$Message.error({
+          content: '必填项不能为空',
+          duration: 5
+        })
+        this.$refs.pwd.focus()
+      } else if (_this.loginForm.code === '') {
+        this.$Message.error({
+          content: '必填项不能为空',
+          duration: 5
+        })
+        this.$refs.code.focus()
+      } else {
+        _this.$axios('login/doLogin', _this.loginForm).then(res => {
+          if (res.status === 1) {
+            this.$store.commit('LOGIN_IN', res.data)
+            this.$router.replace('/')
+          } else if (res.msg === '验证码错误！') {
+            this.getCode()
+          }
+        })
+      }
     },
+    /* 获取验证码 */
     getCode () {
       const _this = this
       let randomNo = Math.random()
@@ -62,6 +89,7 @@ export default {
       _this.loginForm.loginRandom = norand
       _this.codeImgSrc = `${_this.$common.API_PATH}?fun=login/captcha&random=${randomNo}&loginRandom=${norand}`
     },
+    /* 获取验证码随机参数生成 */
     MathRand () {
       let Num = ''
       for (var i = 0; i < 6; i++) {
@@ -69,9 +97,43 @@ export default {
       }
       return Num
     },
+    /* 验证码输入框回车键触发login */
     keyDown (e) {
       if (e.key === 'Enter') {
         this.login()
+      }
+    },
+    /* 输入框的聚焦和失焦 */
+    inputFocus (type) {
+      switch (type) {
+        case 'account':
+          this.accountFocus = true
+          this.placeholder_account = '请输入用户名'
+          break
+        case 'pwd':
+          this.pwdFocus = true
+          this.placeholder_pwd = '请输入密码'
+          break
+        case 'code':
+          this.codeFocus = true
+          this.placeholder_code = '请输入验证码'
+          break
+      }
+    },
+    inputBlur (type) {
+      switch (type) {
+        case 'account':
+          this.accountFocus = false
+          this.placeholder_account = ''
+          break
+        case 'pwd':
+          this.pwdFocus = false
+          this.placeholder_pwd = ''
+          break
+        case 'code':
+          this.codeFocus = false
+          this.placeholder_code = ''
+          break
       }
     }
   }
@@ -79,6 +141,13 @@ export default {
 </script>
 
 <style scoped lang="scss">
+  .blur-label-style.form-label{
+    color: red !important;
+    font-size: 12px !important;
+  }
+  .blur-input-style.form-input{
+    border:1px solid red !important;
+  }
   .main-container{
     height: 100%;
     background: url("../../../../static/images/login_bg.jpg") no-repeat center center;
