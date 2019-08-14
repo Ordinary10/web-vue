@@ -49,7 +49,6 @@ service.interceptors.response.use(
 )
 
 function request (fun, data) {
-  console.log(window.sessionStorage.getItem('loginData'))
   let params = {}
   params['fun'] = fun
   params['params'] = data
