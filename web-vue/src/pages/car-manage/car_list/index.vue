@@ -1,6 +1,8 @@
 <template>
     <div>
-      <search></search>
+      <search>
+        aa
+      </search>
       <div>
         车辆列表
         车辆列表
