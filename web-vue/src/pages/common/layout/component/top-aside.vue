@@ -103,6 +103,9 @@ export default {
       .ivu-menu-item:hover{
         background-color:#054ff5;
       }
+      .ivu-menu-item.ivu-menu-item-active{
+        background-color: #054ff5;
+      }
     }
   }
   .title{

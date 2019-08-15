@@ -32,7 +32,6 @@ export default {
   },
   methods: {
     gotoRoute (name) {
-      // alert(name)
       this.$router.push({ name })
     }
   },

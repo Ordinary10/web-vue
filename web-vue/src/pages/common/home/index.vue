@@ -1,7 +1,7 @@
 <template>
     <div>
       <p>home</p>
-      <p>home</p>
+      <p ref="home">home</p>
       <p>home</p>
       <p>home</p>
       <p>home</p>
