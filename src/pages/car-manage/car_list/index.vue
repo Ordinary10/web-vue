@@ -12,13 +12,12 @@
     </div>
 </template>
 <script>
-import search from '@/components/search'
+// import search from '@/components/search'
 export default {
   data () {
     return {}
   },
   components: {
-    search
   },
   mounted () {
 
