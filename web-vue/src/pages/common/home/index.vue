@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="content-block">
       <p>home</p>
       <p ref="home">home</p>
       <p>home</p>

@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="content-block">
       统计统计统计统计统计统计统计
     </div>
 </template>

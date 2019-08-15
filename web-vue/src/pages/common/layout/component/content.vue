@@ -36,21 +36,17 @@ export default {
     animation:bounce-in 0.3s reverse;
   }
   @keyframes bounce-in{
-    /*0%{transform:scale(0);}*/
-    /*50%{transform:scale(1.5);}*/
-    /*100%{transform:scale(1);}*/
   }
 
   .content-wrapper{
-    margin: 160px 20px 20px;
-    height:750px;
-    background:rgba(255,255,255,1);
-    box-shadow:0px 3px 18px 0px rgba(0, 0, 0, 0.11);
+    margin: 80px 20px 20px;
+    height:830px;
+
     border-radius:15px;
     /deep/ >div{
-      height:750px;
-      background-color: #f0f4f9;
-      position: relative;
+      height:830px;
+      display: flex;
+      flex-direction: column;
     }
 
   }

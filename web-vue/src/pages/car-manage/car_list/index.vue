@@ -3,7 +3,7 @@
       <search>
         aa
       </search>
-      <div>
+      <div class="content-block">
         车辆列表
         车辆列表
         车辆列表
@@ -25,3 +25,6 @@ export default {
   }
 }
 </script>
+<style lang="scss" scoped>
+
+</style>
