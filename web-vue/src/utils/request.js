@@ -51,8 +51,21 @@ service.interceptors.response.use(
     return Promise.reject(error)
   }
 )
-
-function request (fun, data) {
+/* 表格的通用数据请求方法 */
+export function tableRequest (options, data) {
+  let params = {}
+  params['fun'] = options.fun
+  params['limit'] = options.limit || 20
+  params['page'] = options.page || 1
+  params['params'] = data
+  params['token'] = loginData.token || ''
+  return service({
+    'method': 'post',
+    'data': qs.stringify(params)
+  })
+}
+/* 其他数据请求的通用方法 */
+export function request (fun, data) {
   let params = {}
   params['fun'] = fun
   params['params'] = data
@@ -62,5 +75,3 @@ function request (fun, data) {
     'data': qs.stringify(params)
   })
 }
-
-export default request

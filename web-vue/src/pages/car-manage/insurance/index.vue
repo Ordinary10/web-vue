@@ -1,15 +1,16 @@
 <template>
     <div>
-      保单管理
-      保单管理
-      保单管理
-      保单管理
+      <search></search>
+      <div class="content-block">
+        <paging-table configName="insuranceList"></paging-table>
+      </div>
     </div>
 </template>
 <script>
 export default {
   data () {
-    return {}
+    return {
+    }
   },
   mounted () {
 
