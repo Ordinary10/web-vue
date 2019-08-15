@@ -8,12 +8,16 @@ import request from './utils/request'
 import iView from 'iview'
 import 'iview/dist/styles/iview.css'
 import common from './utils/common'
-// 全局样式表
 import './assets/index.scss'
-// 全局过滤器
+import globalComponents from './components'
 import filters from './utils/global_filter'
+// 全局过滤器
 Object.keys(filters).forEach(key => {
   Vue.filter(key, filters[key])
+})
+// 全局组件
+Object.keys(globalComponents).forEach(key => {
+  Vue.component(key, globalComponents[key])
 })
 // 原型上注册请求方法
 Vue.prototype.$axios = request
