@@ -1,28 +1,10 @@
 <template>
-<div class="content-wrapper">
   <transition name="fade">
-    <div v-if="refresh">
-      <div class="search-wrapper" >
-        <div class="search-input-wrapper">
-        </div>
-        <template>
-          <Breadcrumb>
-            <BreadcrumbItem  v-for="(item,index) in crumbList" :key="item.path"
-                             :class="{'BreadcrumbItemLast':index === crumbList.length-1}">
-              {{item.meta.name}}
-            </BreadcrumbItem>
-          </Breadcrumb>
-        </template>
-      </div>
-      <router-view class="content"></router-view>
-    </div>
-
+      <router-view class="content-wrapper" v-if="refresh"></router-view>
   </transition>
-</div>
 </template>
 
 <script>
-import { mapState } from 'vuex'
 export default {
   props: {
     // 刷新组件
@@ -35,9 +17,6 @@ export default {
     }
   },
   mounted () {
-  },
-  computed: {
-    ...mapState(['crumbList'])
   },
   watch: {
     // 刷新组件
@@ -61,35 +40,18 @@ export default {
     /*50%{transform:scale(1.5);}*/
     /*100%{transform:scale(1);}*/
   }
-  .search-wrapper{
-    margin: 20px;
-    height:60px;
-    background:rgba(255,255,255,1);
-    box-shadow:0px 3px 18px 0px rgba(0, 0, 0, 0.11);
-    border-radius:15px;
-    display: flex;
-    /*url设置*/
-   .ivu-breadcrumb{
-      padding: 20px;
-      color: inherit;
-     .BreadcrumbItemLast{
-       /*color: #ccc;*/
-     }
-    }
-    .search-input-wrapper{
-      flex: 1;
-    }
-  }
+
   .content-wrapper{
-    margin-top: 60px;
-    overflow: hidden;
-    background:rgba(240,244,249,1)
-  }
-  .content{
-    margin: 0 20px 20px;
-    min-height:764px;
+    margin: 160px 20px 20px;
+    height:750px;
     background:rgba(255,255,255,1);
     box-shadow:0px 3px 18px 0px rgba(0, 0, 0, 0.11);
     border-radius:15px;
+    /deep/ >div{
+      height:750px;
+      background-color: #f0f4f9;
+      position: relative;
+    }
+
   }
 </style>

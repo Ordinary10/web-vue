@@ -7,12 +7,6 @@
       <p>home</p>
       <p>home</p>
       <p>home</p>
-      <p>home</p>
-      <p>home</p>
-      <p>home</p>
-      <p>home</p>
-      <p>home</p>
-      <p>home</p>
     </div>
 </template>
 
