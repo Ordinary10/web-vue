@@ -27,10 +27,7 @@ export default {
 
 <style lang="scss"  scoped>
   .search-wrapper{
-    position: absolute;
-    top: -80px;
-    left: 0;
-    right: 0;
+    margin-bottom: 20px;
     height:60px;
     background:rgba(255,255,255,1);
     box-shadow:0px 3px 18px 0px rgba(0, 0, 0, 0.11);
