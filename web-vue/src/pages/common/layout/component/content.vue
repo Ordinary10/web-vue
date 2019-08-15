@@ -41,7 +41,6 @@ export default {
   .content-wrapper{
     margin: 80px 20px 20px;
     height:830px;
-
     border-radius:15px;
     /deep/ >div{
       height:830px;

@@ -85,7 +85,7 @@ export default {
       background:inherit;
     }
     /deep/ .ivu-menu-dark.ivu-menu-horizontal .ivu-menu-submenu,/deep/ .ivu-menu-dark.ivu-menu-horizontal .ivu-menu-item{
-     color: #fff;
+      color: #fff;
       font-size: 16px;
       .ivu-icon{
         font-size: 18px;
@@ -95,6 +95,12 @@ export default {
         font-size: 18px;
         transform: translateY(0);
       }
+    }
+    /deep/ .ivu-menu-dark.ivu-menu-horizontal>.menu-container>.ivu-menu-submenu,.ivu-menu-dark.ivu-menu-horizontal>.menu-container>.ivu-menu-item{
+      padding: 0 10px;
+    }
+    /deep/ .ivu-menu-opened .ivu-menu-submenu-title-icon{
+      transform: translateY(0) rotate(180deg) !important;
     }
     /deep/ .ivu-select-dropdown{
       background-color: rgba(76,124,243,1);
@@ -150,6 +156,15 @@ export default {
       height: 60px;
       text-align: center;
       font-size: 17px;
+      .ivu-icon-ios-arrow-down{
+        margin-left: 5px;
+        transition: transform .2s ease-in-out;
+      }
+      &:hover{
+        .ivu-icon-ios-arrow-down{
+          transform: rotate(180deg);
+        }
+      }
       .user_img{
         display: inline-block;
         width: 30px;
