@@ -4,7 +4,7 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import store from './store'
-import request from './utils/request'
+import { request } from './utils/request'
 import iView from 'iview'
 import 'iview/dist/styles/iview.css'
 import common from './utils/common'
@@ -19,7 +19,7 @@ Object.keys(filters).forEach(key => {
 Object.keys(globalComponents).forEach(key => {
   Vue.component(key, globalComponents[key])
 })
-// 原型上注册请求方法
+// 原型上注册通用请求方法
 Vue.prototype.$axios = request
 // 原型上注册全局对象
 Vue.prototype.$common = common

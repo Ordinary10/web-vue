@@ -1,13 +1,8 @@
 <template>
     <div>
-      <search>
-        aa
-      </search>
+      <search></search>
       <div class="content-block">
-        车辆列表
-        车辆列表
-        车辆列表
-        车辆列表
+        <paging-table configName="carList"></paging-table>
       </div>
     </div>
 </template>
@@ -15,7 +10,8 @@
 // import search from '@/components/search'
 export default {
   data () {
-    return {}
+    return {
+    }
   },
   components: {
   },
