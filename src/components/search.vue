@@ -1,6 +1,7 @@
 <template>
   <div class="search-wrapper" >
     <div class="search-input-wrapper">
+      <slot></slot>
     </div>
     <template>
       <Breadcrumb>
@@ -45,6 +46,8 @@ export default {
   }
   .search-input-wrapper{
     flex: 1;
+    display: flex;
+    align-items: center;
   }
   }
 </style>
