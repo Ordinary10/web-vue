@@ -17,5 +17,6 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   overflow: hidden;
   height: 100%;
+  background-color: #f0f4f9;
 }
 </style>
