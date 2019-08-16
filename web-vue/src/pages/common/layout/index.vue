@@ -1,5 +1,5 @@
 <template>
-  <div style="height: 100%">
+  <div style="height: 100%;">
     <Top @refresh="refresh" v-if="PageMode===1"></Top>
     <mainContent :active="active" v-if="PageMode===1"/>
     <sideTop v-if="PageMode!==1"></sideTop>
