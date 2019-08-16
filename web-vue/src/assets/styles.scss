@@ -18,10 +18,10 @@
   flex-wrap: wrap;
   .search-input{
     width: 160px;
-    margin: 4px 4px;
+    margin: 4px;
   }
   .search-submit{
-    margin: 4px 16px 4px 12px;
+    margin: 4px;
     .search-btn{
       padding: 0 15px;
       height: 36px;
@@ -31,7 +31,7 @@
     }
   }
   .redundant-btn{
-    margin: 4px 0;
+    margin: 4px;
   }
 }
 //table内的操作按钮样式
@@ -39,6 +39,30 @@
   .table-btn{
     margin: 4px;
   }
+}
+/* 警告色背景天数 */
+.warnText{
+  display: inline-block;
+  min-width: 30px;
+  height: 18px;
+  line-height: 18px;
+  padding: 0 8px;
+  background-color: #ff4b5b;
+  border-radius:30px;
+  color: white;
+  text-align: center;
+}
+/* 正常天数背景 */
+.normalText{
+  text-align: center;
+  display: inline-block;
+  min-width: 30px;
+  height: 18px;
+  line-height: 18px;
+  padding: 0 8px;
+  background-color: #2bb930;
+  border-radius:30px;
+  color: white;
 }
 //zhw
 @mixin clearfix {
