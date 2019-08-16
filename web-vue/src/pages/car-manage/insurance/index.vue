@@ -24,7 +24,7 @@
         </div>
       </search>
       <div class="content-block">
-        <paging-table :config="config"></paging-table>
+        <paging-table :config="config" :searchData="searchData"></paging-table>
       </div>
     </div>
 </template>
@@ -36,12 +36,40 @@ export default {
         fun: 'Car/insuranceWarn',
         columns: [
           {key: 'company_name', title: '门店'},
-          {key: 'plate_no', title: '车牌号'},
+          {
+            key: 'plate_no',
+            title: '车牌',
+            render: (h, params) => {
+              return <div>
+                <license-plate row={params.row}></license-plate>
+              </div>
+            }
+          },
           {key: 'carVersion', title: '车型'},
-          {key: 'days', title: '脱保天数'},
+          {
+            key: 'days',
+            title: '脱保天数',
+            render: (h, params) => {
+              let d = params.row
+              return d.is_overtime > 0
+                ? <sapn class="warnText">{Math.abs(d.days)}</sapn>
+                : <sapn class="normalText">{Math.abs(d.days)}</sapn>
+            }
+          },
           {key: 'etime', title: '商业险到期日'},
           {key: 'jqx_etime', title: '交强险到期日'},
-          {key: 'quote_time', title: '报价时间'}
+          {key: 'quote_time', title: '报价时间'},
+          {
+            key: 'caozuo',
+            title: '操作',
+            render: (h, params) => {
+              return <div class="table-btn-box">
+                <i-button class="table-btn" type="info" size="small" nativeOnClick={this.tableBtnClick.bind(this, params.row, 'see')}>查看</i-button>
+                <i-button class="table-btn" type="primary" size="small" nativeOnClick={this.tableBtnClick.bind(this, params.row, 'offer')}>报价</i-button>
+                <i-button class="table-btn" type="success" size="small" nativeOnClick={this.tableBtnClick.bind(this, params.row, 'upload')}>上传</i-button>
+              </div>
+            }
+          }
         ]
       },
       searchData: {
@@ -72,6 +100,19 @@ export default {
     },
     refresh () {
       alert('刷新')
+    },
+    tableBtnClick (item, type) {
+      switch (type) {
+        case 'see':
+          alert(`查看：${item.id}`)
+          break
+        case 'offer':
+          alert(`报价：${item.id}`)
+          break
+        case 'upload':
+          alert(`上传：${item.id}`)
+          break
+      }
     }
   }
 }

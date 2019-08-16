@@ -24,7 +24,7 @@
         </div>
       </search>
       <div class="content-block">
-        <paging-table :config="config"></paging-table>
+        <paging-table :config="config" :searchData="searchData"></paging-table>
       </div>
     </div>
 </template>
@@ -40,7 +40,18 @@ export default {
           {key: 'car_model', title: '车型'},
           {key: 'car_number', title: '数量'},
           {key: 'guide_price', title: '指导价'},
-          {key: 'result_status', title: '状态'}
+          {key: 'result_status', title: '状态'},
+          {
+            key: 'caozuo',
+            title: '操作',
+            render: (h, params) => {
+              return <div class="table-btn-box">
+                <i-button class="table-btn" type="info" size="small" nativeOnClick={this.tableBtnClick.bind(this, params.row, 'see')}>查看</i-button>
+                <i-button class="table-btn" type="primary" size="small" nativeOnClick={this.tableBtnClick.bind(this, params.row, 'editor')}>编辑</i-button>
+                <i-button class="table-btn" type="error" size="small" nativeOnClick={this.tableBtnClick.bind(this, params.row, 'delisting')}>下市</i-button>
+              </div>
+            }
+          }
         ]
       },
       searchData: {
@@ -71,6 +82,19 @@ export default {
     },
     refresh () {
       alert('刷新')
+    },
+    tableBtnClick (item, type) {
+      switch (type) {
+        case 'see':
+          alert(`查看：${item.id}`)
+          break
+        case 'editor':
+          alert(`编辑：${item.id}`)
+          break
+        case 'delisting':
+          alert(`下市：${item.id}`)
+          break
+      }
     }
   }
 }
