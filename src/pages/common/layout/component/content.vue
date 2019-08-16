@@ -39,11 +39,11 @@ export default {
   }
 
   .content-wrapper{
-    margin: 80px 20px 20px;
-    height:830px;
+    padding: 80px 20px 20px;
+    height:100%;
     border-radius:15px;
     /deep/ >div{
-      height:830px;
+      height:100%;
       display: flex;
       flex-direction: column;
     }
