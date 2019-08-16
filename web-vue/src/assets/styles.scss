@@ -2,10 +2,31 @@
 .maxHeight{
   height: 100%;
 }
+//主题内容区域盒子
 .content-block{
   flex: 1;
   box-shadow:0px 3px 18px 0px rgba(0, 0, 0, 0.11);
   border-radius:15px;
   overflow: hidden;
   height: 100%;
+}
+//搜索栏样式
+.search-box{
+  width: 100%;
+  display: flex;
+  padding-left: 8px;
+  .search-input{
+    width: 160px;
+    margin: 0 4px;
+  }
+  .search-submit{
+    margin: 0 16px 0 12px;
+    .search-btn{
+      padding: 0 15px;
+      height: 36px;
+      i{
+        font-size: 20px;
+      }
+    }
+  }
 }
