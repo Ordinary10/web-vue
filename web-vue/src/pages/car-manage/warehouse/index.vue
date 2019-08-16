@@ -83,7 +83,4 @@ export default {
 <style lang="scss">
 </style>
 <style scoped lang="scss">
-  ul,li{
-    list-style: none;
-  }
 </style>
