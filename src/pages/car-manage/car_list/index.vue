@@ -2,6 +2,7 @@
     <div>
       <search>
         <div class="search-box">
+          <!--搜索输入框-->
           <Input class="search-input" v-model="searchData.plate_no" size="large" placeholder="请输入车牌" />
           <Select v-model="searchData.status" class="search-input" size="large" placeholder="请选择状态">
             <Option v-for="item in statusList" :value="item.value" :key="item.value">{{ item.label }}</Option>
@@ -15,6 +16,7 @@
           <Input class="search-input" v-model="searchData.plate_no" size="large" placeholder="请输入车牌" v-show="isShow"/>
           <Input class="search-input" v-model="searchData.plate_no" size="large" placeholder="请输入车牌" v-show="isShow"/>
           <Input class="search-input" v-model="searchData.plate_no" size="large" placeholder="请输入车牌" v-show="isShow"/>
+          <!--搜索按钮-->
           <div class="search-submit">
             <Tooltip content="更多搜索条件" placement="bottom-start">
               <Button class="search-btn " size="large" icon="ios-options-outline" type="primary" @click.native="isShow=!isShow"></Button>
@@ -22,6 +24,7 @@
             <Button class="search-btn " size="large" icon="md-search" type="primary" @click.native="search"></Button>
             <Button class="refresh-btn search-btn" size="large" icon="md-refresh" type="info" @click.native="refresh"></Button>
           </div>
+          <!--更多操作-->
           <div class="redundant-btn">
             <Dropdown>
               <Button type="primary" size="large" @mouseout.native="iconType='md-arrow-dropdown'" @mouseover.native="iconType='md-arrow-dropup'">
@@ -39,7 +42,7 @@
         </div>
       </search>
       <div class="content-block">
-        <paging-table :config="config"></paging-table>
+        <paging-table :config="config" :searchData="searchDataCopy"></paging-table>
       </div>
     </div>
 </template>
@@ -53,7 +56,15 @@ export default {
         fun: 'Car/carList',
         columns: [
           {key: 'name', title: '门店'},
-          {key: 'plate_no', title: '车牌'},
+          {
+            key: 'plate_no',
+            title: '车牌',
+            render: (h, params) => {
+              return <div>
+                <license-plate row={params.row}></license-plate>
+              </div>
+            }
+          },
           {key: 'carVersion', title: '车型'},
           {key: 'expire_time', title: '保险到期时间'},
           {key: 'annual', title: '年审日期'},
@@ -74,7 +85,15 @@ export default {
         plate_no: '',
         status: ''
       },
+      searchDataCopy: {
+        plate_no: '',
+        status: ''
+      },
       statusList: [
+        {
+          value: '',
+          label: '全部'
+        },
         {
           value: 1,
           label: '状态1'
@@ -109,18 +128,22 @@ export default {
       }
     },
     search () {
-      alert(`搜索条件：${JSON.stringify(this.searchData)}`)
+      let obj = {}
+      Object.keys(this.searchData).forEach(key => {
+        obj[key] = this.searchData[key]
+      })
+      this.searchDataCopy = obj
     },
     refresh () {
-      alert('刷新')
+      this.searchDataCopy = {}
     },
     tableBtnClick (item, type) {
       switch (type) {
         case 'see':
-          alert(`查看：${item.plate_no}`)
+          alert(`查看：${item.id}`)
           break
         case 'editor':
-          alert(`编辑：${item.plate_no}`)
+          alert(`编辑：${item.id}`)
           break
       }
     }

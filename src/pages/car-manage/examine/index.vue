@@ -24,7 +24,7 @@
         </div>
       </search>
       <div class="content-block">
-        <paging-table :config="config"></paging-table>
+        <paging-table :config="config" :searchData="searchData" ></paging-table>
       </div>
     </div>
 </template>
@@ -36,12 +36,38 @@ export default {
         fun: 'Car/reviewWarn',
         columns: [
           {key: 'company_name', title: '门店'},
-          {key: 'plate_no', title: '车牌号'},
+          {
+            key: 'plate_no',
+            title: '车牌',
+            render: (h, params) => {
+              return <div>
+                <license-plate row={params.row}></license-plate>
+              </div>
+            }
+          },
           {key: 'carVersion', title: '车型'},
-          {key: 'days', title: '逾期天数'},
+          {
+            key: 'days',
+            title: '逾期天数',
+            render: (h, params) => {
+              let d = params.row
+              return d.is_overtime > 0
+                ? <sapn class="warnText">{Math.abs(d.days)}</sapn>
+                : <sapn class="normalText">{Math.abs(d.days)}</sapn>
+            }
+          },
           {key: 'annual', title: '车审到期日期'},
           {key: 'license_annual', title: '证审到期日期'},
-          {key: 'gastank_annual', title: '气罐审到期日期'}
+          {key: 'gastank_annual', title: '气罐审到期日期'},
+          {
+            key: 'caozuo',
+            title: '操作',
+            render: (h, params) => {
+              return <div class="table-btn-box">
+                <i-button class="table-btn" type="primary" size="small" nativeOnClick={this.tableBtnClick.bind(this, params.row, 'editor')}>编辑</i-button>
+              </div>
+            }
+          }
         ]
       },
       searchData: {
@@ -72,6 +98,13 @@ export default {
     },
     refresh () {
       alert('刷新')
+    },
+    tableBtnClick (item, type) {
+      switch (type) {
+        case 'editor':
+          alert(`编辑：${item.id}`)
+          break
+      }
     }
   }
 }

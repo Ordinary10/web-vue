@@ -28,6 +28,7 @@ export default {
       configs: null,
       data: null,
       total: 0,
+      params: null,
       limit: 20,
       page: 1,
       limits: [10, 20, 50, 100]
@@ -35,11 +36,19 @@ export default {
   },
   props: {
     config: {
-      type: Object
+      type: Object,
+      required: true
+    },
+    searchData: {
+      type: Object,
+      default: function () {
+        return {}
+      }
     }
   },
   created () {
     this.configs = this.$props.config
+    this.params = this.$props.searchData
     this.getTableData()
   },
   methods: {
@@ -49,7 +58,7 @@ export default {
         limit: this.limit,
         fun: this.configs.fun
       }
-      tableRequest(options, {}).then(res => {
+      tableRequest(options, this.params).then(res => {
         this.data = res.data
         this.total = res.count
       }).catch(err => {
@@ -66,6 +75,15 @@ export default {
     }
   },
   computed: {
+  },
+  watch: {
+    searchData: {
+      deep: true,
+      handler (newVal, oldVal) {
+        this.params = newVal
+        this.getTableData()
+      }
+    }
   }
 }
 </script>

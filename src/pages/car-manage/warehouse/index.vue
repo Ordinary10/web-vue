@@ -24,7 +24,7 @@
         </div>
       </search>
       <div class="content-block">
-        <paging-table :config="config"></paging-table>
+        <paging-table :config="config" :searchData="searchData"></paging-table>
       </div>
     </div>
 </template>
@@ -36,7 +36,15 @@ export default {
         fun: 'Carstore/carStoreList',
         columns: [
           {key: 'name', title: '仓库'},
-          {key: 'plate_no', title: '车牌'},
+          {
+            key: 'plate_no',
+            title: '车牌',
+            render: (h, params) => {
+              return <div>
+                <license-plate row={params.row}></license-plate>
+              </div>
+            }
+          },
           {key: 'brand', title: '车型'},
           {
             key: 'status',
@@ -44,7 +52,18 @@ export default {
             render: (h, params) => {
               let d = params.row
               return <span>{d.status === 'in_dealing' ? '在库待处理' : '在库待销售'}</span>
-            }}
+            }
+          },
+          {
+            key: 'caozuo',
+            title: '操作',
+            render: (h, params) => {
+              return <div class="table-btn-box">
+                <i-button class="table-btn" type="info" size="small" nativeOnClick={this.tableBtnClick.bind(this, params.row, 'seeIllegal')}>违章记录</i-button>
+                <i-button class="table-btn" type="primary" size="small" nativeOnClick={this.tableBtnClick.bind(this, params.row, 'seeLease')}>租赁记录</i-button>
+              </div>
+            }
+          }
         ]
       },
       searchData: {
@@ -75,6 +94,16 @@ export default {
     },
     refresh () {
       alert('刷新')
+    },
+    tableBtnClick (item, type) {
+      switch (type) {
+        case 'seeIllegal':
+          alert(`查看违章：${item.id}`)
+          break
+        case 'seeLease':
+          alert(`查看租赁：${item.id}`)
+          break
+      }
     }
   }
 }
