@@ -12,5 +12,8 @@ export default {
   },
   setCrumbList (state, list) {
     state.crumbList = list
+  },
+  changeMode (state) {
+    state.PageMode = state.PageMode === 1 ? 0 : 1
   }
 }

@@ -1,14 +1,5 @@
 <template>
    <div class="top-wrapper">
-     <div class="title">
-       <Icon type="ios-car-outline" />
-       <span>租车管家</span>
-     </div>
-     <div class="sidebar-wrapper">
-       <Menu mode="horizontal" theme="dark">
-         <DynamicMenu :menuList="sidebarMenu"></DynamicMenu>
-       </Menu>
-     </div>
      <div class="user_info">
        <div class="refresh" @click.stop="refresh"><Icon type="md-refresh" /></div>
        <Dropdown placement="bottom">
@@ -38,7 +29,6 @@
 
 <script>
 import { mapState } from 'vuex'
-import DynamicMenu from './dynamic-menu'
 export default {
   data () {
     return {}
@@ -68,7 +58,6 @@ export default {
     }
   },
   components: {
-    DynamicMenu
   },
   mounted () {
   }
@@ -83,57 +72,9 @@ export default {
   right: 0;
   height: 60px;
   background:rgba(76,124,243,1);
-  display: flex;
-  .sidebar-wrapper{
-    flex: 1;
-    background:inherit;
-    .ivu-menu{
-      background:inherit;
-    }
-    /deep/ .ivu-menu-dark.ivu-menu-horizontal .ivu-menu-submenu,/deep/ .ivu-menu-dark.ivu-menu-horizontal .ivu-menu-item{
-      color: #fff;
-      font-size: 16px;
-      .ivu-icon{
-        font-size: 18px;
-        transform: translateY(-2px);
-      }
-      .ivu-icon-ios-arrow-down{
-        font-size: 18px;
-        transform: translateY(0);
-      }
-    }
-    /deep/ .ivu-menu-dark.ivu-menu-horizontal>.menu-container>.ivu-menu-submenu,.ivu-menu-dark.ivu-menu-horizontal>.menu-container>.ivu-menu-item{
-      padding: 0 10px;
-    }
-    /deep/ .ivu-menu-opened .ivu-menu-submenu-title-icon{
-      transform: translateY(0) rotate(180deg) !important;
-    }
-    /deep/ .ivu-select-dropdown{
-      background-color: rgba(76,124,243,1);
-      min-width: 80% !important;
-      text-align: center;
-      .ivu-menu-item:hover{
-        background-color:#054ff5;
-      }
-      .ivu-menu-item.ivu-menu-item-active{
-        background-color: #054ff5;
-      }
-    }
-  }
-  .title{
-    width: 12%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 20px;
-    color: #fff;
-    .ivu-icon-ios-car-outline{
-      margin: 0 10px;
-      font-size: 30px;
-    }
-  }
+  margin-left: 240px;
   .user_info{
+    float: right;
     display: flex;
     margin-right: 10px;
     .refresh{
