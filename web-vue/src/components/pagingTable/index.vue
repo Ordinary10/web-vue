@@ -1,8 +1,8 @@
 <template>
-    <div class="paging-table" v-if="config&&data">
+    <div class="paging-table" v-if="configs&&data">
       <Table
         stripe
-        :columns="config.columns"
+        :columns="configs.columns"
         :data="data"></Table>
       <div class="paging-box">
         <Page
@@ -21,12 +21,11 @@
 
 <script>
 import { tableRequest } from '@/utils/request'
-import configs from './config'
 export default {
   name: 'pagingTable',
   data () {
     return {
-      config: null,
+      configs: null,
       data: null,
       total: 0,
       limit: 20,
@@ -34,16 +33,13 @@ export default {
       limits: [10, 20, 50, 100]
     }
   },
-  /*
-  * configName: 用于获取对应的config，详见config.js文件
-  *  */
   props: {
-    configName: {
-      type: String
+    config: {
+      type: Object
     }
   },
   created () {
-    this.config = configs[this.$props.configName]
+    this.configs = this.$props.config
     this.getTableData()
   },
   methods: {
@@ -51,7 +47,7 @@ export default {
       let options = {
         page: this.page,
         limit: this.limit,
-        fun: this.config.fun
+        fun: this.configs.fun
       }
       tableRequest(options, {}).then(res => {
         this.data = res.data
