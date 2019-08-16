@@ -12,12 +12,15 @@
           </div>
           <div class="redundant-btn">
             <Dropdown>
-              <Button type="primary" size="large">
+              <Button type="primary" size="large" @mouseout.native="iconType='md-arrow-dropdown'" @mouseover.native="iconType='md-arrow-dropup'">
                 更多操作
-                <Icon type="ios-arrow-down"></Icon>
+                <Icon :type="iconType" />
               </Button>
               <DropdownMenu slot="list">
-                <DropdownItem @click.native="uploadList">批量导入</DropdownItem>
+                <DropdownItem @click.native="redundant('addCar')">添加车辆</DropdownItem>
+                <DropdownItem @click.native="redundant('addCarList')">导入车辆</DropdownItem>
+                <DropdownItem @click.native="redundant('exportList')">导出列表</DropdownItem>
+                <DropdownItem @click.native="redundant('carBack')">退车入库</DropdownItem>
               </DropdownMenu>
             </Dropdown>
           </div>
@@ -28,10 +31,11 @@
       </div>
     </div>
 </template>
-<script>
+<script type="text/jsx">
 export default {
   data () {
     return {
+      iconType: 'md-arrow-dropdown',
       config: {
         fun: 'Car/carList',
         columns: [
@@ -40,7 +44,17 @@ export default {
           {key: 'carVersion', title: '车型'},
           {key: 'expire_time', title: '保险到期时间'},
           {key: 'annual', title: '年审日期'},
-          {key: 'status', title: '状态'}
+          {key: 'status', title: '状态'},
+          {
+            key: 'caozuo',
+            title: '操作',
+            render: (h, params) => {
+              return <div class="table-btn-box">
+                <i-button class="table-btn" type="info" size="small" nativeOnClick={this.tableBtnClick.bind(this, params.row, 'see')}>查看</i-button>
+                <i-button class="table-btn" type="primary" size="small" nativeOnClick={this.tableBtnClick.bind(this, params.row, 'editor')}>编辑</i-button>
+              </div>
+            }
+          }
         ]
       },
       searchData: {
@@ -65,14 +79,37 @@ export default {
 
   },
   methods: {
-    uploadList () {
-      alert('批量导入')
+    redundant (type) {
+      switch (type) {
+        case 'addCar':
+          alert('添加车辆')
+          break
+        case 'addCarList':
+          alert('导入车辆')
+          break
+        case 'exportList':
+          alert('导出列表')
+          break
+        case 'carBack':
+          alert('退车入库')
+          break
+      }
     },
     search () {
       alert(`搜索条件：${JSON.stringify(this.searchData)}`)
     },
     refresh () {
       alert('刷新')
+    },
+    tableBtnClick (item, type) {
+      switch (type) {
+        case 'see':
+          alert(`查看：${item.plate_no}`)
+          break
+        case 'editor':
+          alert(`编辑：${item.plate_no}`)
+          break
+      }
     }
   }
 }

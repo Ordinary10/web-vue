@@ -15,12 +15,13 @@
   width: 100%;
   display: flex;
   padding-left: 8px;
+  flex-wrap: wrap;
   .search-input{
     width: 160px;
-    margin: 0 4px;
+    margin: 4px 4px;
   }
   .search-submit{
-    margin: 0 16px 0 12px;
+    margin: 4px 16px 4px 12px;
     .search-btn{
       padding: 0 15px;
       height: 36px;
@@ -28,5 +29,14 @@
         font-size: 20px;
       }
     }
+  }
+  .redundant-btn{
+    margin: 4px 0;
+  }
+}
+//table内的操作按钮样式
+.table-btn-box{
+  .table-btn{
+    margin: 4px;
   }
 }
