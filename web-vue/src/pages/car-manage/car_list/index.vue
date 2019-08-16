@@ -6,7 +6,19 @@
           <Select v-model="searchData.status" class="search-input" size="large" placeholder="请选择状态">
             <Option v-for="item in statusList" :value="item.value" :key="item.value">{{ item.label }}</Option>
           </Select>
+          <Input class="search-input" v-model="searchData.plate_no" size="large" placeholder="请输入车牌" v-show="isShow" />
+          <Input class="search-input" v-model="searchData.plate_no" size="large" placeholder="请输入车牌" v-show="isShow"/>
+          <Input class="search-input" v-model="searchData.plate_no" size="large" placeholder="请输入车牌" v-show="isShow"/>
+          <Input class="search-input" v-model="searchData.plate_no" size="large" placeholder="请输入车牌" v-show="isShow"/>
+          <Input class="search-input" v-model="searchData.plate_no" size="large" placeholder="请输入车牌" v-show="isShow"/>
+          <Input class="search-input" v-model="searchData.plate_no" size="large" placeholder="请输入车牌" v-show="isShow"/>
+          <Input class="search-input" v-model="searchData.plate_no" size="large" placeholder="请输入车牌" v-show="isShow"/>
+          <Input class="search-input" v-model="searchData.plate_no" size="large" placeholder="请输入车牌" v-show="isShow"/>
+          <Input class="search-input" v-model="searchData.plate_no" size="large" placeholder="请输入车牌" v-show="isShow"/>
           <div class="search-submit">
+            <Tooltip content="更多搜索条件" placement="bottom-start">
+              <Button class="search-btn " size="large" icon="ios-options-outline" type="primary" @click.native="isShow=!isShow"></Button>
+            </Tooltip>
             <Button class="search-btn " size="large" icon="md-search" type="primary" @click.native="search"></Button>
             <Button class="refresh-btn search-btn" size="large" icon="md-refresh" type="info" @click.native="refresh"></Button>
           </div>
@@ -35,6 +47,7 @@
 export default {
   data () {
     return {
+      isShow: false,
       iconType: 'md-arrow-dropdown',
       config: {
         fun: 'Car/carList',
