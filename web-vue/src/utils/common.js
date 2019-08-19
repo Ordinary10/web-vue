@@ -3,6 +3,7 @@
 // const login_data = JSON.parse(window.sessionStorage.getItem('loginData'))
 const common = {
   API_PATH: 'http://test.c.zdxrchina.com/index/index',
+  pageInitInfo: JSON.parse(sessionStorage.getItem('pageInitInfo') || ''),
   /**
    * day 几天后 number
    * */
@@ -94,5 +95,4 @@ const common = {
     return Number(s1.replace('.', '')) * Number(s2.replace('.', '')) / Math.pow(10, m)
   }
 }
-
 export default common

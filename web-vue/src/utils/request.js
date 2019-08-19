@@ -1,8 +1,8 @@
 import store from '../store'
 import axios from 'axios'
 import qs from 'qs'
-import { Message } from 'iview'
-const loginData = JSON.parse(window.sessionStorage.getItem('loginData')) || ''
+import { Message, Spin, Icon } from 'iview'
+const loginData = JSON.parse(window.sessionStorage.getItem('loginData') || '')
 // 创建axios实例
 const service = axios.create({
   headers: {
@@ -27,6 +27,7 @@ service.interceptors.response.use(
     /* res.status不为1直接错误提示 */
     const res = response.data
     if (res.status === 1) {
+      Spin.hide()
       return res
     } else if (res.status === -998) {
       Message.error({
@@ -34,11 +35,13 @@ service.interceptors.response.use(
         duration: 5
       })
       store.commit('LOGIN_OUT')
+      Spin.hide()
     } else {
       Message.error({
         content: res.msg,
         duration: 5
       })
+      Spin.hide()
       return res
     }
   },
@@ -48,11 +51,27 @@ service.interceptors.response.use(
       content: error.message,
       duration: 5
     })
+    Spin.hide()
     return Promise.reject(error)
   }
 )
 /* 表格的通用数据请求方法 */
 export function tableRequest (options, data) {
+  Spin.show({
+    render: (h) => {
+      return h('div', [
+        h('Icon', {
+          'class': 'demo-spin-icon-load',
+          props: {
+            type: 'ios-loading',
+            size: 18,
+            name: 'iconLoading'
+          }
+        }),
+        h('div', 'Loading')
+      ])
+    }
+  })
   let params = {}
   params['fun'] = options.fun
   params['limit'] = options.limit || 20
@@ -66,6 +85,20 @@ export function tableRequest (options, data) {
 }
 /* 其他数据请求的通用方法 */
 export function request (fun, data) {
+  Spin.show({
+    render: (h) => {
+      return h('div', [
+        h('Icon', {
+          'class': 'demo-spin-icon-load',
+          props: {
+            type: 'ios-loading',
+            size: 18
+          }
+        }),
+        h('div', 'Loading')
+      ])
+    }
+  })
   let params = {}
   params['fun'] = fun
   params['params'] = data

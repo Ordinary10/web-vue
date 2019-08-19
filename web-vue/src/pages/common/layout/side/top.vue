@@ -46,8 +46,9 @@ export default {
   },
   methods: {
     loginOut () {
-      this.$store.commit('LOGIN_OUT')
-      this.$router.push('/login')
+      this.$store.dispatch('LOGIN_OUT').then(() => {
+        this.$router.push('/login')
+      })
     },
     refresh () {
       // window.location.reload()

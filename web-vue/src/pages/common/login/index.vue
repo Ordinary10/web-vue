@@ -73,10 +73,36 @@ export default {
       } else {
         _this.$axios('login/doLogin', _this.loginForm).then(res => {
           if (res.status === 1) {
-            this.$store.commit('LOGIN_IN', res.data)
-            this.$router.push('/')
+            _this.$store.dispatch('LOGIN_IN', res.data).then(() => {
+              _this.$axios('Common/getPageInitInfo', {type: [
+                'order_state',
+                'company_info',
+                'role_info',
+                'plate_type',
+                'car_version',
+                'ware_house',
+                'car_status',
+                'house_info',
+                'charge_type',
+                'remit_type',
+                'car_service',
+                'car_type',
+                'insurance_type',
+                'order_nature',
+                'collection_type',
+                'driver_manage',
+                'financial_plan'
+              ]}).then(res => {
+                sessionStorage.setItem('pageInitInfo', JSON.stringify(res.data))
+                _this.$router.push('/home')
+              }).catch(err => {
+                console.log(err)
+              })
+            }).catch(err => {
+              console.log(err)
+            })
           } else if (res.msg === '验证码错误！') {
-            this.getCode()
+            _this.getCode()
           }
         })
       }

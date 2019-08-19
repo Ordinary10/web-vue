@@ -4,18 +4,23 @@
         <div class="search-box">
           <!--搜索输入框-->
           <Input class="search-input" v-model="searchData.plate_no" size="large" placeholder="请输入车牌" />
-          <Select v-model="searchData.status" class="search-input" size="large" placeholder="请选择状态">
-            <Option v-for="item in statusList" :value="item.value" :key="item.value">{{ item.label }}</Option>
+          <Select v-model="searchData.status" v-if="$common.pageInitInfo.car_status" class="search-input" size="large" placeholder="请选择车辆状态">
+            <Option value="">全部</Option>
+            <Option v-for="item in $common.pageInitInfo.car_status" :value="item.id" :key="'car_status'+item.id">{{ item.name }}</Option>
           </Select>
-          <Input class="search-input" v-model="searchData.plate_no" size="large" placeholder="请输入车牌" v-show="isShow" />
-          <Input class="search-input" v-model="searchData.plate_no" size="large" placeholder="请输入车牌" v-show="isShow"/>
-          <Input class="search-input" v-model="searchData.plate_no" size="large" placeholder="请输入车牌" v-show="isShow"/>
-          <Input class="search-input" v-model="searchData.plate_no" size="large" placeholder="请输入车牌" v-show="isShow"/>
-          <Input class="search-input" v-model="searchData.plate_no" size="large" placeholder="请输入车牌" v-show="isShow"/>
-          <Input class="search-input" v-model="searchData.plate_no" size="large" placeholder="请输入车牌" v-show="isShow"/>
-          <Input class="search-input" v-model="searchData.plate_no" size="large" placeholder="请输入车牌" v-show="isShow"/>
-          <Input class="search-input" v-model="searchData.plate_no" size="large" placeholder="请输入车牌" v-show="isShow"/>
-          <Input class="search-input" v-model="searchData.plate_no" size="large" placeholder="请输入车牌" v-show="isShow"/>
+          <Input  class="search-input" v-model="searchData.vin" size="large" placeholder="请输入车架号" />
+          <Select v-show="isShow" v-model="searchData.type" v-if="$common.pageInitInfo.car_type" class="search-input" size="large" placeholder="请选择车辆类型">
+            <Option value="">全部</Option>
+            <Option v-for="item in $common.pageInitInfo.car_type" :value="item.id" :key="'car_type'+item.id">{{ item.name }}</Option>
+          </Select>
+          <Select v-show="isShow" v-model="searchData.department" v-if="$common.pageInitInfo.company_info" class="search-input" size="large" placeholder="请选择门店">
+            <Option value="">全部</Option>
+            <Option v-for="item in $common.pageInitInfo.company_info" :value="item.id" :key="'company_info'+item.id">{{ item.name }}</Option>
+          </Select>
+          <Select v-show="isShow" v-model="searchData.carVersion" v-if="$common.pageInitInfo.car_version" class="search-input" size="large" placeholder="请选择车辆品牌">
+            <Option value="">全部</Option>
+            <Option v-for="item in $common.pageInitInfo.car_version" :value="item.id" :key="'car_version'+item.id">{{ item.name }}</Option>
+          </Select>
           <!--搜索按钮-->
           <div class="search-submit">
             <Tooltip content="更多搜索条件" placement="bottom-start">
@@ -42,13 +47,20 @@
         </div>
       </search>
       <div class="content-block">
-        <paging-table :config="config" :searchData="searchDataCopy"></paging-table>
+        <paging-table ref="pagingTable" :config="config" :searchData="searchData"></paging-table>
       </div>
     </div>
 </template>
 <script type="text/jsx">
 export default {
   data () {
+    /*
+    * isShow: 用于折叠搜索框的显示隐藏
+    * iconType： 用于更多操作的icon变化
+    * config: table的配置
+    * searchData： 搜索栏的数据存储对象
+    * startSearchData： 存储searchData的初始值，用于重置table
+    * */
     return {
       isShow: false,
       iconType: 'md-arrow-dropdown',
@@ -83,34 +95,31 @@ export default {
       },
       searchData: {
         plate_no: '',
-        status: ''
+        vin: '',
+        status: '',
+        type: '',
+        department: '',
+        carVersion: ''
       },
-      searchDataCopy: {
+      startSearchData: {
         plate_no: '',
-        status: ''
-      },
-      statusList: [
-        {
-          value: '',
-          label: '全部'
-        },
-        {
-          value: 1,
-          label: '状态1'
-        },
-        {
-          value: 2,
-          label: '状态2'
-        }
-      ]
+        vin: '',
+        status: '',
+        type: '',
+        department: '',
+        carVersion: ''
+      }
     }
   },
   components: {
+  },
+  created () {
   },
   mounted () {
 
   },
   methods: {
+    /* 更多操作 */
     redundant (type) {
       switch (type) {
         case 'addCar':
@@ -127,16 +136,21 @@ export default {
           break
       }
     },
+    /* 搜索按钮 */
     search () {
-      let obj = {}
-      Object.keys(this.searchData).forEach(key => {
-        obj[key] = this.searchData[key]
-      })
-      this.searchDataCopy = obj
+      this.$refs.pagingTable.search(this.searchData)
     },
+    /* 刷新按钮 */
     refresh () {
-      this.searchDataCopy = {}
+      /* 注意：不能将searchData引用为startSearchData，否则后续刷新将失效——引用（指针）与内存空间的关系问题 */
+      let obj = {}
+      Object.keys(this.startSearchData).forEach(key => {
+        obj[key] = this.startSearchData[key]
+      })
+      this.searchData = obj
+      this.$refs.pagingTable.refresh(this.searchData)
     },
+    /* table操作栏 */
     tableBtnClick (item, type) {
       switch (type) {
         case 'see':
