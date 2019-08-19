@@ -1,8 +1,8 @@
 <template>
   <transition name="fade">
-    <Tabs type="card" class="content-wrapper" closable v-model="cruTab">
-      <TabPane :label="tab.title" v-for="tab of tabList" :key="tab" :name="tab.name">
-        <component :is="tab.name"></component>
+    <Tabs type="card" class="content-wrapper" :style="{'padding':PageMode===1?'75px 15px 15px':'75px 15px 15px 255px'}" closable v-model="cruTab">
+      <TabPane :label="tab.title" v-for="tab of tabList" :key="tab.name" :name="tab.name">
+        <component :is="tab.name" :ref="tab.name"></component>
       </TabPane>
     </Tabs>
   </transition>
@@ -24,7 +24,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['tabList', 'cruTab'])
+    ...mapState(['tabList', 'cruTab', 'PageMode'])
   },
   components: {
   },
@@ -37,12 +37,14 @@ export default {
   watch: {
     // 刷新组件
     active () {
-      this.refresh = false
-      this.$nextTick(() => (this.refresh = true))
+      console.log(this.$refs[this.cruTab])
     },
     tabList () {
-      this.tabList.forEach(e => {
-        this.$options.components[e.name] = e.component
+      let _this = this
+      _this.tabList.forEach(e => {
+        if (_this.$options.components && !_this.$options.components[e.name]) {
+          _this.$options.components[e.name] = e.component
+        }
       })
     }
   }
@@ -63,9 +65,6 @@ export default {
     padding: 75px 15px 15px;
     height:100%;
     border-radius:15px;
-
-    /*display: flex;*/
-    /*flex-direction: column;*/
     /deep/ .ivu-tabs-content{
       height: calc(100% - 50px);
     }

@@ -1,9 +1,8 @@
 <template>
   <div style="height: 100%;">
-    <Top @refresh="refresh" v-if="PageMode===1"></Top>
+    <Top @refresh="refresh"></Top>
     <mainContent :active="active" :PageMode="PageMode" v-if="TabPage !== 1"/>
-    <TabMainContent :PageMode="PageMode" v-else></TabMainContent>
-    <sideTop @refresh="refresh" v-if="PageMode!==1"></sideTop>
+    <TabMainContent :PageMode="PageMode" :active="active" v-else></TabMainContent>
     <side v-if="PageMode!==1"></side>
   </div>
 </template>
@@ -12,7 +11,6 @@
 import mainContent from './component/content'
 import TabMainContent from './component/TabContent'
 import Top from './component/top-aside'
-import sideTop from './side/top'
 import side from './side/side'
 import {mapState} from 'vuex'
 
@@ -28,7 +26,6 @@ export default {
   components: {
     mainContent,
     Top,
-    sideTop,
     side,
     TabMainContent
   },
