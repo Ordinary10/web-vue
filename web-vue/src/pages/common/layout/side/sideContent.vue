@@ -39,7 +39,7 @@ export default {
   }
 
   .content-wrapper{
-    padding: 80px 20px 20px 260px;
+    padding: 75px 15px 15px 255px;
     height:100%;
     border-radius:15px;
     /deep/ >div{
