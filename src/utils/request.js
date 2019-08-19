@@ -2,7 +2,7 @@ import store from '../store'
 import axios from 'axios'
 import qs from 'qs'
 import { Message, Spin, Icon } from 'iview'
-const loginData = JSON.parse(window.sessionStorage.getItem('loginData') || '')
+const loginData = JSON.parse(window.sessionStorage.getItem('loginData') || '{}')
 // 创建axios实例
 const service = axios.create({
   headers: {

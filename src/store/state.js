@@ -26,5 +26,16 @@ export default {
   },
   set PageMode (value) {
     sessionStorage.setItem('PageMode', value)
-  }
+  },
+  get TabPage () {
+    if (sessionStorage.getItem('TabPage') === null) {
+      sessionStorage.setItem('TabPage', 0)
+    }
+    return +sessionStorage.getItem('TabPage')
+  },
+  set TabPage (value) {
+    sessionStorage.setItem('TabPage', value)
+  },
+  tabList: [],
+  cruTab: ''
 }
