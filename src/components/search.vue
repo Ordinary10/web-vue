@@ -27,14 +27,14 @@ export default {
 
 <style lang="scss"  scoped>
   .search-wrapper{
-    margin-bottom: 20px;
+    margin-bottom: 15px;
     background:rgba(255,255,255,1);
     box-shadow:0px 3px 18px 0px rgba(0, 0, 0, 0.11);
     border-radius:15px;
     display: flex;
   /*url设置*/
   .ivu-breadcrumb{
-    padding: 20px;
+    padding: 15px;
     color: inherit;
   .BreadcrumbItemLast{
     /*color: #ccc;*/
