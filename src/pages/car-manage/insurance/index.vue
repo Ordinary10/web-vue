@@ -3,28 +3,48 @@
       <search>
         <div class="search-box">
           <Input class="search-input" v-model="searchData.plate_no" size="large" placeholder="请输入车牌" />
-          <Select v-model="searchData.status" class="search-input" size="large" placeholder="请选择状态">
-            <Option v-for="item in statusList" :value="item.value" :key="item.value">{{ item.label }}</Option>
+          <Select v-model="searchData.status" class="search-input" size="large" placeholder="请选择车辆状态">
+            <Option value="">全部</Option>
+            <Option v-for="item in $common.pageInitInfo.car_status" :value="item.id" :key="'car_status'+item.id">{{ item.name }}</Option>
+          </Select>
+          <Input class="search-input" v-model="searchData.days" size="large" placeholder="请输入脱保天数" />
+          <Select v-show="isShow" v-model="searchData.isbuy" class="search-input" size="large" placeholder="请选择是否购保">
+            <Option value="">全部</Option>
+            <Option :value="1" selected>是</Option>
+            <Option :value="2">否</Option>
+          </Select>
+          <Select v-show="isShow" v-model="searchData.quote_time" class="search-input" size="large" placeholder="请选择是否购保">
+            <Option value="">全部</Option>
+            <Option value="no">未报价</Option>
+            <Option value="week">一周</Option>
+            <Option value="month">一月</Option>
           </Select>
           <div class="search-submit">
+            <Tooltip content="更多搜索条件" placement="bottom-start">
+              <Button class="search-btn " size="large" icon="ios-options-outline" type="primary" @click.native="isShow=!isShow"></Button>
+            </Tooltip>
             <Button class="search-btn " size="large" icon="md-search" type="primary" @click.native="search"></Button>
             <Button class="refresh-btn search-btn" size="large" icon="md-refresh" type="info" @click.native="refresh"></Button>
           </div>
+          <!--更多操作-->
           <div class="redundant-btn">
             <Dropdown>
-              <Button type="primary" size="large">
+              <Button type="primary" size="large" @mouseout.native="iconType='md-arrow-dropdown'" @mouseover.native="iconType='md-arrow-dropup'">
                 更多操作
-                <Icon type="ios-arrow-down"></Icon>
+                <Icon :type="iconType" />
               </Button>
               <DropdownMenu slot="list">
-                <DropdownItem @click.native="uploadList">批量导入</DropdownItem>
+                <DropdownItem @click.native="redundant('addCar')">添加车辆</DropdownItem>
+                <DropdownItem @click.native="redundant('addCarList')">导入车辆</DropdownItem>
+                <DropdownItem @click.native="redundant('exportList')">导出列表</DropdownItem>
+                <DropdownItem @click.native="redundant('carBack')">退车入库</DropdownItem>
               </DropdownMenu>
             </Dropdown>
           </div>
         </div>
       </search>
       <div class="content-block">
-        <paging-table :config="config" :searchData="searchData"></paging-table>
+        <paging-table ref="pagingTable" :config="config" :searchData="searchData"></paging-table>
       </div>
     </div>
 </template>
@@ -32,6 +52,8 @@
 export default {
   data () {
     return {
+      isShow: false,
+      iconType: 'md-arrow-dropdown',
       config: {
         fun: 'Car/insuranceWarn',
         columns: [
@@ -49,16 +71,17 @@ export default {
           {
             key: 'days',
             title: '脱保天数',
+            sortable: 'custom',
             render: (h, params) => {
               let d = params.row
               return d.is_overtime > 0
-                ? <sapn class="warnText">{Math.abs(d.days)}</sapn>
-                : <sapn class="normalText">{Math.abs(d.days)}</sapn>
+                ? <span class="warnText">{Math.abs(d.days)}</span>
+                : <span class="normalText">{Math.abs(d.days)}</span>
             }
           },
           {key: 'etime', title: '商业险到期日'},
           {key: 'jqx_etime', title: '交强险到期日'},
-          {key: 'quote_time', title: '报价时间'},
+          {key: 'quote_time', title: '报价时间', sortable: 'custom'},
           {
             key: 'caozuo',
             title: '操作',
@@ -74,32 +97,52 @@ export default {
       },
       searchData: {
         plate_no: '',
-        status: ''
+        status: '',
+        days: '',
+        isbuy: 1,
+        quote_time: ''
       },
-      statusList: [
-        {
-          value: 1,
-          label: '状态1'
-        },
-        {
-          value: 2,
-          label: '状态2'
-        }
-      ]
+      startSearchData: {
+        plate_no: '',
+        status: '',
+        days: '',
+        isbuy: 1,
+        quote_time: ''
+      }
     }
   },
   mounted () {
 
   },
   methods: {
-    uploadList () {
-      alert('批量导入')
+    /* 更多操作 */
+    redundant (type) {
+      switch (type) {
+        case 'addCar':
+          alert('添加车辆')
+          break
+        case 'addCarList':
+          alert('导入车辆')
+          break
+        case 'exportList':
+          alert('导出列表')
+          break
+        case 'carBack':
+          alert('退车入库')
+          break
+      }
     },
     search () {
-      alert(`搜索条件：${JSON.stringify(this.searchData)}`)
+      this.$refs.pagingTable.search(this.searchData)
     },
     refresh () {
-      alert('刷新')
+      /* 注意：不能将searchData引用为startSearchData，否则后续刷新将失效——引用（指针）与内存空间的关系问题 */
+      let obj = {}
+      Object.keys(this.startSearchData).forEach(key => {
+        obj[key] = this.startSearchData[key]
+      })
+      this.searchData = obj
+      this.$refs.pagingTable.refresh(this.searchData)
     },
     tableBtnClick (item, type) {
       switch (type) {
