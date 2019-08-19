@@ -148,7 +148,7 @@
     }
     .vehicle-btn{
       position: absolute;
-      top: 49px;
+      top: 55px;
       font-size: 12px;
       right: -3px;
       cursor: pointer;
@@ -254,5 +254,22 @@ body{
 }
 .ivu-form-item-label{
   font-size: 14px;
+}
+.tabs-body .ivu-tabs-nav{
+  float: right;
+}
+.tabs-body{
+  padding-top: 10px;
+  .bt-top{
+    margin-top: 0px;
+    position: absolute;
+  }
+}
+//文字样式
+.redtext{
+  color: #f3555e;
+}
+.green-color {
+  color: #1ab744;
 }
 //zhwend
