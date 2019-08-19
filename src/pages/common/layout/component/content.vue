@@ -1,6 +1,6 @@
 <template>
   <transition name="fade">
-      <router-view class="content-wrapper" v-if="refresh"></router-view>
+      <router-view class="content-wrapper" :style="{'padding':PageMode===1?'75px 15px 15px':'75px 15px 15px 255px'}" v-if="refresh"></router-view>
   </transition>
 </template>
 
@@ -9,6 +9,9 @@ export default {
   props: {
     // 刷新组件
     active: {
+    },
+    // 页面模式
+    PageMode: {
     }
   },
   data () {
