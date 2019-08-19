@@ -2,7 +2,6 @@ import store from '../store'
 import axios from 'axios'
 import qs from 'qs'
 import { Message, Spin, Icon } from 'iview'
-const loginData = JSON.parse(window.sessionStorage.getItem('loginData') || '{}')
 // 创建axios实例
 const service = axios.create({
   headers: {
@@ -77,7 +76,7 @@ export function tableRequest (options, data) {
   params['limit'] = options.limit || 20
   params['page'] = options.page || 1
   params['params'] = data
-  params['token'] = loginData.token || ''
+  params['token'] = window.sessionStorage.getItem('token') || ''
   return service({
     'method': 'post',
     'data': qs.stringify(params)
@@ -102,7 +101,7 @@ export function request (fun, data) {
   let params = {}
   params['fun'] = fun
   params['params'] = data
-  params['token'] = loginData.token || ''
+  params['token'] = window.sessionStorage.getItem('token') || ''
   return service({
     'method': 'post',
     'data': qs.stringify(params)

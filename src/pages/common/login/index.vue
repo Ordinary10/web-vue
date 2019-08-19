@@ -94,6 +94,7 @@ export default {
                 'financial_plan'
               ]}).then(res => {
                 sessionStorage.setItem('pageInitInfo', JSON.stringify(res.data))
+                _this.$common.pageInitInfo = res.data
                 _this.$router.push('/home')
               }).catch(err => {
                 console.log(err)
