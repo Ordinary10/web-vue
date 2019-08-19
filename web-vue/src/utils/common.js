@@ -3,7 +3,7 @@
 // const login_data = JSON.parse(window.sessionStorage.getItem('loginData'))
 const common = {
   API_PATH: 'http://test.c.zdxrchina.com/index/index',
-  pageInitInfo: JSON.parse(sessionStorage.getItem('pageInitInfo') || ''),
+  pageInitInfo: JSON.parse(sessionStorage.getItem('pageInitInfo') || '{}'),
   /**
    * day 几天后 number
    * */

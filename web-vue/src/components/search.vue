@@ -4,7 +4,7 @@
       <slot></slot>
     </div>
     <template>
-      <Breadcrumb>
+      <Breadcrumb v-if="TabPage !== 1">
         <BreadcrumbItem  v-for="(item,index) in crumbList" :key="item.path"
                          :class="{'BreadcrumbItemLast':index === crumbList.length-1}">
           {{item.meta.name}}
@@ -20,7 +20,7 @@ import { mapState } from 'vuex'
 export default {
   name: 'search',
   computed: {
-    ...mapState(['crumbList'])
+    ...mapState(['crumbList','TabPage'])
   }
 }
 </script>

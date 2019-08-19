@@ -24,6 +24,9 @@
            <DropdownItem  @click.native="changeMode">
              <Icon type="md-color-filter"/>更换模式
            </DropdownItem>
+           <DropdownItem  @click.native="changeTab">
+             <Icon type="md-color-filter"/>切换tab
+           </DropdownItem>
            <DropdownItem>
              <Icon type="ios-build-outline" />修改密码
            </DropdownItem>
@@ -65,6 +68,9 @@ export default {
     },
     changeMode () {
       this.$store.commit('changeMode')
+    },
+    changeTab(){
+      this.$store.commit('changeTab')
     }
   },
   components: {
@@ -84,6 +90,7 @@ export default {
   height: 60px;
   background:rgba(76,124,243,1);
   display: flex;
+  z-index: 9999;
   .sidebar-wrapper{
     flex: 1;
     background:inherit;

@@ -74,6 +74,7 @@ export default {
   height: 60px;
   background:rgba(76,124,243,1);
   margin-left: 240px;
+  z-index: 9999;
   .user_info{
     float: right;
     display: flex;

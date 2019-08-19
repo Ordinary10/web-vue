@@ -15,5 +15,14 @@ export default {
   },
   changeMode (state) {
     state.PageMode = state.PageMode === 1 ? 0 : 1
+  },
+  addTab (state, data) {
+    state.tabList.push(data)
+  },
+  SetTab (state, data) {
+    state.cruTab = data
+  },
+  changeTab (state) {
+    state.TabPage = state.TabPage === 1 ? 0 : 1
   }
 }
