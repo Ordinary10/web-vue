@@ -1,15 +1,15 @@
 <template>
    <div class="top-wrapper">
-     <div class="title">
+     <div class="title" v-if="PageMode===1">
        <Icon type="ios-car-outline" />
        <span>租车管家</span>
      </div>
-     <div class="sidebar-wrapper">
+     <div class="sidebar-wrapper" v-if="PageMode===1">
        <Menu mode="horizontal" theme="dark">
          <DynamicMenu :menuList="sidebarMenu"></DynamicMenu>
        </Menu>
      </div>
-     <div class="user_info">
+     <div class="user_info" :class="{'user_info_right':PageMode!==1}">
        <div class="refresh" @click.stop="refresh"><Icon type="md-refresh" /></div>
        <Dropdown placement="bottom">
          <div class="Dropdown">
@@ -47,7 +47,7 @@ export default {
     return {}
   },
   computed: {
-    ...mapState(['isSidebarNavCollapse', 'loginData', 'crumbList']),
+    ...mapState(['isSidebarNavCollapse', 'loginData', 'crumbList', 'PageMode']),
     ...mapState('permission', ['sidebarMenu', 'currentMenu']),
     company_name () {
       if (this.loginData) {
@@ -69,7 +69,7 @@ export default {
     changeMode () {
       this.$store.commit('changeMode')
     },
-    changeTab(){
+    changeTab () {
       this.$store.commit('changeTab')
     }
   },
@@ -143,6 +143,10 @@ export default {
   .user_info{
     display: flex;
     margin-right: 10px;
+    &.user_info_right{
+      position: absolute;
+      right: 0;
+    }
     .refresh{
       height: 100%;
       padding: 13px;

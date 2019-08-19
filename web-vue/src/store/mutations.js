@@ -19,10 +19,14 @@ export default {
   addTab (state, data) {
     state.tabList.push(data)
   },
+  clearTab (state) {
+    state.tabList = []
+  },
   SetTab (state, data) {
     state.cruTab = data
   },
   changeTab (state) {
     state.TabPage = state.TabPage === 1 ? 0 : 1
+    state.tabList = []
   }
 }
