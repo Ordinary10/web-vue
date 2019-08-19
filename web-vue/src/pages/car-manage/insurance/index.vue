@@ -3,18 +3,18 @@
       <search>
         <div class="search-box">
           <Input class="search-input" v-model="searchData.plate_no" size="large" placeholder="请输入车牌" />
-          <Select v-model="searchData.status" class="search-input" size="large" placeholder="请选择车辆状态">
-            <Option value="">全部</Option>
+          <Select v-model="searchData.car_status" class="search-input" size="large" placeholder="请选择车辆状态">
+            <Option value="">全部（车辆状态）</Option>
             <Option v-for="item in $common.pageInitInfo.car_status" :value="item.id" :key="'car_status'+item.id">{{ item.name }}</Option>
           </Select>
-          <Input class="search-input" v-model="searchData.days" size="large" placeholder="请输入脱保天数" />
-          <Select v-show="isShow" v-model="searchData.isbuy" class="search-input" size="large" placeholder="请选择是否购保">
-            <Option value="">全部</Option>
+          <Select v-model="searchData.isbuy" class="search-input" size="large" placeholder="请选择是否购保">
+            <Option value="">全部（是否购保）</Option>
             <Option :value="1" selected>是</Option>
             <Option :value="2">否</Option>
           </Select>
-          <Select v-show="isShow" v-model="searchData.quote_time" class="search-input" size="large" placeholder="请选择是否购保">
-            <Option value="">全部</Option>
+          <Input v-show="isShow" class="search-input" v-model="searchData.days" size="large" placeholder="请输入脱保天数" />
+          <Select v-show="isShow" v-model="searchData.quote_time" class="search-input" size="large" placeholder="报价时间">
+            <Option value="">全部（报价时间）</Option>
             <Option value="no">未报价</Option>
             <Option value="week">一周</Option>
             <Option value="month">一月</Option>
@@ -97,14 +97,14 @@ export default {
       },
       searchData: {
         plate_no: '',
-        status: '',
+        car_status: '',
         days: '',
         isbuy: 1,
         quote_time: ''
       },
       startSearchData: {
         plate_no: '',
-        status: '',
+        car_status: '',
         days: '',
         isbuy: 1,
         quote_time: ''

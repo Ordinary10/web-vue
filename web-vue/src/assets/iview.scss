@@ -2,6 +2,11 @@
 .ivu-menu-submenu-title >div:first-of-type{
   display: inline-block;
 }
+// table filters弹出窗组件样式调整
+.ivu-poptip-popper[x-placement^=bottom]{
+  overflow: auto;
+  max-height: 260px;
+}
 // 分页table组件调整
 .paging-table{
   .ivu-table-wrapper{

@@ -5,20 +5,20 @@
           <!--搜索输入框-->
           <Input class="search-input" v-model="searchData.plate_no" size="large" placeholder="请输入车牌" />
           <Select v-model="searchData.status" v-if="$common.pageInitInfo.car_status" class="search-input" size="large" placeholder="请选择车辆状态">
-            <Option value="">全部</Option>
+            <Option value="">全部（车辆状态）</Option>
             <Option v-for="item in $common.pageInitInfo.car_status" :value="item.id" :key="'car_status'+item.id">{{ item.name }}</Option>
           </Select>
           <Input  class="search-input" v-model="searchData.vin" size="large" placeholder="请输入车架号" />
           <Select v-show="isShow" v-model="searchData.type" v-if="$common.pageInitInfo.car_type" class="search-input" size="large" placeholder="请选择车辆类型">
-            <Option value="">全部</Option>
+            <Option value="">全部（车辆类型）</Option>
             <Option v-for="item in $common.pageInitInfo.car_type" :value="item.id" :key="'car_type'+item.id">{{ item.name }}</Option>
           </Select>
           <Select v-show="isShow" v-model="searchData.department" v-if="$common.pageInitInfo.company_info" class="search-input" size="large" placeholder="请选择门店">
-            <Option value="">全部</Option>
+            <Option value="">全部（门店）</Option>
             <Option v-for="item in $common.pageInitInfo.company_info" :value="item.id" :key="'company_info'+item.id">{{ item.name }}</Option>
           </Select>
           <Select v-show="isShow" v-model="searchData.carVersion" v-if="$common.pageInitInfo.car_version" class="search-input" size="large" placeholder="请选择车辆品牌">
-            <Option value="">全部</Option>
+            <Option value="">全部（车辆品牌）</Option>
             <Option v-for="item in $common.pageInitInfo.car_version" :value="item.id" :key="'car_version'+item.id">{{ item.name }}</Option>
           </Select>
           <!--搜索按钮-->
@@ -54,6 +54,7 @@
 <script type="text/jsx">
 export default {
   data () {
+    const _this = this
     /*
     * isShow: 用于折叠搜索框的显示隐藏
     * iconType： 用于更多操作的icon变化
@@ -67,7 +68,10 @@ export default {
       config: {
         fun: 'Car/carList',
         columns: [
-          {key: 'name', title: '门店'},
+          {
+            key: 'name',
+            title: '门店'
+          },
           {
             key: 'plate_no',
             title: '车牌',
