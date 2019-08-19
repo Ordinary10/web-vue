@@ -15,6 +15,7 @@
           show-total
           :page-size-opts="limits"
           :page-size="limit"
+          :current.sync = "page"
           @on-change="pageChange"
           @on-page-size-change="pageSizeChange"/>
       </div>
@@ -82,28 +83,32 @@ export default {
     /* 每页条数改变 */
     pageSizeChange (limit) {
       this.limit = limit
+      this.page = 1
       this.getTableData()
     },
     /* 表格排序 */
     sortChange (sortData) {
       this.sort_field = sortData.key
       this.sort_type = sortData.order
+      this.page = 1
       this.getTableData()
     },
     /* 搜索 */
     search (searchData) {
-      this.params = searchData
+      this.params = searchData || ''
       /* 点击搜索按钮重置排序条件为空 */
-      this.sort_field = null
-      this.sort_type = null
+      this.page = 1
+      this.sort_field = ''
+      this.sort_type = ''
       this.getTableData()
     },
     /* 刷新 */
     refresh (startSearchData) {
       this.params = startSearchData
       /* 点击刷新按钮重置排序条件为空 */
-      this.sort_field = null
-      this.sort_type = null
+      this.page = 1
+      this.sort_field = ''
+      this.sort_type = ''
       this.getTableData()
     }
   },
