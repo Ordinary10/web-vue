@@ -1,8 +1,9 @@
 <template>
   <transition name="fade">
-    <Tabs type="card" class="content-wrapper" :style="{'padding':PageMode===1?'75px 15px 15px':'75px 15px 15px 255px'}" closable v-model="cruTab">
-      <TabPane :label="tab.title" v-for="tab of tabList" :key="tab.name" :name="tab.name">
-        <component :is="tab.name" :ref="tab.name"></component>
+    <Tabs type="card" class="content-wrapper" :style="{'padding':PageMode===1?'75px 15px 15px':'75px 15px 15px 255px'}" closable v-model="cruTab"  @on-click="changeTab">
+      <TabPane :label="tab.title" v-for="(tab,index) in tabList" :key="tab.name" :name="tab.name">
+<!--        {{tabIndex[index]}}{{tabIndex}}-->
+        <component :is="tab.name" :ref="tab.name" v-if="tabIndex[index]"></component>
       </TabPane>
     </Tabs>
   </transition>
@@ -20,24 +21,56 @@ export default {
   },
   data () {
     return {
-      refresh: true
+      tabIndex: []
     }
   },
   computed: {
-    ...mapState(['tabList', 'cruTab', 'PageMode'])
+    ...mapState(['tabList', 'cruTab', 'PageMode']),
+    cruTab: {
+      get () {
+        return this.$store.state.cruTab
+      },
+      set (val) {
+        this.$store.state.cruTab = val
+      }
+    }
   },
   components: {
   },
   mounted () {
-    this.$store.commit('addTab', {name: 'home', title: '首页', component: Home})
+    this.$store.commit('SetTabList', [{name: 'home', title: '首页', component: Home}])
     this.$store.commit('SetTab', 'home')
+    this.tabIndex = this.tabListIndex()
   },
   methods: {
+    changeTab (name) {
+      this.$router.push({ name })
+      this.$store.commit('SetTab', name)
+    },
+    tabListIndex () {
+      let res = []
+      this.tabList.forEach(e => {
+        res.push(true)
+      })
+      return res
+    }
   },
   watch: {
     // 刷新组件
     active () {
-      console.log(this.$refs[this.cruTab])
+      let cruIndex
+      this.tabList.forEach((e, index) => {
+        if (e.name === this.cruTab) {
+          cruIndex = index
+        }
+      })
+      this.tabIndex[cruIndex] = false
+      this.$nextTick(() => {
+        // this.tabIndex[cruIndex] = true
+      })
+      // console.log(this.tabList)
+      // this.$store.commit('SetTabList', this.tabList)
+      // let newTabList = this.tabList
     },
     tabList () {
       let _this = this
@@ -46,6 +79,7 @@ export default {
           _this.$options.components[e.name] = e.component
         }
       })
+      this.tabIndex = this.tabListIndex()
     }
   }
 }
