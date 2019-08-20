@@ -49,6 +49,7 @@ export default {
           {
             key: 'plate_no',
             title: '车牌',
+            width: 250,
             render: (h, params) => {
               return <div>
                 <license-plate row={params.row}></license-plate>
@@ -67,6 +68,8 @@ export default {
           {
             key: 'caozuo',
             title: '操作',
+            width: 240,
+            align: 'center',
             render: (h, params) => {
               return <div class="table-btn-box">
                 <i-button class="table-btn" type="info" size="small" nativeOnClick={this.tableBtnClick.bind(this, params.row, 'seeIllegal')}>违章记录</i-button>
