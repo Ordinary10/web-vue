@@ -3,10 +3,15 @@
       <search>
         <div class="search-box">
           <Input class="search-input" v-model="searchData.plate_no" size="large" placeholder="请输入车牌" />
+          <Select v-model="searchData.status" class="search-input" size="large" placeholder="请选择在库状态">
+            <Option value="">全部（在库状态）</Option>
+            <Option value="in_dealing">在库待处理</Option>
+            <Option value="in_wait">在库待销售</Option>
+          </Select>
           <div class="search-submit">
-            <Tooltip content="更多搜索条件" placement="bottom-start">
-              <Button class="search-btn " size="large" icon="ios-options-outline" type="primary" @click.native="isShow=!isShow"></Button>
-            </Tooltip>
+<!--            <Tooltip content="更多搜索条件" placement="bottom-start">-->
+<!--              <Button class="search-btn " size="large" icon="ios-options-outline" type="primary" @click.native="isShow=!isShow"></Button>-->
+<!--            </Tooltip>-->
             <Button class="search-btn " size="large" icon="md-search" type="primary" @click.native="search"></Button>
             <Button class="refresh-btn search-btn" size="large" icon="md-refresh" type="info" @click.native="refresh"></Button>
           </div>
