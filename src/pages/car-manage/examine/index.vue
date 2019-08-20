@@ -60,9 +60,9 @@ export default {
                 : <span class="normalText">{Math.abs(d.days)}</span>
             }
           },
-          {key: 'annual', title: '车审到期日期'},
-          {key: 'license_annual', title: '证审到期日期'},
-          {key: 'gastank_annual', title: '气罐审到期日期'},
+          {key: 'annual', title: '车审到期日期', sortable: 'custom'},
+          {key: 'license_annual', title: '证审到期日期', sortable: 'custom'},
+          {key: 'gastank_annual', title: '气罐审到期日期', sortable: 'custom'},
           {
             key: 'caozuo',
             title: '操作',
