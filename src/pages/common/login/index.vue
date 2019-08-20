@@ -50,7 +50,7 @@ export default {
   },
   methods: {
     /* 登录 */
-    login () {
+    async login () {
       const _this = this
       if (_this.loginForm.account === '') {
         this.$Message.error({
@@ -71,41 +71,39 @@ export default {
         })
         this.$refs.code.focus()
       } else {
-        _this.$axios('login/doLogin', _this.loginForm).then(res => {
-          if (res.status === 1) {
-            _this.$store.dispatch('LOGIN_IN', res.data).then(() => {
-              _this.$axios('Common/getPageInitInfo', {type: [
-                'order_state',
-                'company_info',
-                'role_info',
-                'plate_type',
-                'car_version',
-                'ware_house',
-                'car_status',
-                'house_info',
-                'charge_type',
-                'remit_type',
-                'car_service',
-                'car_type',
-                'insurance_type',
-                'order_nature',
-                'collection_type',
-                'driver_manage',
-                'financial_plan'
-              ]}).then(res => {
-                sessionStorage.setItem('pageInitInfo', JSON.stringify(res.data))
-                _this.$common.pageInitInfo = res.data
-                _this.$router.push('/home')
-              }).catch(err => {
-                console.log(err)
-              })
-            }).catch(err => {
-              console.log(err)
-            })
-          } else if (res.msg === '验证码错误！') {
-            _this.getCode()
+        let res
+        let pagededa
+        let login_data
+        res = await _this.$axios('login/doLogin', _this.loginForm,)
+        if (res.status === 1) {
+          login_data =await _this.$store.dispatch('LOGIN_IN', res.data)
+          pagededa = await _this.$axios('Common/getPageInitInfo', {type: [
+              'order_state',
+              'company_info',
+              'role_info',
+              'plate_type',
+              'car_version',
+              'ware_house',
+              'car_status',
+              'house_info',
+              'charge_type',
+              'remit_type',
+              'car_service',
+              'car_type',
+              'insurance_type',
+              'order_nature',
+              'collection_type',
+              'driver_manage',
+              'financial_plan'
+            ]},'no')
+          if (pagededa.status ===1){
+            sessionStorage.setItem('pageInitInfo', JSON.stringify(res.data))
+            _this.$common.pageInitInfo = res.data
+            _this.$router.push('/home')
           }
-        })
+        } else if (res.msg === '验证码错误！') {
+          _this.getCode()
+        }
       }
     },
     /* 获取验证码 */
