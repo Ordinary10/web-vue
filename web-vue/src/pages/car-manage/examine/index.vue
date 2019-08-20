@@ -3,10 +3,11 @@
       <search>
         <div class="search-box">
           <Input class="search-input" v-model="searchData.plate_no" size="large" placeholder="请输入车牌" />
+          <Input class="search-input" v-model="searchData.days" size="large" placeholder="请输入天数(0-90天)" />
           <div class="search-submit">
-            <Tooltip content="更多搜索条件" placement="bottom-start">
-              <Button class="search-btn " size="large" icon="ios-options-outline" type="primary" @click.native="isShow=!isShow"></Button>
-            </Tooltip>
+<!--            <Tooltip content="更多搜索条件" placement="bottom-start">-->
+<!--              <Button class="search-btn " size="large" icon="ios-options-outline" type="primary" @click.native="isShow=!isShow"></Button>-->
+<!--            </Tooltip>-->
             <Button class="search-btn " size="large" icon="md-search" type="primary" @click.native="search"></Button>
             <Button class="refresh-btn search-btn" size="large" icon="md-refresh" type="info" @click.native="refresh"></Button>
           </div>
@@ -77,11 +78,11 @@ export default {
       },
       searchData: {
         plate_no: '',
-        status: ''
+        days: ''
       },
       startSearchData: {
         plate_no: '',
-        status: ''
+        days: ''
       }
     }
   },

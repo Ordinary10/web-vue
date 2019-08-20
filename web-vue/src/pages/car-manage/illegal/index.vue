@@ -3,6 +3,19 @@
       <search>
         <div class="search-box">
           <Input class="search-input" v-model="searchData.plate_no" size="large" placeholder="请输入车牌" />
+          <Select v-model="searchData.car_status" v-if="$common.pageInitInfo.car_status" class="search-input" size="large" placeholder="请选择车辆状态">
+            <Option value="">全部（车辆状态）</Option>
+            <Option v-for="item in $common.pageInitInfo.car_status" :value="item.id" :key="'car_status'+item.id">{{ item.name }}</Option>
+          </Select>
+          <Select v-model="searchData.department" v-if="$common.pageInitInfo.company_info" class="search-input" size="large" placeholder="请选择门店">
+            <Option value="">全部（门店）</Option>
+            <Option v-for="item in $common.pageInitInfo.company_info" :value="item.id" :key="'company_info'+item.id">{{ item.name }}</Option>
+          </Select>
+          <Input class="search-input" v-model="searchData.customer_name" size="large" placeholder="请输入姓名" />
+          <Input v-show="isShow" type="number" min="0" class="search-input" v-model="searchData.num" size="large" placeholder="次数" />
+          <Input v-show="isShow" type="number" min="0" class="search-input" v-model="searchData.score" size="large" placeholder="分数" />
+          <Input v-show="isShow" type="number" min="0" class="search-input" v-model="searchData.fine" size="large" placeholder="金额" />
+          <Input v-show="isShow" type="number" min="0" class="search-input" v-model="searchData.overScore" size="large" placeholder="12分" />
           <div class="search-submit">
             <Tooltip content="更多搜索条件" placement="bottom-start">
               <Button class="search-btn " size="large" icon="ios-options-outline" type="primary" @click.native="isShow=!isShow"></Button>
@@ -69,11 +82,23 @@ export default {
       },
       searchData: {
         plate_no: '',
-        status: ''
+        car_status: '',
+        department: '',
+        customer_name: '',
+        num: '',
+        score: '',
+        fine: '',
+        overScore: ''
       },
       startSearchData: {
         plate_no: '',
-        status: ''
+        car_status: '',
+        department: '',
+        customer_name: '',
+        num: '',
+        score: '',
+        fine: '',
+        overScore: ''
       }
     }
   },
