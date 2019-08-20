@@ -54,7 +54,6 @@
 <script type="text/jsx">
 export default {
   data () {
-    const _this = this
     /*
     * isShow: 用于折叠搜索框的显示隐藏
     * iconType： 用于更多操作的icon变化

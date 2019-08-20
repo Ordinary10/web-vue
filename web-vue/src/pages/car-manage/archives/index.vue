@@ -3,10 +3,21 @@
       <search>
         <div class="search-box">
           <Input class="search-input" v-model="searchData.plate_no" size="large" placeholder="请输入车牌" />
+          <Input class="search-input" v-model="searchData.material_no" size="large" placeholder="请输入档案编号" />
+          <Select v-model="searchData.ls_full" v-if="$common.pageInitInfo.car_status" class="search-input" size="large" placeholder="是否录入档案">
+            <Option value="">全部（录入档案）</Option>
+            <Option value="1">已录入</Option>
+            <Option value="2">未录入</Option>
+          </Select>
+          <Select v-model="searchData.is_borrow" v-if="$common.pageInitInfo.car_status" class="search-input" size="large" placeholder="是否在借">
+            <Option value="">全部（在借）</Option>
+            <Option value="1">是</Option>
+            <Option value="2">否</Option>
+          </Select>
           <div class="search-submit">
-            <Tooltip content="更多搜索条件" placement="bottom-start">
-              <Button class="search-btn " size="large" icon="ios-options-outline" type="primary" @click.native="isShow=!isShow"></Button>
-            </Tooltip>
+<!--            <Tooltip content="更多搜索条件" placement="bottom-start">-->
+<!--              <Button class="search-btn " size="large" icon="ios-options-outline" type="primary" @click.native="isShow=!isShow"></Button>-->
+<!--            </Tooltip>-->
             <Button class="search-btn " size="large" icon="md-search" type="primary" @click.native="search"></Button>
             <Button class="refresh-btn search-btn" size="large" icon="md-refresh" type="info" @click.native="refresh"></Button>
           </div>
