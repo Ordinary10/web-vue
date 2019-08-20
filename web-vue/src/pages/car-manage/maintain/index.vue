@@ -3,10 +3,16 @@
       <search>
         <div class="search-box">
           <Input class="search-input" v-model="searchData.plate_no" size="large" placeholder="请输入车牌" />
+          <Input class="search-input" v-model="searchData.editor_name" size="large" placeholder="请输入录入员" />
+          <Select v-model="searchData.type" class="search-input" size="large" placeholder="请选择类型">
+            <Option value="">全部（类型）</Option>
+            <Option value="1">保养</Option>
+            <Option value="2">维修</Option>
+          </Select>
           <div class="search-submit">
-            <Tooltip content="更多搜索条件" placement="bottom-start">
-              <Button class="search-btn " size="large" icon="ios-options-outline" type="primary" @click.native="isShow=!isShow"></Button>
-            </Tooltip>
+<!--            <Tooltip content="更多搜索条件" placement="bottom-start">-->
+<!--              <Button class="search-btn " size="large" icon="ios-options-outline" type="primary" @click.native="isShow=!isShow"></Button>-->
+<!--            </Tooltip>-->
             <Button class="search-btn " size="large" icon="md-search" type="primary" @click.native="search"></Button>
             <Button class="refresh-btn search-btn" size="large" icon="md-refresh" type="info" @click.native="refresh"></Button>
           </div>
@@ -44,6 +50,7 @@ export default {
           {
             key: 'plate_no',
             title: '车牌',
+            width: 250,
             render: (h, params) => {
               return <div>
                 <license-plate row={params.row}></license-plate>
@@ -60,6 +67,8 @@ export default {
           {
             key: 'caozuo',
             title: '操作',
+            width: 160,
+            align: 'center',
             render: (h, params) => {
               return <div class="table-btn-box">
                 <i-button class="table-btn" type="primary" size="small" nativeOnClick={this.tableBtnClick.bind(this, params.row, 'editor')}>编辑</i-button>
@@ -70,11 +79,13 @@ export default {
       },
       searchData: {
         plate_no: '',
-        status: ''
+        editor_name: '',
+        type: ''
       },
       startSearchData: {
         plate_no: '',
-        status: ''
+        editor_name: '',
+        type: ''
       }
     }
   },

@@ -50,6 +50,8 @@ export default {
           {
             key: 'caozuo',
             title: '操作',
+            width: 240,
+            align: 'center',
             render: (h, params) => {
               return <div class="table-btn-box">
                 <i-button class="table-btn" type="info" size="small" nativeOnClick={this.tableBtnClick.bind(this, params.row, 'see')}>查看</i-button>
