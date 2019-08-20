@@ -46,10 +46,20 @@
       <div class="content-block">
         <paging-table ref="pagingTable" :config="config" :searchData="searchData"></paging-table>
       </div>
+      <Modal
+        v-model="modal1"
+        title="查看详情"
+        :footer-hide="true"
+        :width='1350'
+      >
+        <userVehicleHead :addData="add"></userVehicleHead>
+      </Modal>
     </div>
 </template>
 <script type="text/jsx">
-export default {
+  import userVehicleHead from '../../../components/headPublic/userVehicleHead'
+
+  export default {
   data () {
     /*
     * isShow: 用于折叠搜索框的显示隐藏
@@ -66,7 +76,9 @@ export default {
     * */
     return {
       isShow: false,
+      modal1: false,
       iconType: 'md-arrow-dropdown',
+      add:"",
       config: {
         fun: 'Car/carList',
         columns: [
@@ -148,6 +160,7 @@ export default {
     }
   },
   components: {
+    userVehicleHead
   },
   created () {
   },
@@ -155,6 +168,12 @@ export default {
 
   },
   methods: {
+    ok () {
+      this.$Message.info('Clicked ok');
+    },
+    cancel () {
+      this.$Message.info('Clicked cancel');
+    },
     /* 更多操作 */
     redundant (type) {
       switch (type) {
@@ -193,12 +212,20 @@ export default {
     tableBtnClick (item, type) {
       switch (type) {
         case 'see':
-          alert(`查看：${item.id}`)
+          this.modal1 = true
+          console.log(item)
+          this.ajax('Common/getCommonalityHead', {'plate_no':item.plate_no})
           break
         case 'editor':
           alert(`编辑：${item.id}`)
           break
       }
+    },
+     async ajax(fun,data) {
+       const _this = this
+       let res = await _this.$axios(fun,data,'no')
+       this.add = res.data
+       console.log(this.add)
     }
   }
 }
