@@ -1,12 +1,11 @@
 <template>
-  <transition name="fade">
-    <Tabs type="card" class="content-wrapper" :style="{'padding':PageMode===1?'75px 15px 15px':'75px 15px 15px 255px'}" closable v-model="cruTab"  @on-click="changeTab">
+    <Tabs type="card" class="content-wrapper" :style="{'padding':PageMode===1?'75px 15px 15px':'75px 15px 15px 255px'}" closable v-model="cruTab"  @on-click="changeTab" @on-tab-remove="removeTab">
       <TabPane :label="tab.title" v-for="(tab,index) in tabList" :key="tab.name" :name="tab.name">
-<!--        {{tabIndex[index]}}{{tabIndex}}-->
+        <transition name="fade">
         <component :is="tab.name" :ref="tab.name" v-if="tabIndex[index]"></component>
+        </transition>
       </TabPane>
     </Tabs>
-  </transition>
 </template>
 
 <script>
@@ -44,9 +43,13 @@ export default {
   },
   methods: {
     changeTab (name) {
-      this.$router.push({ name })
-      this.$store.commit('SetTab', name)
+      // this.$router.push({ name })
+      this.$store.commit('CruTab', name)
     },
+    removeTab(name){
+      this.$store.commit('RemoveTab', name)
+    },
+    // 生成tab索引布尔表 用于刷新
     tabListIndex () {
       let res = []
       this.tabList.forEach(e => {
@@ -64,9 +67,14 @@ export default {
           cruIndex = index
         }
       })
-      this.tabIndex[cruIndex] = false
+      let obj = []
+      this.tabIndex.forEach(e => {
+        obj.push(e)
+      })
+      obj[cruIndex] = false
+      this.tabIndex = obj
       this.$nextTick(() => {
-        // this.tabIndex[cruIndex] = true
+        this.tabIndex = this.tabListIndex()
       })
       // console.log(this.tabList)
       // this.$store.commit('SetTabList', this.tabList)

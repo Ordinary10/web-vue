@@ -36,6 +36,7 @@ export default {
   set TabPage (value) {
     sessionStorage.setItem('TabPage', value)
   },
+  // tab模式下数据
   tabList: [],
   cruTab: ''
 }
