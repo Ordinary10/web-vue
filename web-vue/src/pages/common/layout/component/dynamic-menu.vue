@@ -11,7 +11,7 @@
         </template>
         <dynamic-menu :menuList="v.children"></dynamic-menu>
       </Submenu>
-      <Menu-item :key="v.name" @click.native="gotoRoute(v.name)" v-else-if="v.meta.pass !== false" :name="v.name">
+      <Menu-item :key="v.name" @click.native="gotoRoute(v.name,v.meta.name)" v-else-if="v.meta.pass !== false" :name="v.name">
         <Icon :type="v.meta.icon" v-if="v.meta.icon"></Icon>
         {{v.meta.name}}
       </Menu-item>
@@ -35,41 +35,21 @@ export default {
     }
   },
   computed: {
-    ...mapState(['tabList', 'TabPage'])
+    ...mapState([ 'TabPage'])
   },
   methods: {
-    gotoRoute (name) {
-      if (this.$store.state.TabPage === 0) {
-        this.$router.push({ name })
-        return false
-      }
-      let res = this.test(name, dynamicRoutes.concat(DynamicRoutes))
+    gotoRoute (name, title) {
+      this.$router.push({ name })
+      // if (this.$store.state.TabPage === 0) {
+      //   return false
+      // }
+      // let res = this.test(name, dynamicRoutes.concat(DynamicRoutes))
       // console.log(res)
-      if (this.aa(name)) this.$store.commit('addTab', res)
-      this.$store.commit('CruTab', name)
-    },
-    test (name, routes) {
-      let component, res, title
-      for (let key in routes) {
-        if (routes[key].name === name) {
-          component = routes[key].component
-          title = routes[key].meta.name
-          res = {name, component, title}
-          break
-        }
-        if (routes[key].children && routes[key].children.length) {
-          res = this.test(name, routes[key].children)
-          if (res) return res
-        }
+      if (this.$store.state.TabPage === 1) {
+        let obj = {name, title}
+        this.$store.commit('addTab', obj)
+        this.$store.commit('CruTab', obj)
       }
-      return res
-    },
-    aa (name) {
-      let res = true
-      this.tabList.forEach(e => {
-        if (e.name === name) res = false
-      })
-      return res
     }
   },
   mounted () {
