@@ -52,6 +52,7 @@ export default {
     initTab () {
       this.$router.push({name: 'home'})
       this.$store.commit('addTab', {name: 'home', title: '首页'})
+      this.$store.commit('CruTab', {name: 'home', title: '首页'})
     },
     changeTab (name, e) {
       this.$refs.tab.forEach(e => {
