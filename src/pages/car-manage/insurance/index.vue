@@ -34,7 +34,7 @@
                 <Icon :type="iconType" />
               </Button>
               <DropdownMenu slot="list">
-                <DropdownItem v-for="item in redundantList" :key="item.type" @click.native="redundant(item.type)">{{item.label}}</DropdownItem>
+                <DropdownItem v-if="item.isShow === true" v-for="item in redundantList" :key="item.type" @click.native="redundant(item.type)">{{item.label}}</DropdownItem>
               </DropdownMenu>
             </Dropdown>
           </div>

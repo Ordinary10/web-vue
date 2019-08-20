@@ -37,7 +37,7 @@
                 <Icon :type="iconType" />
               </Button>
               <DropdownMenu slot="list">
-                <DropdownItem v-for="item in redundantList" :key="item.type" @click.native="redundant(item.type)">{{item.label}}</DropdownItem>
+                <DropdownItem v-if="item.isShow === true" v-for="item in redundantList" :key="item.type" @click.native="redundant(item.type)">{{item.label}}</DropdownItem>
               </DropdownMenu>
             </Dropdown>
           </div>
@@ -55,9 +55,14 @@ export default {
     * isShow: 用于折叠搜索框的显示隐藏
     * iconType： 用于更多操作的icon变化
     * config: table的配置
+    *     --> fun: table数据的接口
+    *     --> columns: table的具体配置
     * searchData： 搜索栏的数据存储对象
     * startSearchData： 存储searchData的初始值，用于重置table
-    * redundantList: 更多操作按钮的配置对象。isShow为true时才显示，其余状态皆不可用
+    * redundantList: 更多操作按钮的配置对象
+    *            --> isShow 为true时按钮才显示，其余状态皆不可用.用于用户权限相关操作的隐藏显示
+    *            --> type 作为触发点击操作的识别参数
+    *            --> name 操作说明
     * */
     return {
       isShow: false,
