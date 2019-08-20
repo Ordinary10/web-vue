@@ -11,17 +11,14 @@
             <Button class="search-btn " size="large" icon="md-search" type="primary" @click.native="search"></Button>
             <Button class="refresh-btn search-btn" size="large" icon="md-refresh" type="info" @click.native="refresh"></Button>
           </div>
-          <div class="redundant-btn">
+          <div class="redundant-btn" v-if="redundantList && redundantList.length>0">
             <Dropdown>
               <Button type="primary" size="large">
                 更多操作
                 <Icon type="ios-arrow-down"></Icon>
               </Button>
               <DropdownMenu slot="list">
-                <DropdownItem @click.native="redundant('addCar')">添加车辆</DropdownItem>
-                <DropdownItem @click.native="redundant('addCarList')">导入车辆</DropdownItem>
-                <DropdownItem @click.native="redundant('exportList')">导出列表</DropdownItem>
-                <DropdownItem @click.native="redundant('carBack')">退车入库</DropdownItem>
+                <DropdownItem v-for="item in redundantList" :key="item.type" @click.native="redundant(item.type)">{{item.label}}</DropdownItem>
               </DropdownMenu>
             </Dropdown>
           </div>
@@ -86,7 +83,19 @@ export default {
       startSearchData: {
         plate_no: '',
         days: ''
-      }
+      },
+      redundantList: [
+        {
+          type: 'importAuditList',
+          label: '导入年审',
+          isShow: true
+        },
+        {
+          type: 'exportList',
+          label: '导出列表',
+          isShow: true
+        }
+      ]
     }
   },
   mounted () {
@@ -96,17 +105,11 @@ export default {
     /* 更多操作 */
     redundant (type) {
       switch (type) {
-        case 'addCar':
-          alert('添加车辆')
-          break
-        case 'addCarList':
-          alert('导入车辆')
+        case 'importAuditList':
+          alert('导入年审')
           break
         case 'exportList':
           alert('导出列表')
-          break
-        case 'carBack':
-          alert('退车入库')
           break
       }
     },

@@ -30,17 +30,14 @@
             <Button class="refresh-btn search-btn" size="large" icon="md-refresh" type="info" @click.native="refresh"></Button>
           </div>
           <!--更多操作-->
-          <div class="redundant-btn">
+          <div class="redundant-btn" v-if="redundantList && redundantList.length>0">
             <Dropdown>
               <Button type="primary" size="large" @mouseout.native="iconType='md-arrow-dropdown'" @mouseover.native="iconType='md-arrow-dropup'">
                 更多操作
                 <Icon :type="iconType" />
               </Button>
               <DropdownMenu slot="list">
-                <DropdownItem @click.native="redundant('addCar')">添加车辆</DropdownItem>
-                <DropdownItem @click.native="redundant('addCarList')">导入车辆</DropdownItem>
-                <DropdownItem @click.native="redundant('exportList')">导出列表</DropdownItem>
-                <DropdownItem @click.native="redundant('carBack')">退车入库</DropdownItem>
+                <DropdownItem v-for="item in redundantList" :key="item.type" @click.native="redundant(item.type)">{{item.label}}</DropdownItem>
               </DropdownMenu>
             </Dropdown>
           </div>
@@ -60,6 +57,7 @@ export default {
     * config: table的配置
     * searchData： 搜索栏的数据存储对象
     * startSearchData： 存储searchData的初始值，用于重置table
+    * redundantList: 更多操作按钮的配置对象。isShow为true时才显示，其余状态皆不可用
     * */
     return {
       isShow: false,
@@ -114,7 +112,34 @@ export default {
         type: '',
         department: '',
         carVersion: ''
-      }
+      },
+      redundantList: [
+        {
+          type: 'addCar',
+          label: '添加车辆',
+          isShow: true
+        },
+        {
+          type: 'addCarList',
+          label: '导入车辆',
+          isShow: true
+        },
+        {
+          type: 'addGPSList',
+          label: '导入GPS',
+          isShow: true
+        },
+        {
+          type: 'exportList',
+          label: '导出列表',
+          isShow: true
+        },
+        {
+          type: 'carBack',
+          label: '退车入库',
+          isShow: true
+        }
+      ]
     }
   },
   components: {
@@ -139,6 +164,9 @@ export default {
           break
         case 'carBack':
           alert('退车入库')
+          break
+        case 'addGPSList':
+          alert('导入GPS')
           break
       }
     },
