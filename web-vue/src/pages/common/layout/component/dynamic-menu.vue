@@ -39,14 +39,11 @@ export default {
   },
   methods: {
     gotoRoute (name) {
-      if (this.TabPage !== 1) {
-        this.$router.push({ name })
-      } else {
-        let res = this.test(name, dynamicRoutes.concat(DynamicRoutes))
-        // console.log(res)
-        if (this.aa(name)) this.$store.commit('addTab', res)
-        this.$store.commit('SetTab', name)
-      }
+      this.$router.push({ name })
+      let res = this.test(name, dynamicRoutes.concat(DynamicRoutes))
+      // console.log(res)
+      if (this.aa(name)) this.$store.commit('addTab', res)
+      this.$store.commit('SetTab', name)
     },
     test (name, routes) {
       let component, res, title

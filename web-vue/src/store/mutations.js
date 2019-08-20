@@ -22,6 +22,9 @@ export default {
   clearTab (state) {
     state.tabList = []
   },
+  SetTabList(state,data){
+    state.tabList = data
+  },
   SetTab (state, data) {
     state.cruTab = data
   },
