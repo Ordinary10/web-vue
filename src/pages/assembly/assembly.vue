@@ -10,7 +10,7 @@
               </div>
             </div>
             <div class="ma-nomb-spacing">
-              <Table :columns="columns1" :data="data1"></Table>
+              <Table :columns="columns1" ></Table>
             </div>
           </Row>
         </div>
@@ -188,6 +188,7 @@
               </g>
             </svg>
           </div>
+          <p class="data-btn vehicle-btn">展<br>开<br>资<br>料<br></p>
         </div>
       </div>
     </Col>
@@ -276,16 +277,37 @@
               </g>
             </svg>
           </div>
+          <p class="data-btn vehicle-btn">展<br>开<br>资<br>料<br></p>
         </div>
       </div>
     </Col>
-
-
-
+    <Col span="9">
+      <vehicleHead></vehicleHead>
+    </Col>
+    <Col span="12">
+      <div class="card-body">
+        <div class="card">
+          <Row class="ma-lr">
+            <div class="ma-nomb-spacing tabs-body">
+              <div class="bt-top">
+                表格标题
+              </div>
+              <Tabs value="name1">
+                <TabPane label="标签一" name="name1">标签一的内容</TabPane>
+                <TabPane label="标签二" name="name2">标签二的内容</TabPane>
+                <TabPane label="标签三" name="name3">标签三的内容</TabPane>
+              </Tabs>
+            </div>
+          </Row>
+        </div>
+      </div>
+    </Col>
   </Row>
 
 </template>
 <script>
+  import vehicleHead from '../../components/headPublic/vehicleHead'
+  // import {reqSmsLogin} from '../../api'
   export default {
     data () {
       return {
@@ -310,199 +332,26 @@
         },
       }
     },
+    mounted(){
+      this.login()
+    },
+    created(){
+    },
+    methods: {
+      async login () {
+        let result
+        var phone = 1;
+        var code = 2;
+        result = await reqSmsLogin(phone, code)
+      }
+    },
+    components:{
+      vehicleHead,
+    }
+
   }
 </script>
 <style scoped lang="scss">
-  @mixin clearfix {
-    &:after{
-      content:".";
-      display:block;
-      height:0;
-      clear:both;
-      visibility:hidden;
-    }
-  }
-  @mixin card{
-    border: 0;
-    word-wrap: break-word;
-    background-clip: border-box;
-    margin-left: 7px;
-    margin-right: 7px;
-    position: relative;
-  }
-  @mixin vehicle-text{
-    margin-left: -14px !important;
-    margin-right: -14px !important;
-    border-radius: 4px 4px 0 0;
-  }
-  @mixin no-underline{
-    padding: 10px 0;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-  @mixin ma-nomb-spacing{
-    position: relative;
-    zoom: 1;
-    margin-right: 10px;
-    margin-left: 10px;
-    @include clearfix;
-  }
-  @mixin fs-28{
-    font-size: 28px;
-  }
-  @mixin fs-21{
-    font-size: 21px;
-  }
-  @mixin fs-24{
-    font-size: 24px;
-  }
-  .ma-nomb-spacing{
-    position: relative;
-    zoom: 1;
-    margin-right: 10px;
-    margin-left: 10px;
-    @include clearfix;
-  }
-  .card-body-tb{
-    padding-top: 10px;
-  }
-  .card-body-nob{
-    border: 1px solid rgba(211, 210, 210, 1);
-    border-radius: 4px;
-    position: relative;
-    padding-left: 7px;
-    padding-right: 7px;
-    margin-left: 7px;
-    margin-right: 7px;
-    .card{
-      .vehicle-bg{
-        padding: 14px 0;
-      }
-      .vehicle-text{
-        @include vehicle-text;
-        .underline{
-          @include no-underline;
-          @include ma-nomb-spacing;
-        }
-      }
-      .vehicle-text:nth-child(n+3){
-        .underline{
-          border-top: 1px solid #dcdee2;
-        }
-      }
-      @include card;
-    }
-  }
-  body{
-    font-size: 14px;
-  }
-  .fs-28{
-    @include fs-28
-  }
-  .fs-24{
-    @include fs-24
-  }
-  .fs-21{
-    @include fs-21
-  }
-  /*表头*/
-  .vehicle-icon{
-    /*float: left;*/
-    position: absolute;
-    color: #fff;
-    left: 17px;
-    top: 7px;
-  }
 
-
-  .vehile-ma-l{
-
-    margin-right: 24px;
-    margin-left: 64px
-  }
-  .vehicle-iconbg{
-    position: absolute;
-    float: left;
-    top: -5px;
-    left: -20px;
-  }
-  .vehicle-body{
-    margin-left: 43px;
-  }
-
-  .vehicle-bg{
-    background: linear-gradient(90deg, rgba(74, 145, 237, 1), rgba(18, 105, 219, 1));
-    color: #fff;
-  }
-  .main-container{
-    height: 100%;
-    background-size: 100% 100%;
-    #loginForm{
-      width: 500px;
-      margin: 0 auto;
-    }
-  }
-  .ivu-form .ivu-form-item-label{
-      width: 110px;
-      padding: 8px 15px;
-      height: 38px;
-      line-height: 20px;
-      border-width: 1px;
-      border-style: solid;
-      border-radius: 2px 0 0 2px;
-      text-align: center;
-      background-color: #fff;
-      overflow: hidden;
-      box-sizing: border-box;
-      float: left;
-      display: block;
-  }
-  .bt-top{
-    font-size: 16px;
-    margin-top: 10px;
-    height: 40px;
-    line-height: 40px;
-  }
-  .card-body{
-    border: 1px solid rgba(211, 210, 210, 1);
-    border-radius: 4px;
-    position: relative;
-    padding-left: 7px;
-    padding-right: 7px;
-    margin-left: 7px;
-    margin-right: 7px;
-    padding-bottom: 10px;
-    .card{
-      @include card;
-      margin-bottom: 10px;
-    }
-  }
-  .user-top{
-    background: linear-gradient(90deg, rgba(252, 97, 128, 0.7),rgba(252, 97, 128, 1) );
-  }
-
-  .ma-lr{
-    margin-left: -10px;
-    margin-right: -10px;
-  }
-
-
-  .bt-no-top{
-    font-size: 16px;
-    height: 40px;
-    line-height: 40px;
-    /*float: left;*/
-  }
-  .ma-spacing{
-    position: relative;
-    margin-right: 10px;
-    margin-left: 10px;
-    margin-bottom: 10px;
-    @include clearfix;
-  }
-  .ivu-form-item-label{
-    font-size: 14px;
-  }
 
 </style>
