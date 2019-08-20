@@ -1,6 +1,6 @@
 <template>
-    <div class="content-block">
-      车辆统计页
+    <div>
+       <router-view></router-view>
     </div>
 </template>
 <script>

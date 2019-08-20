@@ -1,12 +1,6 @@
 <template>
     <div class="content-block">
-      <p>home</p>
-      <p ref="home">home</p>
-      <p>home</p>
-      <p>home</p>
-      <p>home</p>
-      <p>home</p>
-      <p>home</p>
+      系统统计页（首页）
     </div>
 </template>
 

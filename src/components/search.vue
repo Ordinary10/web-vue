@@ -20,7 +20,7 @@ import { mapState } from 'vuex'
 export default {
   name: 'search',
   computed: {
-    ...mapState(['crumbList','TabPage'])
+    ...mapState(['crumbList', 'TabPage'])
   }
 }
 </script>
