@@ -62,11 +62,52 @@ export default {
               </div>
             }
           },
-          {key: 'ig_nums', title: '违章次数'},
-          {key: 'ig_score', title: '违章分数'},
-          {key: 'ig_fine', title: '违章罚金'},
+          {
+            key: 'ig_nums',
+            title: '违章次数',
+            sortable: 'custom',
+            render: (h, params) => {
+              let d = params.row
+              let color = '#666666'
+              if (d.ig_nums >= d.num) {
+                color = 'red'
+              }
+              return d.urgent_nums
+                ? <span style= {'color:' + color}>{d.ig_nums}({d.urgent_nums})</span>
+                : <span style= {'color:' + color}>{d.ig_nums}</span>
+            }
+          },
+          {
+            key: 'ig_score',
+            title: '违章分数',
+            sortable: 'custom',
+            render: (h, params) => {
+              let d = params.row
+              return d.ig_score >= d.score
+                ? <span style="color: red">{d.ig_score}</span>
+                : <span>{d.ig_score}</span>
+            }
+          },
+          {
+            key: 'ig_fine',
+            title: '违章罚金',
+            sortable: 'custom',
+            render: (h, params) => {
+              let d = params.row
+              return d.ig_fine >= d.fine
+                ? <span style="color: red">{d.ig_fine}</span>
+                : <span>{d.ig_fine}</span>
+            }
+          },
           {key: 'query_time', title: '更新日期'},
-          {key: 'is_error', title: '查询结果'},
+          {
+            key: 'is_error',
+            title: '查询结果',
+            render: (h, params) => {
+              let d = params.row
+              return d.is_error === 0 ? <span style="color:#1E9FFF;">成功</span> : <span>{d.error_reason}</span>
+            }
+          },
           {
             key: 'caozuo',
             title: '操作',
