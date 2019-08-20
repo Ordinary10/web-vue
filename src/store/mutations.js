@@ -22,10 +22,19 @@ export default {
   clearTab (state) {
     state.tabList = []
   },
-  SetTabList(state,data){
+  SetTabList (state, data) {
     state.tabList = data
   },
-  SetTab (state, data) {
+  RemoveTab (state, name) {
+    let res
+    state.tabList.forEach((e, index) => {
+      if (e.name === name) {
+        res = index
+      }
+    })
+    if (res !== undefined) state.tabList.splice(res,1)
+  },
+  CruTab (state, data) {
     state.cruTab = data
   },
   changeTab (state) {
