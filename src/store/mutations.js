@@ -17,28 +17,44 @@ export default {
     state.PageMode = state.PageMode === 1 ? 0 : 1
   },
   addTab (state, data) {
-    state.tabList.push(data)
+    let title = data.title
+    let add = true
+    state.Tab.list.forEach(e => {
+      if (title === e.title) {
+        add = false
+      }
+    })
+    if (state.Tab.list.length > 9) {
+      alert('tab不能超过10个')
+      return false
+    }
+    if (add) {
+      state.Tab.list.push(data)
+    }
   },
   clearTab (state) {
-    state.tabList = []
+    state.Tab.list = []
   },
   SetTabList (state, data) {
-    state.tabList = data
+    state.Tab.list = data
   },
   RemoveTab (state, name) {
     let res
-    state.tabList.forEach((e, index) => {
+    state.Tab.list.forEach((e, index) => {
       if (e.name === name) {
         res = index
       }
     })
-    if (res !== undefined) state.tabList.splice(res,1)
+    if (res !== undefined) state.Tab.list.splice(res, 1)
   },
   CruTab (state, data) {
-    state.cruTab = data
+    state.Tab.cru = data
   },
   changeTab (state) {
     state.TabPage = state.TabPage === 1 ? 0 : 1
-    state.tabList = []
+    state.Tab.list = []
+  },
+  setLastTab (state, data) {
+    state.Tab.last = data
   }
 }
