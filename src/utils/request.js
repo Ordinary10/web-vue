@@ -55,22 +55,24 @@ service.interceptors.response.use(
   }
 )
 /* 表格的通用数据请求方法 */
-export function tableRequest (options, data) {
-  Spin.show({
-    render: (h) => {
-      return h('div', [
-        h('Icon', {
-          'class': 'demo-spin-icon-load',
-          props: {
-            type: 'ios-loading',
-            size: 18,
-            name: 'iconLoading'
-          }
-        }),
-        h('div', 'Loading')
-      ])
-    }
-  })
+export function tableRequest (options, data,Loadings) {
+  if (!Loadings){
+    Spin.show({
+      render: (h) => {
+        return h('div', [
+          h('Icon', {
+            'class': 'demo-spin-icon-load',
+            props: {
+              type: 'ios-loading',
+              size: 18,
+              name: 'iconLoading'
+            }
+          }),
+          h('div', 'Loading')
+        ])
+      }
+    })
+  }
   let params = {}
   params['fun'] = options.fun
   params['limit'] = options.limit || 20
@@ -83,21 +85,36 @@ export function tableRequest (options, data) {
   })
 }
 /* 其他数据请求的通用方法 */
-export function request (fun, data) {
-  Spin.show({
-    render: (h) => {
-      return h('div', [
-        h('Icon', {
-          'class': 'demo-spin-icon-load',
-          props: {
-            type: 'ios-loading',
-            size: 18
-          }
-        }),
-        h('div', 'Loading')
-      ])
-    }
+export function request (fun, data,Loadings) {
+  if (!Loadings){
+    Spin.show({
+      render: (h) => {
+        return h('div', [
+          h('Icon', {
+            'class': 'demo-spin-icon-load',
+            props: {
+              type: 'ios-loading',
+              size: 18,
+              name: 'iconLoading'
+            }
+          }),
+          h('div', 'Loading')
+        ])
+      }
+    })
+  }
+  let params = {}
+  params['fun'] = fun
+  params['params'] = data
+  params['token'] = window.sessionStorage.getItem('token') || ''
+  return service({
+    'method': 'post',
+    'data': qs.stringify(params)
   })
+}
+
+/* 其他数据请求的通用方法 */
+export function no_long_request (fun, data) {
   let params = {}
   params['fun'] = fun
   params['params'] = data
