@@ -1,15 +1,15 @@
 <template>
     <div class="content-block">
-      车辆统计页
+      违章查询
     </div>
 </template>
+
 <script>
 export default {
-  data () {
-    return {}
-  },
-  mounted () {
-
-  }
+  name: 'illegal-query'
 }
 </script>
+
+<style scoped>
+
+</style>

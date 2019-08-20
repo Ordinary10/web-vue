@@ -1,15 +1,15 @@
 <template>
     <div class="content-block">
-      车辆统计页
+      出险理赔
     </div>
 </template>
+
 <script>
 export default {
-  data () {
-    return {}
-  },
-  mounted () {
-
-  }
+  name: 'compensation-claims'
 }
 </script>
+
+<style scoped>
+
+</style>

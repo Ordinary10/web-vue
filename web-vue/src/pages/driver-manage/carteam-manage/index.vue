@@ -1,15 +1,15 @@
 <template>
     <div class="content-block">
-      车辆统计页
+      车队管理
     </div>
 </template>
+
 <script>
 export default {
-  data () {
-    return {}
-  },
-  mounted () {
-
-  }
+  name: 'carteam-manage'
 }
 </script>
+
+<style scoped>
+
+</style>

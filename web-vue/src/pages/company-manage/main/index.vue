@@ -1,15 +1,15 @@
 <template>
     <div class="content-block">
-      车辆统计页
+      公司统计
     </div>
 </template>
+
 <script>
 export default {
-  data () {
-    return {}
-  },
-  mounted () {
-
-  }
+  name: 'main'
 }
 </script>
+
+<style scoped>
+
+</style>

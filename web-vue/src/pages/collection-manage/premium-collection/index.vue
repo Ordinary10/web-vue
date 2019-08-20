@@ -1,15 +1,15 @@
 <template>
     <div class="content-block">
-      车辆统计页
+      保费催收
     </div>
 </template>
+
 <script>
 export default {
-  data () {
-    return {}
-  },
-  mounted () {
-
-  }
+  name: 'premium-cillection'
 }
 </script>
+
+<style scoped>
+
+</style>

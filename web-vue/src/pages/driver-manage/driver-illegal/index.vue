@@ -1,15 +1,15 @@
 <template>
     <div class="content-block">
-      车辆统计页
+      司机违章
     </div>
 </template>
+
 <script>
 export default {
-  data () {
-    return {}
-  },
-  mounted () {
-
-  }
+  name: 'driver-illegal'
 }
 </script>
+
+<style scoped>
+
+</style>

@@ -12,6 +12,7 @@ const CarMaintain = () => import('@/pages/car-manage/maintain')
 /* 业务管理 */
 const business = () => import('@/pages/business-manage')
 const OrderList = () => import('@/pages/business-manage/order-list')
+const Main = () => import('@/pages/business-manage/main')
 const extract = () => import('@/pages/business-manage/extract')
 
 /* 需要权限判断的路由 */
@@ -22,15 +23,15 @@ const dynamicRoutes = [
     name: 'car-manage',
     meta: {
       name: '车辆管理',
-      icon: 'md-car'
+      icon: 'iconcheliang'
     },
     children: [
       {
-        path: '',
+        path: 'main',
         name: 'car-main',
         component: CarMain,
         meta: {
-          name: '统计',
+          name: '车辆统计',
           pass: true
         }
       },
@@ -106,9 +107,18 @@ const dynamicRoutes = [
     name: 'business-manage',
     meta: {
       name: '业务管理',
-      icon: 'md-clipboard'
+      icon: 'iconyewu'
     },
     children: [
+      {
+        path: 'main',
+        name: 'business-main',
+        component: Main,
+        meta: {
+          name: '业务统计',
+          pass: true
+        }
+      },
       {
         path: 'list',
         name: 'order-list',
@@ -123,6 +133,101 @@ const dynamicRoutes = [
         component: extract,
         meta: {
           name: '提车退车'
+        }
+      }
+    ]
+  },
+  {
+    path: '/financial',
+    component: () => import('@/pages/financial-manage'),
+    name: 'financial-manage',
+    meta: {
+      name: '财务管理',
+      icon: 'iconcaiwuguanli'
+    },
+    children: [
+      {
+        path: 'main',
+        name: 'financial-main',
+        component: () => import('@/pages/financial-manage/main'),
+        meta: {
+          name: '财务统计',
+          pass: true
+        }
+      },
+      {
+        path: 'firstPayment',
+        name: 'first-payment',
+        component: () => import('@/pages/financial-manage/first-payment'),
+        meta: {
+          name: '首期收款'
+        }
+      },
+      {
+        path: 'chargeManage',
+        name: 'charge-manage',
+        component: () => import('@/pages/financial-manage/charge-manage'),
+        meta: {
+          name: '收费管理'
+        }
+      },
+      {
+        path: 'runningWater',
+        name: 'running-water',
+        component: () => import('@/pages/financial-manage/running-water'),
+        meta: {
+          name: '流水管理'
+        }
+      },
+      {
+        path: 'financialPlan',
+        name: 'financial-plan',
+        component: () => import('@/pages/financial-manage/financial-plan'),
+        meta: {
+          name: '金融方案'
+        }
+      }
+    ]
+  },
+  {
+    path: '/driver',
+    component: () => import('@/pages/driver-manage'),
+    name: 'driver-manage',
+    meta: {
+      name: '司机管理',
+      icon: 'iconsijiguanli'
+    },
+    children: [
+      {
+        path: 'list',
+        name: 'driver-list',
+        component: () => import('@/pages/driver-manage/driver-list'),
+        meta: {
+          name: '司机列表'
+        }
+      },
+      {
+        path: 'carteam',
+        name: 'carteam-manage',
+        component: () => import('@/pages/driver-manage/carteam-manage'),
+        meta: {
+          name: '车队管理'
+        }
+      },
+      {
+        path: 'illegal',
+        name: 'driver-illegal',
+        component: () => import('@/pages/driver-manage/driver-illegal'),
+        meta: {
+          name: '司机违章'
+        }
+      },
+      {
+        path: 'compensationClaims',
+        name: 'compensation-claims',
+        component: () => import('@/pages/driver-manage/compensation-claims'),
+        meta: {
+          name: '出险理赔'
         }
       }
     ]

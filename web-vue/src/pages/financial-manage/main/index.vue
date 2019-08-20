@@ -1,7 +1,7 @@
 <template>
-    <div class="content-block">
-      车辆统计页
-    </div>
+  <div class="content-block">
+    财务统计页
+  </div>
 </template>
 <script>
 export default {
