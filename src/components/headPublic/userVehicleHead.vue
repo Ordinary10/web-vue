@@ -14,7 +14,7 @@
           </Row>
           <Row class="vehicle-text">
             <Row class="vehile-ma-l" >
-              <Col span="8" v-for="(list,index) in addlist" :key="value.id">
+              <Col span="8" v-for="(list,index) in addlist" :key="list.id">
                 <div class="underline">
                   {{list.name}}：<span class="">{{list.value}}</span>
                 </div>
@@ -63,7 +63,7 @@
           </Row>
           <Row class="vehicle-text">
             <Row class="vehile-ma-l">
-              <Col span="8" v-for="(list,name) in userlist_surplus" :key="value.id">
+              <Col span="8" v-for="(list,name) in userlist_surplus" :key="list.id">
                 <div class="underline">
                   {{list.name}}：<span class="">{{list.value}}</span>
                 </div>
