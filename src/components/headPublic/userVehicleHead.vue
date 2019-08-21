@@ -21,7 +21,7 @@
               </Col>
             </Row>
           </Row>
-          <Row class="vehicle-text">
+          <Row class="vehicle-text" v-if="dis_no[0]">
             <Row class="vehile-ma-l" >
               <Col span="8" v-for="(value,name,index) in addlist_surplus" :key="value.id">
                 <div class="underline">
@@ -36,6 +36,7 @@
             </div>
           </div>
           <p class="data-btn vehicle-btn"
+             @click="activeClass('veh')"
           >展<br>开<br>资<br>料<br></p>
         </div>
       </div>
@@ -61,7 +62,7 @@
               </Col>
             </Row>
           </Row>
-          <Row class="vehicle-text">
+          <Row class="vehicle-text" v-if="dis_no[1]">
             <Row class="vehile-ma-l">
               <Col span="8" v-for="(list,name) in userlist_surplus" :key="list.id">
                 <div class="underline">
@@ -75,7 +76,9 @@
               <i class="iconfont iconyonghu fs-24"></i>
             </div>
           </div>
-          <p class="data-btn vehicle-btn">展<br>开<br>资<br>料<br></p>
+          <p class="data-btn vehicle-btn"
+             @click="activeClass()"
+          >展<br>开<br>资<br>料<br></p>
         </div>
       </div>
     </Col>
@@ -94,11 +97,12 @@
     data:function(){
       return {
         addData:'',
-        dis_no:false
+        dis_no:[false,false]
       }
     },
     created(){
       this.getlinst()
+      console.log(this.dis_no[0])
     },
     computed:{
       addlist:function () {
@@ -138,6 +142,15 @@
          }
          console.log(res.data)
          this.addData  = res.data
+      },
+      activeClass(v){
+         if (v=='veh') {
+           this.dis_no[0] = !this.dis_no[0]
+         }else {
+           this.dis_no[1] = !this.dis_no[1]
+         }
+        this.dis_no.push(true)
+        this.dis_no.pop();
       },
       clean(list,data){
         for (let key in list){
