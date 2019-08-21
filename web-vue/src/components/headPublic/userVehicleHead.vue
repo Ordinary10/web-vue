@@ -126,16 +126,17 @@
   export default {
     name: 'userVehicleHead',
     props:{
-      addData:{
+      param:{
       }
     },
     data:function(){
       return {
-
+        addData:''
       }
     },
     created(){
-      console.log(this.addData)
+      console.log(123)
+      this.getlinst()
     },
     computed:{
       addlist:function () {
@@ -165,6 +166,11 @@
       },
     },
     methods:{
+       async getlinst() {
+         const _this = this
+         var res  = await _this.$axios('Common/getCommonalityHead',{plate_no:this.param})
+         this.addData  = res.data
+      },
 
       clean(list,data){
         var newarray = []
@@ -266,7 +272,6 @@
             }
           }
         }
-        console.log(newarray)
         return newarray
       },
     }
