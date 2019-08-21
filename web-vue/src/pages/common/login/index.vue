@@ -94,7 +94,8 @@ export default {
             'order_nature',
             'collection_type',
             'driver_manage',
-            'financial_plan'
+            'financial_plan',
+            'repair_shop'
           ]}, 'no')
           if (pagededa.status === 1) {
             sessionStorage.setItem('pageInitInfo', JSON.stringify(pagededa.data))

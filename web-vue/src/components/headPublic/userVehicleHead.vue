@@ -183,22 +183,22 @@
 </template>
 
 <script>
-  export default {
-    name: 'userVehicleHead',
-    props:{
-      addData:{
-      }
-    },
-    data:function(){
-      return {
-      }
-    },
-    created(){
-    },
-    methods:{
-
+export default {
+  name: 'userVehicleHead',
+  props: {
+    addData: {
     }
+  },
+  data: function () {
+    return {
+    }
+  },
+  created () {
+  },
+  methods: {
+
   }
+}
 </script>
 
 <style scoped>
