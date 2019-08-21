@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: 'premium-cillection'
+  name: 'premium-collection'
 }
 </script>
 

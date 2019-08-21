@@ -235,6 +235,153 @@ const dynamicRoutes = [
         }
       }
     ]
+  },
+  {
+    path: '/collection',
+    component: () => import('@/pages/collection-manage'),
+    name: 'collection-manage',
+    meta: {
+      name: '催收管理',
+      icon: 'iconcuishouguanli'
+    },
+    children: [
+      {
+        path: 'premium',
+        name: 'premium-collection',
+        component: () => import('@/pages/collection-manage/premium-collection'),
+        meta: {
+          name: '保费催收'
+        }
+      },
+      {
+        path: 'overdue',
+        name: 'overdue-list',
+        component: () => import('@/pages/collection-manage/overdue-list'),
+        meta: {
+          name: '逾期列表'
+        }
+      }
+    ]
+  },
+  {
+    path: '/company',
+    component: () => import('@/pages/company-manage'),
+    name: 'company-manage',
+    meta: {
+      name: '公司管理',
+      icon: 'icongong_si',
+      tabName: '公司统计'
+    },
+    children: [
+      {
+        path: 'main',
+        name: 'company-main',
+        component: () => import('@/pages/company-manage/main'),
+        meta: {
+          name: '公司统计',
+          pass: true
+        }
+      },
+      {
+        path: 'customer',
+        name: 'customer',
+        component: () => import('@/pages/company-manage/customer'),
+        meta: {
+          name: '客户管理'
+        }
+      },
+      {
+        path: 'stores',
+        name: 'stores',
+        component: () => import('@/pages/company-manage/stores'),
+        meta: {
+          name: '门店管理'
+        }
+      },
+      {
+        path: 'householder',
+        name: 'householder',
+        component: () => import('@/pages/company-manage/householder'),
+        meta: {
+          name: '户主管理'
+        }
+      },
+      {
+        path: 'employees',
+        name: 'employees',
+        component: () => import('@/pages/company-manage/employees'),
+        meta: {
+          name: '员工管理'
+        }
+      },
+      {
+        path: 'financialPlan',
+        name: 'financial-plan',
+        component: () => import('@/pages/company-manage/financial-plan'),
+        meta: {
+          name: '金融方案'
+        }
+      },
+      {
+        path: 'warehouse',
+        name: 'warehouse',
+        component: () => import('@/pages/company-manage/warehouse'),
+        meta: {
+          name: '仓库管理'
+        }
+      },
+      {
+        path: 'mechanics',
+        name: 'mechanics',
+        component: () => import('@/pages/company-manage/mechanics'),
+        meta: {
+          name: '汽修管理'
+        }
+      },
+      {
+        path: 'role',
+        name: 'role',
+        component: () => import('@/pages/company-manage/role'),
+        meta: {
+          name: '角色管理'
+        }
+      }
+    ]
+  },
+  {
+    path: '/system',
+    component: () => import('@/pages/system-setup'),
+    name: 'system-setup',
+    meta: {
+      name: '系统设置',
+      icon: 'iconxitongguanli'
+    },
+    children: [
+      {
+        path: 'illegalStatistical',
+        name: 'illegal-statistical',
+        component: () => import('@/pages/system-setup/illegal-statistical'),
+        meta: {
+          name: '违章统计'
+        }
+      },
+      {
+        path: 'illegalQuery',
+        name: 'illegal-query',
+        component: () => import('@/pages/system-setup/illegal-query'),
+        meta: {
+          name: '违章查询'
+        }
+      },
+      {
+        path: 'interfaceLog',
+        name: 'interface-log',
+        component: () => import('@/pages/system-setup/interface-log'),
+        meta: {
+          name: '接口日志'
+        }
+      }
+    ]
   }
 ]
 export default dynamicRoutes
