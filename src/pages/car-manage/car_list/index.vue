@@ -57,9 +57,9 @@
     </div>
 </template>
 <script type="text/jsx">
-  import userVehicleHead from '../../../components/headPublic/userVehicleHead'
+import userVehicleHead from '../../../components/headPublic/userVehicleHead'
 
-  export default {
+export default {
   data () {
     /*
     * isShow: 用于折叠搜索框的显示隐藏
@@ -78,7 +78,7 @@
       isShow: false,
       modal1: false,
       iconType: 'md-arrow-dropdown',
-      add:"",
+      add: '',
       config: {
         fun: 'Car/carList',
         columns: [
@@ -169,10 +169,10 @@
   },
   methods: {
     ok () {
-      this.$Message.info('Clicked ok');
+      this.$Message.info('Clicked ok')
     },
     cancel () {
-      this.$Message.info('Clicked cancel');
+      this.$Message.info('Clicked cancel')
     },
     /* 更多操作 */
     redundant (type) {
@@ -214,18 +214,18 @@
         case 'see':
           this.modal1 = true
           console.log(item)
-          this.ajax('Common/getCommonalityHead', {'plate_no':item.plate_no})
+          this.ajax('Common/getCommonalityHead', {'plate_no': item.plate_no})
           break
         case 'editor':
           alert(`编辑：${item.id}`)
           break
       }
     },
-     async ajax(fun,data) {
-       const _this = this
-       let res = await _this.$axios(fun,data,'no')
-       this.add = res.data
-       console.log(this.add)
+    async ajax (fun, data) {
+      const _this = this
+      let res = await _this.$axios(fun, data, 'no')
+      this.add = res.data
+      console.log(this.add)
     }
   }
 }
