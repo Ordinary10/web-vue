@@ -14,9 +14,9 @@
           </Row>
           <Row class="vehicle-text">
             <Row class="vehile-ma-l" >
-              <Col span="8" v-for="(value,name,index) in addlist">
+              <Col span="8" v-for="(list,index) in addlist">
                 <div class="underline">
-                  {{name}}：<span class="">{{value}}</span>
+                  {{list.name}}：<span class="">{{list.value}}</span>
                 </div>
               </Col>
             </Row>
@@ -82,9 +82,9 @@
           </Row>
           <Row class="vehicle-text">
             <Row class="vehile-ma-l">
-              <Col span="8" v-for="(value,name) in userlist_surplus">
+              <Col span="8" v-for="(list,name) in userlist_surplus">
                 <div class="underline">
-                  {{name}}：<span class="">{{value}}</span>
+                  {{list.name}}：<span class="">{{list.value}}</span>
                 </div>
               </Col>
             </Row>
@@ -243,13 +243,26 @@
                   hover_text = `${value}/${data.insurance_etime}`
                 }
               }
-              if (k=='annual' || i=='license_annual'){
-                var day = i == 'annual' ? res.data.annual_day : res.data.license_annual_day;
-                var time = i == 'annual' ? res.data.annual : res.data.license_annual;
-                vehicleLicense(day, time, i)
+              //判断车审证审
+              if (k=='annual' || k=='license_annual'){
+                var day = k == 'annual' ? data.annual_day : data.license_annual_day;
+                var time = k == 'annual' ? data.annual : data.license_annual;
+                vehicleLicense(day, time)
+              }
+              //判断车审和证审
+              function vehicleLicense(day, time,) {
+                if (day <= 0) { //正常
+                  value = `${Math.abs(day)}天`
+                  hover_text = `${value}/${time}`
+                  state =2
+                } else {
+                  value = `${day}天`
+                  hover_text = `${value}/${time}`
+                  state =1
+                }
               }
               //增加到数组
-              newarray.push({'name':key,'value':value,'data_name':k,'state':state,'hover':hover_text})
+              newarray.push({name:key,value:value,data_name:k,state:state,hover:hover_text})
             }
           }
         }
