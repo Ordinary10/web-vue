@@ -1,6 +1,6 @@
 <template>
     <div class="content-block">
-      公司统计
+      公司统计页
     </div>
 </template>
 

@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: 'financal-plan'
+  name: 'financial-plan'
 }
 </script>
 
