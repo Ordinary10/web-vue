@@ -16,7 +16,7 @@
             <Row class="vehile-ma-l" >
               <Col span="8" v-for="(list,index) in addlist" :key="list.id">
                 <div class="underline">
-                  {{list.name}}：<span class="">{{list.value}}</span>
+                  {{list.name}}：<span :class="list.state">{{list.value}}</span>
                 </div>
               </Col>
             </Row>
@@ -102,7 +102,6 @@
     },
     created(){
       this.getlinst()
-      console.log(this.dis_no[0])
     },
     computed:{
       addlist:function () {
@@ -140,7 +139,6 @@
              res.data[k]='暂无'
            }
          }
-         console.log(res.data)
          this.addData  = res.data
       },
       activeClass(v){
@@ -164,9 +162,11 @@
       },
       cleans(list,data){
         var newarray = []
-        let state = 0, //0默认状态，1红色，2绿色，3蓝色
+        let state = 'a', //a默认状态，redtext红色，green-color绿色，3蓝色
             violationState,
             hover_text,
+            red = 'redtext',
+            gre = 'green-color',
             value;
         //先清洗数据，与传过来的值对比，交集则留下
         for (let key in list){
@@ -187,7 +187,7 @@
               function violation(violationState, data) {
                 if (violationState == '1') { //判断有违章
                   value = `${data.ig_fine}元/${data.ig_score}分/${data.ig_nums}条`
-                  state = 1
+                  state = red
                 } else {
                   value = `无违章`
                 }
@@ -207,11 +207,14 @@
                 var day = data.gastank_annual_day
                 if (day <=0){
                   value = `${day}天`
-                  state = 2
+                  state = gre
                   hover_text = `${value}/${data.gastank_annual}`
-                }else {
+                }if (day=='暂无'){
+                  value = `${day}`
+                  state = 'a'
+                }  else {
                   value = `${day}天`
-                  state = 1
+                  state = red
                   hover_text = `${value}/${data.gastank_annual}`
                 }
               }
@@ -220,11 +223,11 @@
                 var day = data.insurance_etime_day
                 if (day>0){
                   value = `${day}天`
-                  state = 1
+                  state = red
                   hover_text = `${value}/${data.insurance_etime}`
                 }else {
                   value = `${Math.abs(day)}天`
-                  state = 2
+                  state = gre
                   hover_text = `${value}/${data.insurance_etime}`
                 }
               }
@@ -239,11 +242,11 @@
                 if (day <= 0) { //正常
                   value = `${Math.abs(day)}天`
                   hover_text = `${value}/${time}`
-                  state =2
+                  state =gre
                 } else {
                   value = `${day}天`
                   hover_text = `${value}/${time}`
-                  state =1
+                  state =red
                 }
               }
               //增加到数组
@@ -251,6 +254,7 @@
             }
           }
         }
+        console.log(newarray)
         return newarray
       },
     }
