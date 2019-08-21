@@ -5,7 +5,7 @@
         <div class="card">
           <Row class="vehicle-text vehicle-bg">
             <Row class="vehile-ma-l">
-              <Col span="8" v-for="(value,name) in toplist">
+              <Col span="8" v-for="(value,name) in toplist" :key="value.id">
                 <div class="ma-nomb-spacing">
                   {{name}}：<span class="">{{value}}</span>
                 </div>
@@ -14,7 +14,7 @@
           </Row>
           <Row class="vehicle-text">
             <Row class="vehile-ma-l" >
-              <Col span="8" v-for="(list,index) in addlist">
+              <Col span="8" v-for="(list,index) in addlist" :key="value.id">
                 <div class="underline">
                   {{list.name}}：<span class="">{{list.value}}</span>
                 </div>
@@ -23,7 +23,7 @@
           </Row>
           <Row class="vehicle-text">
             <Row class="vehile-ma-l" >
-              <Col span="8" v-for="(value,name,index) in addlist_surplus">
+              <Col span="8" v-for="(value,name,index) in addlist_surplus" :key="value.id">
                 <div class="underline">
                   {{name}}：<span class="">{{value}}</span>
                 </div>
@@ -35,7 +35,8 @@
               <i class="iconfont iconcheliangxinxi fs-28"></i>
             </div>
           </div>
-          <p class="data-btn vehicle-btn">展<br>开<br>资<br>料<br></p>
+          <p class="data-btn vehicle-btn"
+          >展<br>开<br>资<br>料<br></p>
         </div>
       </div>
     </Col>
@@ -44,7 +45,7 @@
         <div class="card">
           <Row class="vehicle-text vehicle-bg user-top">
             <Row class="vehile-ma-l">
-              <Col span="8" v-for="(value,name) in topuser">
+              <Col span="8" v-for="(value,name) in topuser" :key="value.id">
                 <div class="ma-nomb-spacing">
                   {{name}}：<span class="">{{value}}</span>
                 </div>
@@ -53,7 +54,7 @@
           </Row>
           <Row class="vehicle-text">
             <Row class="vehile-ma-l">
-              <Col span="8" v-for="(value,name) in userlist">
+              <Col span="8" v-for="(value,name) in userlist" :key="value.id">
                 <div class=" underline">
                   {{name}}：<span class="">{{value}}</span>
                 </div>
@@ -62,7 +63,7 @@
           </Row>
           <Row class="vehicle-text">
             <Row class="vehile-ma-l">
-              <Col span="8" v-for="(list,name) in userlist_surplus">
+              <Col span="8" v-for="(list,name) in userlist_surplus" :key="value.id">
                 <div class="underline">
                   {{list.name}}：<span class="">{{list.value}}</span>
                 </div>
@@ -92,7 +93,8 @@
     },
     data:function(){
       return {
-        addData:''
+        addData:'',
+        dis_no:false
       }
     },
     created(){
@@ -130,14 +132,13 @@
          const _this = this
          var res  = await _this.$axios('Common/getCommonalityHead',{plate_no:this.param})
          for (let k in res.data){
-           console.log(k,res.data[k])
            if (!res.data[k]){
              res.data[k]='暂无'
            }
          }
+         console.log(res.data)
          this.addData  = res.data
       },
-
       clean(list,data){
         for (let key in list){
           for (let k in data){
@@ -209,7 +210,7 @@
                   state = 1
                   hover_text = `${value}/${data.insurance_etime}`
                 }else {
-                  value = `${day}天`
+                  value = `${Math.abs(day)}天`
                   state = 2
                   hover_text = `${value}/${data.insurance_etime}`
                 }
