@@ -123,19 +123,19 @@ const dynamicRoutes = [
         }
       },
       {
-        path: 'list',
-        name: 'order-list',
-        component: OrderList,
-        meta: {
-          name: '订单列表'
-        }
-      },
-      {
         path: 'extract',
         name: 'extract-car',
         component: extract,
         meta: {
           name: '提车退车'
+        }
+      },
+      {
+        path: 'list',
+        name: 'order-list',
+        component: OrderList,
+        meta: {
+          name: '订单列表'
         }
       }
     ]
