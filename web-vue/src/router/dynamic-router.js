@@ -23,7 +23,9 @@ const dynamicRoutes = [
     name: 'car-manage',
     meta: {
       name: '车辆管理',
-      icon: 'iconcheliang'
+      icon: 'iconcheliang',
+      // tabName名称和第一个子路由一致 用于tab的展示
+      tabName: '车辆统计'
     },
     children: [
       {
@@ -107,7 +109,8 @@ const dynamicRoutes = [
     name: 'business-manage',
     meta: {
       name: '业务管理',
-      icon: 'iconyewu'
+      icon: 'iconyewu',
+      tabName: '业务统计'
     },
     children: [
       {
@@ -143,7 +146,8 @@ const dynamicRoutes = [
     name: 'financial-manage',
     meta: {
       name: '财务管理',
-      icon: 'iconcaiwuguanli'
+      icon: 'iconcaiwuguanli',
+      tabName: '财务统计'
     },
     children: [
       {

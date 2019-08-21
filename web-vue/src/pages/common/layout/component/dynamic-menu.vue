@@ -2,9 +2,9 @@
 <template>
   <div class="menu-container">
     <template v-for="v in menuList">
-      <Submenu v-if="v.children&&v.children.length>0" :key="v.name" :name="v.name">
+      <Submenu v-if="v.children&&v.children.length>0" :key="v.name" :name="v.name" >
         <template slot="title">
-          <div ref="title" :data-name="v.name">
+          <div ref="title" :data-name="v.name" :data-title="v.meta.tabName">
             <Icon :custom="'iconfont ' + v.meta.icon" v-if="v.meta.icon"></Icon>
             {{v.meta.name}}
           </div>
@@ -40,11 +40,6 @@ export default {
   methods: {
     gotoRoute (name, title) {
       this.$router.push({ name })
-      // if (this.$store.state.TabPage === 0) {
-      //   return false
-      // }
-      // let res = this.test(name, dynamicRoutes.concat(DynamicRoutes))
-      // console.log(res)
       if (this.$store.state.TabPage === 1) {
         let obj = {name, title}
         this.$store.commit('addTab', obj)
@@ -57,7 +52,8 @@ export default {
       this.$refs.title.forEach(div => {
         div.addEventListener('click', e => {
           let name = div.dataset.name
-          this.gotoRoute(name)
+          let title = div.dataset.title
+          if (title) this.gotoRoute(name, title)
         })
       })
     }
