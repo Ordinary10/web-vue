@@ -52,7 +52,7 @@
         :footer-hide="true"
         :width='1350'
       >
-        <userVehicleHead :addData="add" v-if="modal1"></userVehicleHead>
+        <userVehicleHead :param="add" v-if="modal1"></userVehicleHead>
       </Modal>
     </div>
 </template>
@@ -213,18 +213,14 @@ export default {
       switch (type) {
         case 'see':
           this.modal1 = true
-          this.ajax('Common/getCommonalityHead', {'plate_no':'川A782C3','order_id':'10'})
+          this.add = item.plate_no
           break
         case 'editor':
           alert(`编辑：${item.id}`)
           break
       }
     },
-     async ajax(fun,data) {
-       const _this = this
-       let res = await _this.$axios(fun,data,'no')
-       this.add = res.data
-    },
+
 
 
   }
