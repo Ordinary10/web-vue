@@ -4,7 +4,7 @@
         <div class="tab" v-for="(item,index) in Tab.list" :key="item.index" ref="tab">
           <span @click="changeTab(item.name,$event)" :ref="item.name" :class="{'active':item.name===Tab.cru.name}" :style="{'padding-right':index?'5px':'10px'}">
             {{item.title}}
-            <Icon type="ios-close" v-if="index" @click.native="removeTab(item.name,$event)"/>
+            <Icon type="ios-close" v-if="index" @click.stop="removeTab(item.name,$event)"/>
           </span>
         </div>
         <div class="removeTab" @click="removeTabAll">
@@ -63,8 +63,10 @@ export default {
     },
     removeTab (name) {
       this.$store.commit('RemoveTab', name)
-      this.$router.go(-1)
-      // if (this.Tab.last) this.changeTab(this.Tab.last)
+      // this.$router.go(-1)
+      let last = this.Tab.list[this.Tab.list.length > 0 ? this.Tab.list.length - 1 : 0]
+      this.$store.commit('CruTab', last)
+      this.$router.push({name: last.name})
     },
     removeTabAll () {
       this.$store.commit('clearTab')

@@ -39,8 +39,7 @@ export default {
   // tab模式下数据
   Tab: {
     list: [],
-    cru: '',
-    last: ''
+    cru: ''
   }
 
 }
