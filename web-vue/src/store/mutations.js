@@ -24,8 +24,8 @@ export default {
         add = false
       }
     })
-    if (state.Tab.list.length > 9) {
-      alert('tab不能超过10个')
+    if (state.Tab.list.length > 14) {
+      alert('tab不能超过15个')
       return false
     }
     if (add) {
@@ -53,8 +53,5 @@ export default {
   changeTab (state) {
     state.TabPage = state.TabPage === 1 ? 0 : 1
     state.Tab.list = []
-  },
-  setLastTab (state, data) {
-    state.Tab.last = data
   }
 }
