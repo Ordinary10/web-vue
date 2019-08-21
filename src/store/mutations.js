@@ -24,9 +24,9 @@ export default {
         add = false
       }
     })
-    if (state.Tab.list.length > 14) {
-      alert('tab不能超过15个')
-      return false
+    if (state.Tab.list.length > 15) {
+      // alert('tab不能超过16个')
+      state.Tab.list.splice(state.Tab.list.length - 1, 1)
     }
     if (add) {
       state.Tab.list.push(data)
