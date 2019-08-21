@@ -56,11 +56,18 @@ export default {
   .sidebar-wrapper{
     width: 240px;
     background-color: #fff;
-    height: 100%;
+    height: calc(100% - 15px);
+    box-sizing: border-box;
+    padding-bottom: 15px;
+    border-radius: 0 0 15px 0;
     position: absolute;
     top: 0;
     left: 0;
     z-index: 10000;
+    overflow: auto;
+    &::-webkit-scrollbar{
+      display: none;
+    }
     .title{
       height: 100px;
       display: flex;
