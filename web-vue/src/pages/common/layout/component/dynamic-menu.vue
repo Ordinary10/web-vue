@@ -4,7 +4,7 @@
     <template v-for="v in menuList">
       <Submenu v-if="v.children&&v.children.length>0" :key="v.name" :name="v.name" >
         <template slot="title">
-          <div ref="title" :data-name="v.name" :data-title="v.meta.tabName">
+          <div ref="title" :data-name="v.name" :data-title="v.meta.tabName" style="width: 100%">
             <Icon :custom="'iconfont ' + v.meta.icon" v-if="v.meta.icon"></Icon>
             {{v.meta.name}}
           </div>
