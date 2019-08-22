@@ -21,6 +21,12 @@ export default new Router({
       name: 'assembly',
       component: () => import('@/pages/assembly/assembly')
       // component: Layout
+    },
+    {
+      path: '/com',
+      name: 'com',
+      component: () => import('@/components/ImgUpload')
+      // component: Layout
     }
   ]
 })
