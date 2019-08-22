@@ -116,6 +116,42 @@
         </div>
       </div>
     </Col>
+    <Col span="12">
+
+      <div class="card-body">
+        <div class="card-header">
+          <p class="card-title">车辆信息</p>
+        </div>
+        <div class="card">
+
+          <Row class="ma-lr">
+            <div class="ma-nomb-spacing">
+              <div class="bt-top">
+                基本信息
+              </div>
+            </div>
+            <div class="ma-nomb-spacing ma-top">
+            </div>
+          </Row>
+        </div>
+      </div>
+    </Col>
+
+    <Col span="12">
+
+      <div class="card-body">
+        <div class="card-header">
+            <p class="card-title">表格标题</p>
+        </div>
+        <div class="card">
+          <Row class="ma-lr">
+            <div class="ma-nomb-spacing ma-top">
+              <Table :columns="columns1" ></Table>
+            </div>
+          </Row>
+        </div>
+      </div>
+    </Col>
   </Row>
 
 
@@ -131,7 +167,21 @@
     data:function(){
       return {
         addData:'',
-        dis_no:[false,false]
+        dis_no:[false,false],
+        columns1: [
+          {
+            title: 'Name',
+            key: 'name'
+          },
+          {
+            title: 'Age',
+            key: 'age'
+          },
+          {
+            title: 'Address',
+            key: 'address'
+          }
+        ],
       }
     },
     created(){
