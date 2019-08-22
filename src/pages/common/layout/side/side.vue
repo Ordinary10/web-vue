@@ -87,10 +87,19 @@ export default {
       width: 240px!important;
       /*text-align: center;*/
     }
-    /deep/ .ivu-menu-dark.ivu-menu-vertical .ivu-menu-submenu,/deep/ .ivu-menu-dark.ivu-menu-vertical .ivu-menu-item{
+    /deep/ .ivu-menu-dark.ivu-menu-vertical .ivu-menu-item{
       color: #8A98AC;
       font-size: 16px;
       background:inherit;
+      padding: 10px 0 10px 10px;
+      border-radius: 20px 0 0 20px;
+      padding-left: 70px !important;
+      &:hover{
+        @include active
+      }
+      &.ivu-menu-item-selected{
+        @include active
+      }
       .ivu-icon{
         font-size: 18px;
         transform: translateY(-2px);
@@ -100,32 +109,21 @@ export default {
         transform: translateY(-6px);
       }
     }
+    /deep/ .ivu-menu-dark.ivu-menu-vertical .ivu-menu-submenu{
+      background-color: #fff;
+      padding: 0 0 0 10px;
+      margin-left: 15px;
+    }
     /deep/ .ivu-menu-dark.ivu-menu-vertical .ivu-menu-submenu .ivu-menu-submenu-title{
       color: #8A98AC;
       border-radius: 20px 0 0 20px;
       padding-top: 10px;
       padding-bottom: 10px;
       background-color: #fff;
+      font-size: 16px;
       &:hover{
         @include active
     }
-    }
-    /deep/ .ivu-menu-dark.ivu-menu-vertical>.menu-container>.ivu-menu-submenu{
-      padding: 0 0 0 10px;
-      margin-left: 15px;
-    }
-    /deep/ .ivu-menu-dark.ivu-menu-vertical>.menu-container .ivu-menu-item{
-      padding: 10px 0 10px 10px;
-      background:#fff;
-      color: #8A98AC;
-      border-radius: 20px 0 0 20px;
-      padding-left: 70px !important;
-      &:hover{
-        @include active
-    }
-      &.ivu-menu-item-selected{
-        @include active
-      }
     }
     /deep/ .ivu-menu-dark.ivu-menu-vertical>.menu-container>.ivu-menu-item{
       margin-left: 24px;
