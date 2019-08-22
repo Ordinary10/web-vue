@@ -34,6 +34,7 @@
             <div class="vehicle-icon">
               <i class="iconfont iconcheliangxinxi fs-28"></i>
             </div>
+            <svg data-v-cb35e4d4="" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="81px" height="82px"><defs data-v-cb35e4d4=""><filter data-v-cb35e4d4="" filterUnits="userSpaceOnUse" id="Filter_0" x="0px" y="0px" width="81px" height="82px"><feOffset data-v-cb35e4d4="" in="SourceAlpha" dx="0" dy="4"></feOffset> <feGaussianBlur data-v-cb35e4d4="" result="blurOut" stdDeviation="3"></feGaussianBlur> <feFlood data-v-cb35e4d4="" flood-color="rgb(0, 0, 0)" result="floodOut"></feFlood> <feComposite data-v-cb35e4d4="" operator="atop" in="floodOut" in2="blurOut"></feComposite> <feComponentTransfer data-v-cb35e4d4=""><feFuncA data-v-cb35e4d4="" type="linear" slope="0.19"></feFuncA></feComponentTransfer> <feMerge data-v-cb35e4d4=""><feMergeNode data-v-cb35e4d4=""></feMergeNode> <feMergeNode data-v-cb35e4d4="" in="SourceGraphic"></feMergeNode></feMerge></filter></defs> <g data-v-cb35e4d4="" filter="url(#Filter_0)"><path data-v-cb35e4d4="" fill-rule="evenodd" fill="rgb(18, 105, 219)" d="M5.000,69.987 L5.000,9.000 C5.000,6.791 6.791,5.000 9.000,5.000 L69.000,5.000 C69.000,5.000 69.000,5.000 69.000,5.000 C69.000,40.564 40.437,69.452 5.000,69.987 Z"></path></g></svg>
           </div>
           <p class="data-btn vehicle-btn"
              @click="activeClass('veh')"
@@ -75,6 +76,7 @@
             <div class="vehicle-icon">
               <i class="iconfont iconyonghu fs-24"></i>
             </div>
+            <svg data-v-4aeec2ca="" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="81px" height="82px"><defs data-v-4aeec2ca=""><filter data-v-4aeec2ca="" filterUnits="userSpaceOnUse" id="Filter_0" x="0px" y="0px" width="81px" height="82px"><feOffset data-v-4aeec2ca="" in="SourceAlpha" dx="0" dy="4"></feOffset> <feGaussianBlur data-v-4aeec2ca="" result="blurOut" stdDeviation="3"></feGaussianBlur> <feFlood data-v-4aeec2ca="" flood-color="rgb(0, 0, 0)" result="floodOut"></feFlood> <feComposite data-v-4aeec2ca="" operator="atop" in="floodOut" in2="blurOut"></feComposite> <feComponentTransfer data-v-4aeec2ca=""><feFuncA data-v-4aeec2ca="" type="linear" slope="0.19"></feFuncA></feComponentTransfer> <feMerge data-v-4aeec2ca=""><feMergeNode data-v-4aeec2ca=""></feMergeNode> <feMergeNode data-v-4aeec2ca="" in="SourceGraphic"></feMergeNode></feMerge></filter></defs> <g data-v-4aeec2ca="" filter="url(#Filter_0)"><path data-v-4aeec2ca="" fill-rule="evenodd" fill="rgb(252, 97, 128)" d="M5.000,69.987 L5.000,9.000 C5.000,6.791 6.791,5.000 9.000,5.000 L69.000,5.000 C69.000,5.000 69.000,5.000 69.000,5.000 C69.000,40.564 40.437,69.452 5.000,69.987 Z"></path></g></svg>
           </div>
           <p class="data-btn vehicle-btn"
              @click="activeClass()"
@@ -126,6 +128,8 @@
         return this.clean(userlist_data,this.addData)
       },
       userlist_surplus:function () {
+        // var userlist_datas= {'紧急联系人':'customer_contact','地址':'address','评分':'driver_star'}
+        // var userlist_datas= {'月供(元)':'monthly_fee'}
         var userlist_data = {'紧急联系人':'customer_contact','地址':'address','评分':'driver_star'}
         return this.cleans(userlist_data,this.addData)
       },
@@ -158,6 +162,7 @@
             }
           }
         }
+
         return list
       },
       cleans(list,data){
@@ -200,6 +205,8 @@
                     address += `${e.name}&nbsp${e.mobile}&nbsp${e.relation}`
                   })
                   value = address
+                }else {
+                  value = '暂无'
                 }
               }
               //判断气罐
