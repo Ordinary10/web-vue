@@ -7,7 +7,13 @@
             <Row class="vehile-ma-l">
               <Col span="8" v-for="(list,index) in toplist" :key="list.id">
                 <div class="ma-nomb-spacing">
+                  <Tooltip top="Here is the prompt text">
+                    <div slot="content">
+                      <p>{{list.value}}</p>
+                    </div>
                   {{list.name}}：<span class="">{{list.value}}</span>
+                  </Tooltip>
+
                 </div>
               </Col>
             </Row>
@@ -15,8 +21,13 @@
           <Row class="vehicle-text">
             <Row class="vehile-ma-l" >
               <Col span="8" v-for="(list,index) in addlist" :key="list.id">
-                <div class="underline">
-                  {{list.name}}：<span :class="list.state">{{list.value}}</span>
+                <div class="ma-nomb-spacing">
+                  <Tooltip content="Bottom Center text" >
+                    <div slot="content">
+                      <p>{{list.hover}}</p>
+                    </div>
+                    {{list.name}}：<span :class="list.state">{{list.value}}</span>
+                  </Tooltip>
                 </div>
               </Col>
             </Row>
@@ -24,8 +35,13 @@
           <Row class="vehicle-text" v-if="dis_no[0]">
             <Row class="vehile-ma-l" >
               <Col span="8" v-for="(list,index) in addlist_surplus" :key="list.id">
-                <div class="underline">
-                  {{list.name}}：<span class="">{{list.value}}</span>
+                <div class="ma-nomb-spacing">
+                  <Tooltip content="Bottom Center text" >
+                    <div slot="content">
+                      <p>{{list.hover}}</p>
+                    </div>
+                    {{list.name}}：<span class="">{{list.value}}</span>
+                  </Tooltip>
                 </div>
               </Col>
             </Row>
@@ -49,16 +65,27 @@
             <Row class="vehile-ma-l">
               <Col span="8" v-for="(list,index) in topuser" :key="list.id">
                 <div class="ma-nomb-spacing">
-                  {{list.name}}：<span class="">{{list.value}}</span>
+                  <Tooltip content="Bottom Center text" >
+                    <div slot="content">
+                      <p>{{list.hover}}</p>
+                    </div>
+                    {{list.name}}：<span class="">{{list.value}}</span>
+                  </Tooltip>
                 </div>
+
               </Col>
             </Row>
           </Row>
           <Row class="vehicle-text">
             <Row class="vehile-ma-l">
               <Col span="8" v-for="(list,index) in userlist" :key="list.id">
-                <div class=" underline">
-                  {{list.name}}：<span class="">{{list.value}}</span>
+                <div class="ma-nomb-spacing">
+                  <Tooltip content="Bottom Center text" >
+                    <div slot="content">
+                      <p>{{list.hover}}</p>
+                    </div>
+                    {{list.name}}：<span class="">{{list.value}}</span>
+                  </Tooltip>
                 </div>
               </Col>
             </Row>
@@ -66,8 +93,13 @@
           <Row class="vehicle-text" v-if="dis_no[1]">
             <Row class="vehile-ma-l">
               <Col span="8" v-for="(list,name) in userlist_surplus" :key="list.id">
-                <div class="underline">
-                  {{list.name}}：<span class="">{{list.value}}</span>
+                <div class="ma-nomb-spacing">
+                  <Tooltip content="Bottom Center text" >
+                    <div slot="content">
+                      <p>{{list.hover}}</p>
+                    </div>
+                    {{list.name}}：<span class="">{{list.value}}</span>
+                  </Tooltip>
                 </div>
               </Col>
             </Row>
@@ -162,7 +194,7 @@
          if (data){
            let newarray = []
            for (let key in list){
-             newarray.push({name:list[key],value:data[key],data_name:key})
+             newarray.push({name:list[key],value:data[key],data_name:key,hover:data[key]})
            }
            console.log(newarray)
            return newarray
@@ -182,6 +214,7 @@
             for (let k in data){
               if (k ==key) {
                 value = data[k]
+                hover_text = data[k]
                 //循环判断是否有违章
                 if (k =='illegal_info') {
                   for (let s in data[k]) {
@@ -198,7 +231,7 @@
                     value = `${data.ig_fine}元/${data.ig_score}分/${data.ig_nums}条`
                     state = red
                   } else {
-                    value = `无违章`
+                    hover_text =value = `无违章`
                   }
                 }
                 //紧急联系人判断
@@ -217,11 +250,10 @@
                 if (k=='is_gas'){
                   var day = data.gastank_annual_day
                   if (day <=0){
-                    value = `${day}天`
+                    hover_text = value = `${day}天`
                     state = gre
-                    hover_text = `${value}/${data.gastank_annual}`
                   }if (day=='暂无'){
-                    value = `${day}`
+                    hover_text = value = `${day}`
                     state = 'a'
                   }  else {
                     value = `${day}天`
@@ -265,6 +297,7 @@
               }
             }
           }
+          console.log(newarray)
           return newarray
         }
       },
