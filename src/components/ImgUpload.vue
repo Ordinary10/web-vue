@@ -1,7 +1,7 @@
 <template>
   <div class="upload-wrapper">
     <div class="title" v-if="config.title" v-html="config.title">{{config.title}}</div>
-    <viewer class="img-box" :images="uploadList">
+    <viewer class="img-box" ref="viewer" :images="uploadList">
         <div class="upload-list" v-for="(item,index) in uploadList" :key="index">
           <template v-if="item.status === 'finished'">
           <img :src="item.url" alt="">
@@ -80,6 +80,9 @@ export default {
     handleSuccess (res, file) {
       // console.log(res, file)
       file.url = file.response.data.url
+      setTimeout(e => {
+        this.$refs.viewer.$viewer.update()
+      }, 500)
     },
     handleFormatError (file) {
       this.$Notice.warning({
@@ -115,6 +118,8 @@ export default {
       }
       return res
     }
+  },
+  watch: {
   }
 }
 </script>
