@@ -162,13 +162,6 @@
          if (data){
            let newarray = []
            for (let key in list){
-             console.log(key,list[key])
-             // console.log(data[key],key)
-             for (let k in data){
-               if (k ==list[key]) {
-                 list[key] = data[k]
-               }
-             }
              newarray.push({name:list[key],value:data[key],data_name:key})
            }
            console.log(newarray)
