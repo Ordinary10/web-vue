@@ -1,21 +1,19 @@
 <template>
   <div class="upload-wrapper">
     <div class="title" v-if="config.title" v-html="config.title">{{config.title}}</div>
-    <div class="img-box">
-      <div class="upload-list" v-for="item in uploadList" :key="item">
-        <template v-if="item.status === 'finished'">
-          <img :src="item.url">
-          <div class="upload-list-cover">
-            <Icon type="ios-eye-outline" @click.native="handleView(item.url)"></Icon>
-            <Icon type="ios-trash-outline" @click.native="handleRemove(item)"></Icon>
-          </div>
-        </template>
-        <template v-else>
-          <Progress v-if="item.showProgress" :percent="item.percentage" hide-info></Progress>
-        </template>
-      </div>
+    <viewer class="img-box" :images="uploadList">
+        <div class="upload-list" v-for="(item,index) in uploadList" :key="index">
+          <template v-if="item.status === 'finished'">
+          <img :src="item.url" alt="">
+            <Icon type="md-close-circle" @click.native="handleRemove(item)"/>
+          </template>
+          <template v-else>
+            <Progress v-if="item.showProgress" :percent="item.percentage" hide-info></Progress>
+          </template>
+        </div>
       <Upload
         v-show="uploadList.length < (config.max || 5)"
+        v-if="add"
         ref="upload"
         :show-upload-list="false"
         :default-file-list="config.oldImg"
@@ -25,19 +23,17 @@
         :on-format-error="handleFormatError"
         :on-exceeded-size="handleMaxSize"
         :before-upload="handleBeforeUpload"
-        :multiple="config.multiple || true"
+        :multiple="multiple"
         type="drag"
         :action="API_PATH"
         :data="networkConfig"
-        style="display: inline-block;width:58px;">
-        <div style="width: 58px;height:58px;line-height: 58px;">
+        style="display: inline-block;width:78px;">
+        <div style="width: 78px;height:78px;line-height: 78px;">
           <Icon type="ios-camera" size="20"></Icon>
         </div>
       </Upload >
-    </div>
-    <Modal title="查看图片" v-model="visible"  class-name="vertical-center-modal">
-      <img :src="showUrl" v-if="visible" style="width: 100%">
-    </Modal>
+    </viewer>
+
   </div>
 
 </template>
@@ -49,15 +45,14 @@ export default {
       type: Object,
       default: () => {
         return {
-          // 图片标题 不传入 默认空
-          title: '图片标题',
-          // 是否多文件  不传入 默认为true
-          // multiple: false
-          // 最大文件数量  不传入 默认为5
-          // max: 5,
-          // 接口 图片保存的类型 不传入 默认为Car
-          type: 'Car',
+          title: '图片标题', // 图片标题 不传入 默认空
+          // multiple: false  // 是否多文件  不传入 默认为true
+          // max: 5, // 最大文件数量  不传入 默认为5
+          // type: 'Car', // 接口 图片保存的类型 不传入 默认为Car
+          // add: false, // 是否添加图片  不传入 默认为true
           oldImg: [
+            {url: 'http://zucheguanjia.oss-cn-qingdao.aliyuncs.com/car/15664441942763.png'},
+            {url: 'http://zucheguanjia.oss-cn-qingdao.aliyuncs.com/Car/15664600948748.png'}
           ]
         }
       }
@@ -68,18 +63,16 @@ export default {
       networkConfig: {
         fun: 'common/uploadImg',
         token: JSON.parse(sessionStorage.getItem('loginData')).token,
-        type: this.config.type
+        type: this.config.type || 'Car'
       },
+      add: this.config.add === true || this.config.add === undefined,
+      multiple: this.config.multiple === true || this.config.multiple === undefined,
       showUrl: '',
       visible: false,
       uploadList: []
     }
   },
   methods: {
-    handleView (url) {
-      this.visible = true
-      this.showUrl = url
-    },
     handleRemove (file) {
       const fileList = this.$refs.upload.fileList
       this.$refs.upload.fileList.splice(fileList.indexOf(file), 1)
@@ -143,47 +136,45 @@ export default {
   }
   .upload-list{
     display: inline-block;
-    width: 60px;
-    height: 60px;
+    width: 80px;
+    height: 80px;
     text-align: center;
-    line-height: 60px;
+    line-height: 80px;
     border: 1px solid transparent;
     border-radius: 4px;
-    overflow: hidden;
     background: #fff;
     position: relative;
     box-shadow: 0 1px 1px rgba(0,0,0,.2);
-    margin-right: 4px;
+    margin-right: 15px;
     img{
       width: 100%;
       height: 100%;
     }
-    &:hover .upload-list-cover{
-      display: block;
-    }
-  }
-  .upload-list-cover{
-    display: none;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: rgba(0,0,0,.6);
-    i{
-      color: #fff;
+    .ivu-icon{
+      position: absolute;
+      right: -10px;
+      top: -10px;
       font-size: 20px;
+      color: red;
       cursor: pointer;
-      margin: 0 2px;
     }
+    /*&:hover .upload-list-cover{*/
+    /*  display: block;*/
+    /*}*/
   }
-  /*对话框居中*/
-  /deep/ .vertical-center-modal{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    .ivu-modal{
-      top: 0;
-    }
-  }
+  /*.upload-list-cover{*/
+  /*  display: none;*/
+  /*  position: absolute;*/
+  /*  top: 0;*/
+  /*  bottom: 0;*/
+  /*  left: 0;*/
+  /*  right: 0;*/
+  /*  background: rgba(0,0,0,.6);*/
+  /*  i{*/
+  /*    color: #fff;*/
+  /*    font-size: 20px;*/
+  /*    cursor: pointer;*/
+  /*    margin: 0 2px;*/
+  /*  }*/
+  /*}*/
 </style>
