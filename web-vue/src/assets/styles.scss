@@ -137,14 +137,21 @@
     }
     .vehicle-text{
       @include vehicle-text;
-      .underline{
-        @include no-underline;
+      .ma-nomb-spacing{
+        //@include no-underline;
         @include ma-nomb-spacing;
       }
     }
-    .vehicle-text:nth-child(n+1){
-      .underline{
+    .vehicle-text:nth-child(n+2){
+      .ma-nomb-spacing{
         border-bottom: 1px solid #dcdee2;
+
+      }
+      .vehile-ma-l{
+        .ivu-col{
+          //padding: 14px 0;
+          line-height: 41px;
+        }
       }
     }
     .vehicle-btn{
