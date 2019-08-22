@@ -11,6 +11,13 @@ import common from './utils/common'
 import './assets/index.scss'
 import globalComponents from './components'
 import filters from './utils/global_filter'
+// 引入图片查看器
+import Viewer from 'v-viewer'
+import 'viewerjs/dist/viewer.css'
+Vue.use(Viewer)
+Viewer.setDefaults({
+  Options: { 'inline': true, 'button': true, 'navbar': true, 'title': true, 'toolbar': true, 'tooltip': true, 'movable': true, 'zoomable': true, 'rotatable': true, 'scalable': true, 'transition': true, 'fullscreen': true, 'keyboard': true, 'url': 'data-source' }
+})
 // 全局过滤器
 Object.keys(filters).forEach(key => {
   Vue.filter(key, filters[key])
