@@ -137,6 +137,7 @@ export default {
     }
     .img-box{
       margin-left: 20px;
+      display: flex;
     }
   }
   .upload-list{
