@@ -70,8 +70,11 @@ export default {
       if (response.status) {
         _this.$Message.success({
           content: response.msg,
-          duration: 5
+          duration: 3
         })
+        setTimeout(function () {
+          _this.$emit('excelUploadSuccess')
+        }, 1000)
       } else {
         _this.$Modal.confirm({
           title: '错误报告下载',
@@ -86,14 +89,14 @@ export default {
     onError (e, file, fileList) {
       this.$Message.success({
         content: '网络不给力，上传文件失败',
-        duration: 5
+        duration: 3
       })
     },
     /* 文件格式错误 */
     onFormatError () {
       this.$Message.error({
         content: '文件格式错误',
-        duration: 5
+        duration: 3
       })
       return false
     }

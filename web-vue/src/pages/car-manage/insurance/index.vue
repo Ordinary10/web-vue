@@ -48,7 +48,7 @@
         :title="excelModal.title"
         :mask-closable="false"
       >
-        <excelUpload :config="excelModal.config" v-if="excelModal.isShow"></excelUpload>
+        <excelUpload :config="excelModal.config" v-if="excelModal.isShow" @excelUploadSuccess="excelUploadSuccess"></excelUpload>
         <div slot="footer"></div>
       </Modal>
     </div>
@@ -168,6 +168,17 @@ export default {
 
   },
   methods: {
+    /* 批量上传成功后执行该回调函数 */
+    excelUploadSuccess () {
+      /* 关闭弹窗 */
+      this.excelModal = {
+        title: '',
+        isShow: false,
+        config: ''
+      }
+      /* 保留page刷新table */
+      this.pageRefresh()
+    },
     /* 更多操作 */
     redundant (index) {
       let d = this.redundantList[index]
@@ -197,6 +208,15 @@ export default {
       })
       this.searchData = obj
       this.$refs.pagingTable.refresh(this.searchData)
+    },
+    /* 保留page刷新table */
+    pageRefresh () {
+      let obj = {}
+      Object.keys(this.startSearchData).forEach(key => {
+        obj[key] = this.startSearchData[key]
+      })
+      this.searchData = obj
+      this.$refs.pagingTable.pageRefresh(this.searchData)
     },
     tableBtnClick (item, type) {
       switch (type) {

@@ -110,6 +110,13 @@ export default {
       this.sort_field = ''
       this.sort_type = ''
       this.getTableData()
+    },
+    /* 保留页码刷新 */
+    pageRefresh (startSearchData) {
+      this.params = startSearchData
+      this.sort_field = ''
+      this.sort_type = ''
+      this.getTableData()
     }
   },
   computed: {
