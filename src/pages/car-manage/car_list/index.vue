@@ -66,7 +66,7 @@
         :title="excelModal.title"
         :mask-closable="false"
       >
-        <excelUpload :config="excelModal.config" v-if="excelModal.isShow"></excelUpload>
+        <excelUpload :config="excelModal.config" v-if="excelModal.isShow" @excelUploadSuccess="excelUploadSuccess"></excelUpload>
         <div slot="footer"></div>
       </Modal>
     </div>
@@ -214,6 +214,19 @@ export default {
     cancel () {
       this.$Message.info('Clicked cancel')
     },
+    /* 批量上传成功后执行该回调函数 */
+    excelUploadSuccess () {
+      /* 关闭弹窗 */
+      this.excelModal = {
+        title: '',
+        isShow: false,
+        config: ''
+      }
+      /* 保留page刷新table */
+      this.pageRefresh()
+      /* 不保留page刷新table（同刷新按钮） */
+      // this.refresh()
+    },
     /* 新增车辆 */
     addCar () {
       alert('添加车辆')
@@ -249,6 +262,15 @@ export default {
       })
       this.searchData = obj
       this.$refs.pagingTable.refresh(this.searchData)
+    },
+    /* 保留page刷新table */
+    pageRefresh () {
+      let obj = {}
+      Object.keys(this.startSearchData).forEach(key => {
+        obj[key] = this.startSearchData[key]
+      })
+      this.searchData = obj
+      this.$refs.pagingTable.pageRefresh(this.searchData)
     },
     /* table操作栏 */
     tableBtnClick (item, type) {
