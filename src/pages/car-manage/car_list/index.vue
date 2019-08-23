@@ -57,8 +57,11 @@
         title="查看详情"
         :footer-hide="true"
         :width='1350'
+        v-if="modal1"
+        class-name="vertical-center-modal"
       >
-        <userVehicleHead :param="add" v-if="modal1"></userVehicleHead>
+        <userVehicleHead :param="add" ></userVehicleHead>
+        <popup :popupData="popupData"></popup>
       </Modal>
       <!--批量导入弹出框-->
       <Modal
@@ -73,6 +76,7 @@
 </template>
 <script type="text/jsx">
 import userVehicleHead from '../../../components/headPublic/userVehicleHead'
+import popup from './popup'
 
 export default {
   data () {
@@ -100,6 +104,7 @@ export default {
       modal1: false,
       iconType: 'md-arrow-dropdown',
       add: '',
+      popupData:{},
       config: {
         fun: 'Car/carList',
         columns: [
@@ -201,7 +206,8 @@ export default {
     }
   },
   components: {
-    userVehicleHead
+    userVehicleHead,
+    popup,
   },
   created () {
   },
@@ -278,6 +284,8 @@ export default {
         case 'see':
           this.modal1 = true
           this.add = item.plate_no
+          this.popupData = {car_id:item.id}
+          console.log(this.popupData)
           break
         case 'editor':
           alert(`编辑：${item.id}`)
