@@ -22,7 +22,7 @@
                 <Icon type="ios-arrow-down"></Icon>
               </Button>
               <DropdownMenu slot="list">
-                <DropdownItem v-if="item.isShow === true" v-for="item in redundantList" :key="item.type" @click.native="redundant(item.type)">{{item.label}}</DropdownItem>
+                <DropdownItem v-if="item.isShow === true" v-for="(item,index) in redundantList" :key="item.type" @click.native="redundant(index)">{{item.label}}</DropdownItem>
               </DropdownMenu>
             </Dropdown>
           </div>
@@ -91,14 +91,10 @@ export default {
 
   },
   methods: {
-    /* 更多操作 */
-    redundant (type) {
-    },
     search () {
       this.$refs.pagingTable.search(this.searchData)
     },
     refresh () {
-      /* 注意：不能将searchData引用为startSearchData，否则后续刷新将失效——引用（指针）与内存空间的关系问题 */
       let obj = {}
       Object.keys(this.startSearchData).forEach(key => {
         obj[key] = this.startSearchData[key]

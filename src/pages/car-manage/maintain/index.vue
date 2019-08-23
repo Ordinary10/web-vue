@@ -16,6 +16,15 @@
             <Button class="search-btn " size="large" icon="md-search" type="primary" @click.native="search"></Button>
             <Button class="refresh-btn search-btn" size="large" icon="md-refresh" type="info" @click.native="refresh"></Button>
           </div>
+          <!--常用操作按钮-->
+          <div class="commonly-used-btn-box">
+            <Tooltip content="新增维修" placement="bottom-start">
+              <Button class="commonly-used-btn" type="warning" size="large" icon="ios-add-circle-outline" @click="addMaintain">维修</Button>
+            </Tooltip>
+            <Tooltip content="新增保养" placement="bottom-start">
+              <Button class="commonly-used-btn" type="warning" size="large" icon="ios-add-circle-outline" @click="addUpkeep">保养</Button>
+            </Tooltip>
+          </div>
           <div class="redundant-btn" v-if="redundantList && redundantList.length>0">
             <Dropdown>
               <Button type="primary" size="large">
@@ -23,7 +32,7 @@
                 <Icon type="ios-arrow-down"></Icon>
               </Button>
               <DropdownMenu slot="list">
-                <DropdownItem v-for="item in redundantList" :key="item.type" @click.native="redundant(item.type)">{{item.label}}</DropdownItem>
+                <DropdownItem v-for="(item,index) in redundantList" :key="item.type" @click.native="redundant(index)">{{item.label}}</DropdownItem>
               </DropdownMenu>
             </Dropdown>
           </div>
@@ -32,6 +41,15 @@
       <div class="content-block">
         <paging-table ref="pagingTable" :config="config" :searchData="searchData"></paging-table>
       </div>
+      <!--批量导入弹出框-->
+      <Modal
+        v-model="excelModal.isShow"
+        :title="excelModal.title"
+        :mask-closable="false"
+      >
+        <excelUpload :config="excelModal.config" v-if="excelModal.isShow"></excelUpload>
+        <div slot="footer"></div>
+      </Modal>
     </div>
 </template>
 <script type="text/jsx">
@@ -86,55 +104,71 @@ export default {
       },
       redundantList: [
         {
-          type: 'addUpkeep',
-          label: '新增保养',
-          isShow: true
-        },
-        {
-          type: 'addMaintain',
-          label: '新增维修',
-          isShow: true
-        },
-        {
           type: 'addUpkeepList',
           label: '批量保养',
-          isShow: true
+          isExcelModal: true,
+          isShow: true,
+          config: {
+            'fun': 'BulkImport/carUpkeepImportData',
+            'demo': 'carUpkeep',
+            'exts': ['xlsx', 'xls'],
+            'str': `日期格式必须设置为yyyy-mm-dd格式，如：2019-07-02
+                    上传格式支持xlsx或xls`
+          }
         },
         {
           type: 'addMaintainList',
           label: '批量维修',
-          isShow: true
+          isExcelModal: true,
+          isShow: true,
+          config: {
+            'fun': 'BulkImport/carRepairsImportData',
+            'demo': 'carRepairs',
+            'exts': ['xlsx', 'xls'],
+            'str': `日期格式必须设置为yyyy-mm-dd格式，如：2019-07-02
+                    上传格式支持xlsx或xls`
+          }
         },
         {
           type: 'exportList',
           label: '导出列表',
-          isShow: true
+          isShow: true,
+          exportFun: 'CarUpkeep/exportCarUpkeep'
         }
-      ]
+      ],
+      excelModal: {
+        title: '',
+        isShow: false,
+        config: ''
+      }
     }
   },
   mounted () {
-
   },
   methods: {
+    /* 新增维修保养 */
+    addUpkeep () {
+      alert('新增保养')
+    },
+    addMaintain () {
+      alert('新增维修')
+    },
     /* 更多操作 */
-    redundant (type) {
-      switch (type) {
-        case 'addUpkeep':
-          alert('新增保养')
-          break
-        case 'addMaintain':
-          alert('新增维修')
-          break
-        case 'exportList':
-          alert('导出列表')
-          break
-        case 'addUpkeepList':
-          alert('批量保养')
-          break
-        case 'addMaintainList':
-          alert('批量维修')
-          break
+    redundant (index) {
+      let d = this.redundantList[index]
+      if (d.isExcelModal === true) {
+        this.excelModal.title = d.label
+        this.excelModal.config = d.config
+        this.excelModal.isShow = true
+      } else if (d.type === 'exportList' && d.exportFun) {
+        const _this = this
+        let str = ''
+        Object.keys(_this.searchData).forEach(key => {
+          str += `&params[${key}]=${_this.searchData[key]}`
+        })
+        window.open(`${_this.$common.API_PATH}?fun=${d.exportFun}&token=${sessionStorage.getItem('token')}${str}`)
+      } else {
+        alert(d.label)
       }
     },
     search () {

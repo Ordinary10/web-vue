@@ -30,8 +30,19 @@
       }
     }
   }
+
   .redundant-btn{
     margin: 4px;
+  }
+  .commonly-used-btn-box{
+    margin: 4px;
+    .commonly-used-btn{
+      padding: 0 15px;
+      height: 36px;
+      i{
+        font-size: 14px;
+      }
+    }
   }
 }
 //table内的操作按钮样式

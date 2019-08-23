@@ -18,7 +18,7 @@
                 <Icon type="ios-arrow-down"></Icon>
               </Button>
               <DropdownMenu slot="list">
-                <DropdownItem v-if="item.isShow === true" v-for="item in redundantList" :key="item.type" @click.native="redundant(item.type)">{{item.label}}</DropdownItem>
+                <DropdownItem v-if="item.isShow === true" v-for="(item,index) in redundantList" :key="item.type" @click.native="redundant(index)">{{item.label}}</DropdownItem>
               </DropdownMenu>
             </Dropdown>
           </div>
@@ -27,6 +27,15 @@
       <div class="content-block">
         <paging-table ref="pagingTable" :config="config" :searchData="searchData" ></paging-table>
       </div>
+      <!--批量导入弹出框-->
+      <Modal
+        v-model="excelModal.isShow"
+        :title="excelModal.title"
+        :mask-closable="false"
+      >
+        <excelUpload :config="excelModal.config" v-if="excelModal.isShow"></excelUpload>
+        <div slot="footer"></div>
+      </Modal>
     </div>
 </template>
 <script type="text/jsx">
@@ -88,14 +97,28 @@ export default {
         {
           type: 'importAuditList',
           label: '导入年审',
-          isShow: true
+          isExcelModal: true,
+          isShow: true,
+          config: {
+            'fun': 'BulkImport/annualImportData',
+            'demo': 'annualImport',
+            'exts': ['xlsx', 'xls'],
+            'str': `日期格式必须设置为yyyy-mm-dd格式，如：2019-07-02
+                    上传格式支持xlsx或xls `
+          }
         },
         {
           type: 'exportList',
           label: '导出列表',
-          isShow: true
+          isShow: true,
+          exportFun: 'car/exportAnnual'
         }
-      ]
+      ],
+      excelModal: {
+        title: '',
+        isShow: false,
+        config: ''
+      }
     }
   },
   mounted () {
@@ -103,14 +126,21 @@ export default {
   },
   methods: {
     /* 更多操作 */
-    redundant (type) {
-      switch (type) {
-        case 'importAuditList':
-          alert('导入年审')
-          break
-        case 'exportList':
-          alert('导出列表')
-          break
+    redundant (index) {
+      let d = this.redundantList[index]
+      if (d.isExcelModal === true) {
+        this.excelModal.title = d.label
+        this.excelModal.config = d.config
+        this.excelModal.isShow = true
+      } else if (d.type === 'exportList' && d.exportFun) {
+        const _this = this
+        let str = ''
+        Object.keys(_this.searchData).forEach(key => {
+          str += `&params[${key}]=${_this.searchData[key]}`
+        })
+        window.open(`${_this.$common.API_PATH}?fun=${d.exportFun}&token=${sessionStorage.getItem('token')}${str}`)
+      } else {
+        alert(d.label)
       }
     },
     search () {

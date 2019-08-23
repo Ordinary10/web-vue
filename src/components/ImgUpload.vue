@@ -33,9 +33,7 @@
         </div>
       </Upload >
     </viewer>
-
   </div>
-
 </template>
 
 <script>

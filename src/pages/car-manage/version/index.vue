@@ -11,6 +11,12 @@
             <Button class="search-btn " size="large" icon="md-search" type="primary" @click.native="search"></Button>
             <Button class="refresh-btn search-btn" size="large" icon="md-refresh" type="info" @click.native="refresh"></Button>
           </div>
+          <!--常用操作按钮-->
+          <div class="commonly-used-btn-box">
+            <Tooltip content="添加车型" placement="bottom-start">
+              <Button class="commonly-used-btn" type="warning" size="large" icon="ios-add-circle-outline" @click="addCarModel" style="font-size: 18px"></Button>
+            </Tooltip>
+          </div>
           <div class="redundant-btn" v-if="redundantList && redundantList.length>0">
             <Dropdown>
               <Button type="primary" size="large">
@@ -18,7 +24,7 @@
                 <Icon type="ios-arrow-down"></Icon>
               </Button>
               <DropdownMenu slot="list">
-                <DropdownItem v-if="item.isShow === true" v-for="item in redundantList" :key="item.type" @click.native="redundant(item.type)">{{item.label}}</DropdownItem>
+                <DropdownItem v-if="item.isShow === true" v-for="(item,index) in redundantList" :key="item.type" @click.native="redundant(index)">{{item.label}}</DropdownItem>
               </DropdownMenu>
             </Dropdown>
           </div>
@@ -67,26 +73,16 @@ export default {
         brand: '',
         car_model: ''
       },
-      redundantList: [
-        {
-          type: 'addCarModels',
-          label: '添加车型',
-          isShow: true
-        }
-      ]
+      redundantList: []
     }
   },
   mounted () {
 
   },
   methods: {
-    /* 更多操作 */
-    redundant (type) {
-      switch (type) {
-        case 'addCarModels':
-          alert('添加车型')
-          break
-      }
+    /* 添加车型 */
+    addCarModel () {
+      alert('添加车型')
     },
     search () {
       this.$refs.pagingTable.search(this.searchData)

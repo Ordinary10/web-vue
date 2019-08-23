@@ -29,4 +29,13 @@
     }
   }
 }
+// 弹出层垂直居中
+.ivu-modal-wrap{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .ivu-modal{
+    top: 0;
+  }
+}
 

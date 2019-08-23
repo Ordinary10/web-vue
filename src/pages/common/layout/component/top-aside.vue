@@ -90,7 +90,7 @@ export default {
   height: 60px;
   background:rgba(76,124,243,1);
   display: flex;
-  z-index: 9999;
+  z-index: 1000;
   .sidebar-wrapper{
     flex: 1;
     background:inherit;
