@@ -9,15 +9,15 @@
             <Option v-for="item in $common.pageInitInfo.car_status" :value="item.id" :key="'car_status'+item.id">{{ item.name }}</Option>
           </Select>
           <Input  class="search-input" v-model="searchData.vin" size="large" placeholder="请输入车架号" />
-          <Select v-show="isShow" v-model="searchData.type" v-if="$common.pageInitInfo.car_type" class="search-input" size="large" placeholder="请选择车辆类型">
+          <Select v-show="isShow" v-model="searchData.type" class="search-input" size="large" placeholder="请选择车辆类型">
             <Option value="">全部（车辆类型）</Option>
             <Option v-for="item in $common.pageInitInfo.car_type" :value="item.id" :key="'car_type'+item.id">{{ item.name }}</Option>
           </Select>
-          <Select v-show="isShow" v-model="searchData.department" v-if="$common.pageInitInfo.company_info" class="search-input" size="large" placeholder="请选择门店">
+          <Select v-show="isShow" v-model="searchData.department" class="search-input" size="large" placeholder="请选择门店">
             <Option value="">全部（门店）</Option>
             <Option v-for="item in $common.pageInitInfo.company_info" :value="item.id" :key="'company_info'+item.id">{{ item.name }}</Option>
           </Select>
-          <Select v-show="isShow" v-model="searchData.carVersion" v-if="$common.pageInitInfo.car_version" class="search-input" size="large" placeholder="请选择车辆品牌">
+          <Select v-show="isShow" v-model="searchData.carVersion" class="search-input" size="large" placeholder="请选择车辆品牌">
             <Option value="">全部（车辆品牌）</Option>
             <Option v-for="item in $common.pageInitInfo.car_version" :value="item.id" :key="'car_version'+item.id">{{ item.name }}</Option>
           </Select>
@@ -72,7 +72,7 @@ export default {
     * redundantList: 更多操作按钮的配置对象
     *            --> isShow 为true时按钮才显示，其余状态皆不可用.用于用户权限相关操作的隐藏显示
     *            --> type 作为触发点击操作的识别参数
-    *            --> name 操作说明
+    *            --> name 点击按钮说明
     * */
     return {
       isShow: false,
@@ -219,10 +219,7 @@ export default {
           alert(`编辑：${item.id}`)
           break
       }
-    },
-
-
-
+    }
   }
 }
 </script>
