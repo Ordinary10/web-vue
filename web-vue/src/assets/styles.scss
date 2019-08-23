@@ -198,6 +198,21 @@
 }
 body{
   font-size: 14px!important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+}
+.ivu-modal-body{
+  overflow-y: auto;
+  max-height: 668px;
+}
+.vertical-center-modal{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .ivu-modal{
+    top: 0;
+  }
 }
 .ivu-modal-body{
   font-size: 14px!important;
@@ -285,6 +300,9 @@ body{
   height: 40px;
   line-height: 40px;
   /*float: left;*/
+}
+.key_text{
+  color: #2B343A;
 }
 .ma-spacing{
   position: relative;
