@@ -185,6 +185,15 @@ export default {
       this.searchData = obj
       this.$refs.pagingTable.refresh(this.searchData)
     },
+    /* 保留page刷新table */
+    pageRefresh () {
+      let obj = {}
+      Object.keys(this.startSearchData).forEach(key => {
+        obj[key] = this.startSearchData[key]
+      })
+      this.searchData = obj
+      this.$refs.pagingTable.pageRefresh(this.searchData)
+    },
     tableBtnClick (item, type) {
       switch (type) {
         case 'see':
