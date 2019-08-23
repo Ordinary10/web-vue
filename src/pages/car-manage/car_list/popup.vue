@@ -1,0 +1,161 @@
+<template>
+  <Row>
+    <Col span="12">
+
+      <div class="card-body">
+        <div class="card-header">
+          <p class="card-title">基本信息</p>
+        </div>
+        <div class="card">
+          <Row class="ma-lr">
+<!--            <div class="ma-nomb-spacing">-->
+<!--              <div class="bt-top">-->
+<!--                基本信息-->
+<!--              </div>-->
+<!--            </div>-->
+            <Col span="12" v-for="(list,index) in vehic_data" :key="list.id">
+              <div class="ma-spacing">
+                {{list.name}}：<span class="key_text">{{list.value}}</span>
+              </div>
+            </Col>
+            <div class="ma-nomb-spacing">
+              <div class="bt-top">
+                行驶证照片
+              </div>
+            </div>
+          </Row>
+        </div>
+      </div>
+    </Col>
+    <Col span="12">
+      <div class="card-body">
+        <div class="card-header">
+          <p class="card-title">车辆信息</p>
+        </div>
+        <div class="card">
+          <Row class="ma-lr">
+            <div class="ma-nomb-spacing">
+              <Tabs value="name1">
+                <TabPane label="购车信息" name="name1">
+                  <Col span="12">
+                    <div class="ma-spacing">
+                      1221：<span class="key_text">9884984</span>
+                    </div>
+                  </Col>
+                  <Col span="12">
+                    <div class="ma-spacing">
+                      1221：<span class="key_text">9884984</span>
+                    </div>
+                  </Col>
+                  <div class="ma-nomb-spacing">
+                    <div class="bt-top">
+                      购车发票
+                    </div>
+                  </div>
+                  <div class="ma-nomb-spacing">
+                    <div class="bt-top">
+                      购置税发票
+                    </div>
+                  </div>
+                  
+                </TabPane>
+                <TabPane label="GPS信息" name="name2">标签二的内容</TabPane>
+                <TabPane label="车钥匙信息" name="name3">标签三的内容</TabPane>
+                <TabPane label="租赁信息" name="name3">
+                  <Table :columns="columns1" ></Table>
+                </TabPane>
+              </Tabs>
+            </div>
+            <div class="ma-nomb-spacing ma-top">
+            </div>
+          </Row>
+        </div>
+      </div>
+    </Col>
+  </Row>
+</template>
+
+<script>
+  export default {
+    name: 'popup',
+    props:{
+      popupData:{
+      }
+    },
+    data:function(){
+      return {
+        addData:'',
+        dis_no:[false,false],
+        columns1: [
+          {
+            title: 'Name',
+            key: 'name'
+          },
+          {
+            title: 'Age',
+            key: 'age'
+          },
+          {
+            title: 'Address',
+            key: 'address'
+          }
+        ],
+      }
+    },
+    created(){
+      console.log(this.popupData)
+      this.getlinst()
+    },
+    computed:{
+      vehic_data:function () {
+        var data = {
+          plate_no:'车牌号码',
+          dp_id_name:'门店',
+          car_householder_name:'户主',
+          type_name:'车辆类型',
+          version_id_name:'品牌车型',
+          color:'车身颜色',
+          vin:'车架号',
+          engine_no:'发动机号',
+          on_plate:'注册时间',
+          is_service_name:'营运性质',
+          plate_city:'上牌城市',
+          is_gas_name:'是否气罐',
+          car_type_name:'车牌类型',
+          storage_name:'车库',
+          status_name:'状态',
+          warehouse_place:'仓位',
+          desc:'备注',
+        }
+        return this.clean(data,this.addData)
+      }
+    },
+    methods:{
+      async getlinst() {
+        const _this = this
+        var res  = await _this.$axios('car/getDetailInfo',{car_id:this.popupData.car_id})
+        //先将空数据全部改为暂无
+        for (let k in res.data){
+          if (!res.data[k]){
+            res.data[k]='暂无'
+          }
+        }
+        this.addData  = res.data
+      },
+      clean(list,data){
+        if (data){
+          let newarray = []
+          for (let key in list){
+            newarray.push({name:list[key],value:data[key],data_name:key,hover:data[key]})
+          }
+          console.log(newarray)
+          return newarray
+        }
+      }
+    }
+  }
+</script>
+
+<style scoped>
+
+</style>
