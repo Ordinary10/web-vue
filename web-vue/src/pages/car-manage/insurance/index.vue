@@ -34,7 +34,7 @@
                 <Icon :type="iconType" />
               </Button>
               <DropdownMenu slot="list">
-                <DropdownItem v-if="item.isShow === true" v-for="item in redundantList" :key="item.type" @click.native="redundant(item.type)">{{item.label}}</DropdownItem>
+                <DropdownItem v-if="item.isShow === true" v-for="(item,index) in redundantList" :key="item.type" @click.native="redundant(index)">{{item.label}}</DropdownItem>
               </DropdownMenu>
             </Dropdown>
           </div>
@@ -43,6 +43,14 @@
       <div class="content-block">
         <paging-table ref="pagingTable" :config="config" :searchData="searchData"></paging-table>
       </div>
+      <Modal
+        v-model="excelModal.isShow"
+        :title="excelModal.title"
+        :mask-closable="false"
+      >
+        <excelUpload :config="excelModal.config" v-if="excelModal.isShow"></excelUpload>
+        <div slot="footer"></div>
+      </Modal>
     </div>
 </template>
 <script type="text/jsx">
@@ -113,19 +121,47 @@ export default {
         {
           type: 'importPolicyList',
           label: '批量保单',
-          isShow: true
+          isShow: true,
+          isExcelModal: true,
+          config: {
+            'fun': 'BulkImport/insuranceImportData',
+            'demo': 'insuranceImport',
+            'exts': ['xlsx', 'xls'],
+            'str': `日期格式必须设置为yyyy-mm-dd格式，如：2019-07-02
+            有录入交强险金额则更新交强险到期时间
+            有录入商业险金额则更新商业险到期时间
+            保单开始日期和结束日期必填
+            商业险与交强险必填其中一项
+            填写保单号有则更新,无则添加
+            无保单号则直接新增保单
+            上传格式支持xlsx或xls`
+          }
         },
         {
           type: 'importQuotationList',
           label: '批量报价',
-          isShow: true
+          isShow: true,
+          isExcelModal: true,
+          config: {
+            'fun': 'BulkImport/insuranceQuote',
+            'demo': 'insuranceQuote',
+            'exts': ['xlsx', 'xls'],
+            'str': `日期格式必须设置为yyyy-mm-dd格式，如：2019-07-02
+            上传格式支持xlsx或xls`
+          }
         },
         {
           type: 'exportList',
           label: '导出列表',
-          isShow: true
+          isShow: true,
+          exportFun: 'car/isuranceExportData'
         }
-      ]
+      ],
+      excelModal: {
+        title: '',
+        isShow: false,
+        config: ''
+      }
     }
   },
   mounted () {
@@ -133,17 +169,21 @@ export default {
   },
   methods: {
     /* 更多操作 */
-    redundant (type) {
-      switch (type) {
-        case 'importPolicyList':
-          alert('批量保单')
-          break
-        case 'importQuotationList':
-          alert('批量报价')
-          break
-        case 'exportList':
-          alert('导出列表')
-          break
+    redundant (index) {
+      let d = this.redundantList[index]
+      if (d.isExcelModal === true) {
+        this.excelModal.title = d.label
+        this.excelModal.config = d.config
+        this.excelModal.isShow = true
+      } else if (d.type === 'exportList' && d.exportFun) {
+        const _this = this
+        let str = ''
+        Object.keys(_this.searchData).forEach(key => {
+          str += `&params[${key}]=${_this.searchData[key]}`
+        })
+        window.open(`${_this.$common.API_PATH}?fun=${d.exportFun}&token=${sessionStorage.getItem('token')}${str}`)
+      } else {
+        alert(d.label)
       }
     },
     search () {

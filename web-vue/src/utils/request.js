@@ -55,8 +55,8 @@ service.interceptors.response.use(
   }
 )
 /* 表格的通用数据请求方法 */
-export function tableRequest (options, data,Loadings) {
-  if (!Loadings){
+export function tableRequest (options, data, Loadings) {
+  if (!Loadings) {
     Spin.show({
       render: (h) => {
         return h('div', [
@@ -85,8 +85,8 @@ export function tableRequest (options, data,Loadings) {
   })
 }
 /* 其他数据请求的通用方法 */
-export function request (fun, data,Loadings) {
-  if (!Loadings){
+export function request (fun, data, Loadings) {
+  if (!Loadings) {
     Spin.show({
       render: (h) => {
         return h('div', [

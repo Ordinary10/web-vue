@@ -30,7 +30,7 @@
                 <Icon type="ios-arrow-down"></Icon>
               </Button>
               <DropdownMenu slot="list">
-                <DropdownItem v-if="item.isShow === true" v-for="item in redundantList" :key="item.type" @click.native="redundant(item.type)">{{item.label}}</DropdownItem>
+                <DropdownItem v-if="item.isShow === true" v-for="(item,index) in redundantList" :key="item.type" @click.native="redundant(index)">{{item.label}}</DropdownItem>
               </DropdownMenu>
             </Dropdown>
           </div>
@@ -150,24 +150,27 @@ export default {
         {
           type: 'exportList',
           label: '导出列表',
-          isShow: true
+          isShow: true,
+          exportFun: 'IllegalSearch/DerivedTable'
         }
       ]
     }
   },
   mounted () {
-
   },
   methods: {
     /* 更多操作 */
-    redundant (type) {
-      switch (type) {
-        case 'setThreshold':
-          alert('设置阀值')
-          break
-        case 'exportList':
-          alert('导出列表')
-          break
+    redundant (index) {
+      let d = this.redundantList[index]
+      if (d.type === 'exportList' && d.exportFun) {
+        const _this = this
+        let str = ''
+        Object.keys(_this.searchData).forEach(key => {
+          str += `&params[${key}]=${_this.searchData[key]}`
+        })
+        window.open(`${_this.$common.API_PATH}?fun=${d.exportFun}&token=${sessionStorage.getItem('token')}${str}`)
+      } else {
+        alert(d.label)
       }
     },
     search () {

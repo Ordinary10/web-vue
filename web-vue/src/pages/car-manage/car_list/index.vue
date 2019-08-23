@@ -29,6 +29,12 @@
             <Button class="search-btn " size="large" icon="md-search" type="primary" @click.native="search"></Button>
             <Button class="refresh-btn search-btn" size="large" icon="md-refresh" type="info" @click.native="refresh"></Button>
           </div>
+          <!--常用操作按钮-->
+          <div class="commonly-used-btn-box">
+            <Tooltip content="添加车辆" placement="bottom-start">
+              <Button class="commonly-used-btn" type="warning" size="large" icon="ios-add-circle-outline" @click="addCar" style="font-size: 18px"></Button>
+            </Tooltip>
+          </div>
           <!--更多操作-->
           <div class="redundant-btn" v-if="redundantList && redundantList.length>0">
             <Dropdown>
@@ -37,7 +43,7 @@
                 <Icon :type="iconType" />
               </Button>
               <DropdownMenu slot="list">
-                <DropdownItem v-if="item.isShow === true" v-for="item in redundantList" :key="item.type" @click.native="redundant(item.type)">{{item.label}}</DropdownItem>
+                <DropdownItem v-if="item.isShow === true" v-for="(item,index) in redundantList" :key="item.type" @click.native="redundant(index)">{{item.label}}</DropdownItem>
               </DropdownMenu>
             </Dropdown>
           </div>
@@ -53,6 +59,15 @@
         :width='1350'
       >
         <userVehicleHead :param="add" v-if="modal1"></userVehicleHead>
+      </Modal>
+      <!--批量导入弹出框-->
+      <Modal
+        v-model="excelModal.isShow"
+        :title="excelModal.title"
+        :mask-closable="false"
+      >
+        <excelUpload :config="excelModal.config" v-if="excelModal.isShow"></excelUpload>
+        <div slot="footer"></div>
       </Modal>
     </div>
 </template>
@@ -72,7 +87,13 @@ export default {
     * redundantList: 更多操作按钮的配置对象
     *            --> isShow 为true时按钮才显示，其余状态皆不可用.用于用户权限相关操作的隐藏显示
     *            --> type 作为触发点击操作的识别参数
-    *            --> name 点击按钮说明
+    *            --> name 点击按钮功能描述
+    *            --> isExcelModal 是否是批量导入按钮
+    *            --> config 如果isExcelModal为true则必须设置
+    *                   --> fun 批量上传的接口
+    *                   --> demo 批量上传的模板下载接口
+    *                   --> exts 批量上传文件格式
+    *                   --> str 批量上传的注意说明
     * */
     return {
       isShow: false,
@@ -132,31 +153,51 @@ export default {
       },
       redundantList: [
         {
-          type: 'addCar',
-          label: '添加车辆',
-          isShow: true
-        },
-        {
           type: 'addCarList',
           label: '导入车辆',
-          isShow: true
+          isExcelModal: true,
+          isShow: true,
+          config: {
+            'fun': 'BulkImport/carImportData',
+            'demo': 'carImport',
+            'exts': ['xlsx', 'xls'],
+            'str': `门店编号,户主编号,车型编号,仓库编号为数字，请下载基础数据查看
+                    日期格式必须设置为yyyy-mm-dd格式，如：2019-07-02
+                    上传的车辆默认为新车，状态为在库待销售
+                    年审日期自动在上牌时间基础上累加
+                    上传格式支持xlsx或xls
+                    模板中标题标红的为必填项`
+          }
         },
         {
           type: 'addGPSList',
           label: '导入GPS',
-          isShow: true
+          isExcelModal: true,
+          isShow: true,
+          config: {
+            'fun': 'BulkImport/carGpsImport',
+            'demo': 'carGps',
+            'exts': ['xlsx', 'xls'],
+            'str': ``
+          }
         },
         {
           type: 'exportList',
           label: '导出列表',
-          isShow: true
+          isShow: true,
+          exportFun: 'car/exportCars'
         },
         {
           type: 'carBack',
           label: '退车入库',
           isShow: true
         }
-      ]
+      ],
+      excelModal: {
+        title: '',
+        isShow: false,
+        config: ''
+      }
     }
   },
   components: {
@@ -165,7 +206,6 @@ export default {
   created () {
   },
   mounted () {
-
   },
   methods: {
     ok () {
@@ -174,24 +214,26 @@ export default {
     cancel () {
       this.$Message.info('Clicked cancel')
     },
+    /* 新增车辆 */
+    addCar () {
+      alert('添加车辆')
+    },
     /* 更多操作 */
-    redundant (type) {
-      switch (type) {
-        case 'addCar':
-          alert('添加车辆')
-          break
-        case 'addCarList':
-          alert('导入车辆')
-          break
-        case 'exportList':
-          alert('导出列表')
-          break
-        case 'carBack':
-          alert('退车入库')
-          break
-        case 'addGPSList':
-          alert('导入GPS')
-          break
+    redundant (index) {
+      let d = this.redundantList[index]
+      if (d.isExcelModal === true) {
+        this.excelModal.title = d.label
+        this.excelModal.config = d.config
+        this.excelModal.isShow = true
+      } else if (d.type === 'exportList' && d.exportFun) {
+        const _this = this
+        let str = ''
+        Object.keys(_this.searchData).forEach(key => {
+          str += `&params[${key}]=${_this.searchData[key]}`
+        })
+        window.open(`${_this.$common.API_PATH}?fun=${d.exportFun}&token=${sessionStorage.getItem('token')}${str}`)
+      } else {
+        alert(d.label)
       }
     },
     /* 搜索按钮 */
@@ -200,7 +242,7 @@ export default {
     },
     /* 刷新按钮 */
     refresh () {
-      /* 注意：不能将searchData引用为startSearchData，否则后续刷新将失效——引用（指针）与内存空间的关系问题 */
+      /* 注意：不能将searchData引用为startSearchData，否则后续刷新将失效——引用（指针）与内存空间的问题 */
       let obj = {}
       Object.keys(this.startSearchData).forEach(key => {
         obj[key] = this.startSearchData[key]
