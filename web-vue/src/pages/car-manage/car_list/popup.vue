@@ -7,12 +7,7 @@
           <p class="card-title">基本信息</p>
         </div>
         <div class="card">
-          <Row class="ma-lr">
-<!--            <div class="ma-nomb-spacing">-->
-<!--              <div class="bt-top">-->
-<!--                基本信息-->
-<!--              </div>-->
-<!--            </div>-->
+          <Row class="ma-lr top-p">
             <Col span="12" v-for="(list,index) in vehic_data" :key="list.id">
               <div class="ma-spacing">
                 {{list.name}}：<span class="key_text">{{list.value}}</span>
@@ -20,9 +15,12 @@
             </Col>
             <Col span="24">
               <div class="ma-nomb-spacing">
-                <div class="bt-top">
+                <div class="bt-no-top">
                   行驶证照片
                 </div>
+                <ImgUpload v-if="purchase_data" :config="buy_img"></ImgUpload>
+<!--                <paging-table ref="pagingTable" :config="detailConfig" :searchData="searchData"></paging-table>-->
+
               </div>
             </Col>
           </Row>
@@ -118,6 +116,7 @@
 </template>
 
 <script>
+  import ImgUpload from '../../../components/ImgUpload'
   export default {
     name: 'popup',
     props:{
@@ -129,6 +128,12 @@
       return {
         addData:'',
         dis_no:[false,false],
+        gps_wx_type:{
+          oldImg:[]
+        },
+        buy_img:{
+          oldImg:[]
+        },
         detailConfig:{
           fun: 'Order/getIllegalByOrder',
           columns: [
@@ -179,6 +184,9 @@
     created(){
       this.getlinst()
     },
+    components:{
+      ImgUpload
+    },
     computed:{
       vehic_data:function () {
         var data = {
@@ -203,28 +211,28 @@
         return this.clean(data,this.addData)
       },
       purchase_data:function () {
-        let data = {
-          buy_amount:'购车金额',
-          tax_amount:'购置税金额'
+        if (this.addData){
+          let data = {
+            buy_amount:'购车金额',
+            tax_amount:'购置税金额'
+          }
+          this.buy_img.oldImg= this.clean_img(this.addData.buy_bill_img)
+          console.log(this.buy_img)
+          return this.clean(data,this.addData)
         }
-
-        return this.clean(data,this.addData)
-      },
-      Car_img:function () {
-        let data = {
-          buy_bill_img:'购车金额',
-          tax_bill_img:'购置税金额'
-        }
-        return this.clean_data(data,this.addData,'img')
       },
       gps_wx:function () {
-        let data = {
-          device_number:'设备编号',
-          device_manufacturer:'厂商',
-          ctime:'续费日',
-          status:'GPS状态'
+        if (this.addData){
+          let data = {
+            device_number:'设备编号',
+            device_manufacturer:'厂商',
+            ctime:'续费日',
+            status:'GPS状态'
+          }
+
+          return this.clean(data,this.addData.gps_info[0])
         }
-        return this.clean(data,this.addData.gps_info[0])
+
       },
       keys:function(){
         let data = {
@@ -233,14 +241,15 @@
         return this.clean(data,this.addData)
       },
       gps_yx:function () {
-        let data = {
-          device_number:'设备编号',
-          device_manufacturer:'厂商',
-          ctime:'续费日',
-          status:'GPS状态'
+        if (this.addData){
+          let data = {
+            device_number:'设备编号',
+            device_manufacturer:'厂商',
+            ctime:'续费日',
+            status:'GPS状态'
+          }
+          return this.clean(data,this.addData.gps_info[0])
         }
-        return this.clean(data,this.addData.gps_info[0])
-
       }
     },
     methods:{
@@ -264,18 +273,13 @@
           return newarray
         }
       },
-      clean_data(list,data,img){
-        if (data){
-          if (img){
-            let newarray = {}
-            for (let key in list){
-              newarray[`${list[key]}`] = data[key].split(',')
-            }
-            return newarray
-          } else {
-
-          }
+      clean_img(img){
+        let newarray = []
+        let img_list = img.split(',')
+        for ( let k of img_list){
+          newarray.push({url:k})
         }
+        return newarray
       },
     }
   }
