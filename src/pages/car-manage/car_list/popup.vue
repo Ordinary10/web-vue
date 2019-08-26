@@ -29,41 +29,65 @@
         </div>
       </div>
     </Col>
+
+
+
     <Col span="12">
       <div class="card-body">
         <div class="card-header">
           <p class="card-title">车辆信息</p>
         </div>
+
         <div class="card">
           <Row class="ma-lr">
-            <div class="ma-nomb-spacing">
               <Tabs value="name1">
                 <TabPane label="购车信息" name="name1">
-                  <Col span="12" v-for="(list,index) in purchase_data" :key="list.id">
-                    <div class="ma-spacing">
-                      {{list.name}}：<span class="key_text">{{list.value}}</span>
-                    </div>
-                  </Col>
-                  <Col span="24" v-for="(list,index) in Car_img" :key="list.id">
-                    <div class="bt-top">
-                      {{index}}
-                    </div>
-                    <div class="ma-spacing">
-                      {{list}}
-                    </div>
-                  </Col>
-                </TabPane>
-                <TabPane label="GPS信息" name="name2">
 
                 </TabPane>
-                <TabPane label="车钥匙信息" name="name3">标签三的内容</TabPane>
-                <TabPane label="租赁信息" name="name3">
-                  <Table :columns="columns1" ></Table>
+                <TabPane label="GPS信息" name="name2">
+                  <Row>
+                    <div class="ma-nomb-spacing">
+                      <div class="bt-no-top">
+                        无线设备
+                      </div>
+                    </div>
+                    <Col span="12" v-for="(list,index) in gps_wx" :key="list.id">
+                      <div class="ma-spacing">
+                        {{list.name}}：<span class="key_text">{{list.value}}</span>
+                      </div>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <div class="ma-nomb-spacing">
+                      <div class="bt-no-top">
+                        有线设备
+                      </div>
+                    </div>
+                    <Col span="12" v-for="(list,index) in gps_yx" :key="list.id">
+                      <div class="ma-spacing">
+                        {{list.name}}：<span class="key_text">{{list.value}}</span>
+                      </div>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <div class="ma-nomb-spacing">
+                      <div class="bt-no-top">
+                        GPS安装照
+                      </div>
+                    </div>
+
+                  </Row>
+                  <Row>
+                    <div class="ma-nomb-spacing">
+                      <div class="bt-no-top">
+                        GPS设备状态照
+                      </div>
+                    </div>
+
+                  </Row>
+
                 </TabPane>
               </Tabs>
-            </div>
-            <div class="ma-nomb-spacing ma-top">
-            </div>
           </Row>
         </div>
       </div>
@@ -139,10 +163,25 @@
         }
         return this.clean_data(data,this.addData,'img')
       },
-      Car_list:function () {
+      gps_wx:function () {
         let data = {
-
+          device_number:'设备编号',
+          device_manufacturer:'厂商',
+          ctime:'续费日',
+          status:'GPS状态'
         }
+        return this.clean(data,this.addData.gps_info[0])
+
+      },
+      gps_yx:function () {
+        let data = {
+          device_number:'设备编号',
+          device_manufacturer:'厂商',
+          ctime:'续费日',
+          status:'GPS状态'
+        }
+        return this.clean(data,this.addData.gps_info[0])
+
       }
     },
     methods:{
@@ -166,15 +205,6 @@
           return newarray
         }
       },
-      clean_list(list,data){
-        if (data){
-          let newarray = []
-          for (let key in list){
-            newarray.push({name:list[key],value:data[key],data_name:key,hover:data[key]})
-          }
-          return newarray
-        }
-      },
       clean_data(list,data,img){
         if (data){
           if (img){
@@ -182,7 +212,6 @@
             for (let key in list){
               newarray[`${list[key]}`] = data[key].split(',')
             }
-            console.log(newarray)
             return newarray
           } else {
 
