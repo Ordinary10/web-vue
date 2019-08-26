@@ -57,11 +57,14 @@
         title="查看详情"
         :footer-hide="true"
         :width='1350'
-        v-if="modal1"
         class-name="vertical-center-modal"
       >
-        <userVehicleHead :param="add" ></userVehicleHead>
-        <popup :popupData="popupData"></popup>
+        <div class="mod-body"
+        v-if="modal1"
+        >
+          <userVehicleHead :param="add" ></userVehicleHead>
+          <popup :popupData="popupData"></popup>
+        </div>
       </Modal>
       <!--批量导入弹出框-->
       <Modal
@@ -282,10 +285,9 @@ export default {
     tableBtnClick (item, type) {
       switch (type) {
         case 'see':
-          this.modal1 = true
+          this.modal1 = !this.modal1
           this.add = item.plate_no
           this.popupData = {car_id:item.id}
-          console.log(this.popupData)
           break
         case 'editor':
           alert(`编辑：${item.id}`)
