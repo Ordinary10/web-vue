@@ -18,11 +18,13 @@
                 {{list.name}}：<span class="key_text">{{list.value}}</span>
               </div>
             </Col>
-            <div class="ma-nomb-spacing">
-              <div class="bt-top">
-                行驶证照片
+            <Col span="24">
+              <div class="ma-nomb-spacing">
+                <div class="bt-top">
+                  行驶证照片
+                </div>
               </div>
-            </div>
+            </Col>
           </Row>
         </div>
       </div>
@@ -37,29 +39,23 @@
             <div class="ma-nomb-spacing">
               <Tabs value="name1">
                 <TabPane label="购车信息" name="name1">
-                  <Col span="12">
+                  <Col span="12" v-for="(list,index) in purchase_data" :key="list.id">
                     <div class="ma-spacing">
-                      1221：<span class="key_text">9884984</span>
+                      {{list.name}}：<span class="key_text">{{list.value}}</span>
                     </div>
                   </Col>
-                  <Col span="12">
+                  <Col span="24" v-for="(list,index) in Car_img" :key="list.id">
+                    <div class="bt-top">
+                      {{index}}
+                    </div>
                     <div class="ma-spacing">
-                      1221：<span class="key_text">9884984</span>
+                      {{list}}
                     </div>
                   </Col>
-                  <div class="ma-nomb-spacing">
-                    <div class="bt-top">
-                      购车发票
-                    </div>
-                  </div>
-                  <div class="ma-nomb-spacing">
-                    <div class="bt-top">
-                      购置税发票
-                    </div>
-                  </div>
-                  
                 </TabPane>
-                <TabPane label="GPS信息" name="name2">标签二的内容</TabPane>
+                <TabPane label="GPS信息" name="name2">
+
+                </TabPane>
                 <TabPane label="车钥匙信息" name="name3">标签三的内容</TabPane>
                 <TabPane label="租赁信息" name="name3">
                   <Table :columns="columns1" ></Table>
@@ -103,7 +99,6 @@
       }
     },
     created(){
-      console.log(this.popupData)
       this.getlinst()
     },
     computed:{
@@ -128,6 +123,26 @@
           desc:'备注',
         }
         return this.clean(data,this.addData)
+      },
+      purchase_data:function () {
+        let data = {
+          buy_amount:'购车金额',
+          tax_amount:'购置税金额'
+        }
+
+        return this.clean(data,this.addData)
+      },
+      Car_img:function () {
+        let data = {
+          buy_bill_img:'购车金额',
+          tax_bill_img:'购置税金额'
+        }
+        return this.clean_data(data,this.addData,'img')
+      },
+      Car_list:function () {
+        let data = {
+
+        }
       }
     },
     methods:{
@@ -148,10 +163,32 @@
           for (let key in list){
             newarray.push({name:list[key],value:data[key],data_name:key,hover:data[key]})
           }
-          console.log(newarray)
           return newarray
         }
-      }
+      },
+      clean_list(list,data){
+        if (data){
+          let newarray = []
+          for (let key in list){
+            newarray.push({name:list[key],value:data[key],data_name:key,hover:data[key]})
+          }
+          return newarray
+        }
+      },
+      clean_data(list,data,img){
+        if (data){
+          if (img){
+            let newarray = {}
+            for (let key in list){
+              newarray[`${list[key]}`] = data[key].split(',')
+            }
+            console.log(newarray)
+            return newarray
+          } else {
+
+          }
+        }
+      },
     }
   }
 </script>
