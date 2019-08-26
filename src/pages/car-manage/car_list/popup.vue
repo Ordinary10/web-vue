@@ -29,9 +29,6 @@
         </div>
       </div>
     </Col>
-
-
-
     <Col span="12">
       <div class="card-body">
         <div class="card-header">
@@ -42,7 +39,11 @@
           <Row class="ma-lr">
               <Tabs value="name1">
                 <TabPane label="购车信息" name="name1">
-
+                  <Col span="12" v-for="(list,index) in purchase_data" :key="list.id">
+                    <div class="ma-spacing">
+                      {{list.name}}：<span class="key_text">{{list.value}}</span>
+                    </div>
+                  </Col>
                 </TabPane>
                 <TabPane label="GPS信息" name="name2">
                   <Row>
@@ -87,6 +88,27 @@
                   </Row>
 
                 </TabPane>
+                <TabPane label="车钥匙信息" name="name3">
+                  <Col span="12" v-for="(list,index) in keys" :key="list.id">
+                    <div class="ma-spacing">
+                      {{list.name}}：<span class="key_text">{{list.value}}</span>
+                    </div>
+                  </Col>
+                </TabPane>
+                <TabPane label="租赁记录" name="name4">
+                    <div class="ma-spacing ">
+                      <div class="tab-box">
+                        <paging-table ref="pagingTable" :config="config" :searchData="searchData"></paging-table>
+                      </div>
+                    </div>
+                </TabPane>
+                <TabPane label="违章记录" name="name5">
+                  <div class="ma-spacing ">
+                    <div class="tab-box">
+                      <paging-table ref="pagingTable" :config="detailConfig" :searchData="searchData"></paging-table>
+                    </div>
+                  </div>
+                </TabPane>
               </Tabs>
           </Row>
         </div>
@@ -100,26 +122,58 @@
     name: 'popup',
     props:{
       popupData:{
-      }
+      },
+      id:{}
     },
-    data:function(){
+    data(){
       return {
         addData:'',
         dis_no:[false,false],
-        columns1: [
-          {
-            title: 'Name',
-            key: 'name'
-          },
-          {
-            title: 'Age',
-            key: 'age'
-          },
-          {
-            title: 'Address',
-            key: 'address'
-          }
-        ],
+        detailConfig:{
+          fun: 'Order/getIllegalByOrder',
+          columns: [
+            {
+              key: 'ig_time',
+              title: '日期'
+            },
+            {
+              key: 'ig_address',
+              title: '地点'
+            },
+            {
+              key: 'ig_content',
+              title: '违章'
+            },
+            {
+              key: 'ig_fine',
+              title: '罚款（元）'
+            },
+          ]
+        },
+        config: {
+          fun: 'Order/getHistoryByOrder',
+          columns: [
+            {
+              key: 'lease_time',
+              title: '签约日期'
+            },
+            {
+              key: 'periods',
+              title: '期数'
+            },
+            {
+              key: 'name',
+              title: '金额'
+            },
+            {
+              key: 'status',
+              title: '状态'
+            },
+          ]
+        },
+        searchData: {
+          id:this.popupData.car_id,
+        },
       }
     },
     created(){
@@ -171,7 +225,12 @@
           status:'GPS状态'
         }
         return this.clean(data,this.addData.gps_info[0])
-
+      },
+      keys:function(){
+        let data = {
+          car_keys:'车钥匙数量'
+        }
+        return this.clean(data,this.addData)
       },
       gps_yx:function () {
         let data = {
