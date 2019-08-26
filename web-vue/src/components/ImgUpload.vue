@@ -12,7 +12,7 @@
           </template>
         </div>
       <Upload
-        v-show="uploadList.length < (config.max || 5)"
+        v-show="uploadList.length < max"
         v-if="add"
         ref="upload"
         :show-upload-list="false"
@@ -49,8 +49,8 @@ export default {
           // type: 'Car', // 接口 图片保存的类型 不传入 默认为Car
           // add: false, // 是否添加图片  不传入 默认为true
           oldImg: [
-            {url: 'http://zucheguanjia.oss-cn-qingdao.aliyuncs.com/car/15664441942763.png'},
-            {url: 'http://zucheguanjia.oss-cn-qingdao.aliyuncs.com/Car/15664600948748.png'}
+            // {url: 'http://zucheguanjia.oss-cn-qingdao.aliyuncs.com/car/15664441942763.png'},
+            // {url: 'http://zucheguanjia.oss-cn-qingdao.aliyuncs.com/Car/15664600948748.png'}
           ]
         }
       }
@@ -65,6 +65,7 @@ export default {
       },
       add: this.config.add === true || this.config.add === undefined,
       multiple: this.config.multiple === true || this.config.multiple === undefined,
+      max: this.config.max === 0 || this.config.max ? this.config.max : 5,
       showUrl: '',
       visible: false,
       uploadList: []
@@ -80,7 +81,7 @@ export default {
       file.url = file.response.data.url
       setTimeout(e => {
         this.$refs.viewer.$viewer.update()
-      }, 500)
+      }, 10)
     },
     handleFormatError (file) {
       this.$Notice.warning({
@@ -162,23 +163,5 @@ export default {
       color: red;
       cursor: pointer;
     }
-    /*&:hover .upload-list-cover{*/
-    /*  display: block;*/
-    /*}*/
   }
-  /*.upload-list-cover{*/
-  /*  display: none;*/
-  /*  position: absolute;*/
-  /*  top: 0;*/
-  /*  bottom: 0;*/
-  /*  left: 0;*/
-  /*  right: 0;*/
-  /*  background: rgba(0,0,0,.6);*/
-  /*  i{*/
-  /*    color: #fff;*/
-  /*    font-size: 20px;*/
-  /*    cursor: pointer;*/
-  /*    margin: 0 2px;*/
-  /*  }*/
-  /*}*/
 </style>
