@@ -13,14 +13,16 @@
                 {{list.name}}：<span class="key_text">{{list.value}}</span>
               </div>
             </Col>
-            <Col span="24">
+            <Col span="24" v-for="(list,index) in basic_img() ":key="list.id">
               <div class="ma-nomb-spacing">
                 <div class="bt-no-top">
-                  行驶证照片
+                  {{list.name}}
                 </div>
-                <ImgUpload v-if="purchase_data" :config="buy_img"></ImgUpload>
-<!--                <paging-table ref="pagingTable" :config="detailConfig" :searchData="searchData"></paging-table>-->
-
+                <ImgUpload :config="list.img_config"></ImgUpload>
+<!--                <div v-else>-->
+<!--                  <i class="iconfont iconzanwu" style="font-size: 73px"></i>-->
+<!--                  暂时没有行驶证照片哦-->
+<!--                </div>-->
               </div>
             </Col>
           </Row>
@@ -82,9 +84,7 @@
                         GPS设备状态照
                       </div>
                     </div>
-
                   </Row>
-
                 </TabPane>
                 <TabPane label="车钥匙信息" name="name3">
                   <Col span="12" v-for="(list,index) in keys" :key="list.id">
@@ -217,8 +217,7 @@ export default {
           buy_amount: '购车金额',
           tax_amount: '购置税金额'
         }
-        this.buy_img.oldImg = this.clean_img(this.addData.buy_bill_img)
-        console.log(this.buy_img)
+        // this.buy_img.oldImg = this.clean_img(this.addData.buy_bill_img)
         return this.clean(data, this.addData)
       }
     },
@@ -264,6 +263,17 @@ export default {
       }
       this.addData = res.data
     },
+    basic_img:function(){
+      if (this.addData){
+        let data_img = {
+          license_img:'行驶证照片',
+          certificate_img:'合格证照片',
+          register_img:'登记照片',
+          car_img:'车身照'
+        }
+        return this.clean_img(this.addData,data_img)
+      }
+    },
     clean (list, data) {
       if (data) {
         let newarray = []
@@ -273,12 +283,23 @@ export default {
         return newarray
       }
     },
-    clean_img (img) {
+    // clean_img (img) {
+    //   let newarray = []
+    //   let img_list = img.split(',')
+    //   for (let k of img_list) {
+    //     newarray.push({url: k})
+    //   }
+    //   return newarray
+    // }
+    clean_img (data,img) {
       let newarray = []
-      let img_list = img.split(',')
-      for (let k of img_list) {
-        newarray.push({url: k})
+      for (let k in img){
+        let img_list = data[k].split(',')
+        for (let key of img_list ){
+          newarray.push({name:img[k],data_name:k,img_config:{oldImg:[{url:key}]}})
+        }
       }
+      console.log(newarray)
       return newarray
     }
   }
