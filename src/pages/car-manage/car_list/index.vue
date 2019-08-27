@@ -52,6 +52,7 @@
       <div class="content-block">
         <paging-table ref="pagingTable" :config="config" :searchData="searchData"></paging-table>
       </div>
+      <!--查看详情-->
       <Modal
         v-model="modal1"
         title="查看详情"
@@ -66,6 +67,15 @@
           <popup :popupData="popupData"></popup>
         </div>
       </Modal>
+      <!--新增编辑车辆-->
+<!--      <Modal-->
+<!--        v-model="excelModal.isShow"-->
+<!--        :title="excelModal.title"-->
+<!--        :mask-closable="false"-->
+<!--      >-->
+<!--        <excelUpload :config="excelModal.config" v-if="excelModal.isShow" @excelUploadSuccess="excelUploadSuccess"></excelUpload>-->
+<!--        <div slot="footer"></div>-->
+<!--      </Modal>-->
       <!--批量导入弹出框-->
       <Modal
         v-model="excelModal.isShow"
@@ -120,8 +130,9 @@ export default {
             title: '车牌',
             width: 250,
             render: (h, params) => {
+              console.log(params.row)
               return <div>
-                <license-plate row={params.row}></license-plate>
+                <license-plate row={params.row} key={'plate_no' + params.row.id}></license-plate>
               </div>
             }
           },

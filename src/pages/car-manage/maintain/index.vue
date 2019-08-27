@@ -68,7 +68,7 @@ export default {
             width: 250,
             render: (h, params) => {
               return <div>
-                <license-plate row={params.row}></license-plate>
+                <license-plate row={params.row} key={'plate_no' + params.row.id}></license-plate>
               </div>
             }
           },
