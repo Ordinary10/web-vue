@@ -5,18 +5,17 @@
         <div class="upload-list" v-for="(item,index) in uploadList" :key="index">
           <template v-if="item.status === 'finished'">
           <img :src="item.url" alt="">
-            <Icon type="md-close-circle" @click.native="handleRemove(item)"/>
+            <Icon type="md-close-circle" v-if="!onlyShow" @click.native="handleRemove(item)"/>
           </template>
           <template v-else>
             <Progress v-if="item.showProgress" :percent="item.percentage" hide-info></Progress>
           </template>
         </div>
       <Upload
-        v-show="uploadList.length < max"
-        v-if="add"
+        v-show="uploadList.length < max && !onlyShow"
         ref="upload"
         :show-upload-list="false"
-        :default-file-list="config.oldImg"
+        :default-file-list="oldImgs"
         :on-success="handleSuccess"
         :format="['jpg', 'jpeg', 'png']"
         :max-size="2048"
@@ -43,15 +42,18 @@ export default {
       type: Object,
       default: () => {
         return {
-          title: '图片标题', // 图片标题 不传入 默认空
+          // title: '图片标题', // 图片标题 不传入 默认空
           // multiple: false  // 是否多文件  不传入 默认为true
           // max: 5, // 最大文件数量  不传入 默认为5
           // type: 'Car', // 接口 图片保存的类型 不传入 默认为Car
-          // add: false, // 是否添加图片  不传入 默认为true
+          // onlyShow: true, // 是否仅仅作为图片回显  不传入 默认为false
+          // oldImg 为数组 或者 ,分割的字符串
           oldImg: [
-            // {url: 'http://zucheguanjia.oss-cn-qingdao.aliyuncs.com/car/15664441942763.png'},
-            // {url: 'http://zucheguanjia.oss-cn-qingdao.aliyuncs.com/Car/15664600948748.png'}
+            {url: 'http://zucheguanjia.oss-cn-qingdao.aliyuncs.com/car/15664441942763.png'},
+            {url: 'http://zucheguanjia.oss-cn-qingdao.aliyuncs.com/car/15664441942763.png'},
+            {url: 'http://zucheguanjia.oss-cn-qingdao.aliyuncs.com/Car/15664600948748.png'}
           ]
+          // oldImg: 'http://zucheguanjia.oss-cn-qingdao.aliyuncs.com/car/15664441942763.png'
         }
       }
     }
@@ -63,9 +65,9 @@ export default {
         token: JSON.parse(sessionStorage.getItem('loginData')).token,
         type: this.config.type || 'Car'
       },
-      add: this.config.add === true || this.config.add === undefined,
       multiple: this.config.multiple === true || this.config.multiple === undefined,
       max: this.config.max === 0 || this.config.max ? this.config.max : 5,
+      onlyShow: this.config.onlyShow,
       showUrl: '',
       visible: false,
       uploadList: []
@@ -96,7 +98,7 @@ export default {
       })
     },
     handleBeforeUpload () {
-      // 上传文件之前的钩子，参数为上传的文件，若返回 false 或者 Promise 则停止上传
+      // 上传文件之前的钩子，参数为上传的文件，若返回 false s或者 Promise 则停止上传
       return true
     }
   },
@@ -106,6 +108,18 @@ export default {
   computed: {
     API_PATH () {
       return this.$common.API_PATH
+    },
+    oldImgs () {
+      if (Array.isArray(this.config.oldImg)) {
+        return this.config.oldImg
+      } else {
+        let newarray = []
+        let imgs = this.config.oldImg.split(',')
+        for (let k of imgs) {
+          newarray.push({url: k})
+        }
+        return newarray
+      }
     },
     // 获取上传的url字符串
     getImgUrl () {
@@ -128,7 +142,7 @@ export default {
     margin: 0 5px;
     overflow: hidden;
     .title{
-      margin: 10px ;
+      margin: 10px 10px 0;
       border-left: 3px solid red;
       height: 16px;
       line-height: 16px;
@@ -136,6 +150,7 @@ export default {
     }
     .img-box{
       margin-left: 20px;
+      margin-top: 10px;
       display: flex;
     }
   }
