@@ -18,11 +18,11 @@
                 <div class="bt-no-top">
                   {{list.name}}
                 </div>
-                <ImgUpload :config="list.img_config"></ImgUpload>
-<!--                <div v-else>-->
-<!--                  <i class="iconfont iconzanwu" style="font-size: 73px"></i>-->
-<!--                  暂时没有行驶证照片哦-->
-<!--                </div>-->
+                <ImgUpload v-if="list.img_config.oldImg[0].url !='暂无'" :config="list.img_config"></ImgUpload>
+                <div v-else>
+                  <i class="iconfont iconzanwu" style="font-size: 73px"></i>
+                  暂时没有{{list.name}}照片哦
+                </div>
               </div>
             </Col>
           </Row>
