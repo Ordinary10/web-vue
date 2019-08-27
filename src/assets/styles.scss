@@ -324,6 +324,20 @@ body{
     position: absolute;
   }
 }
+.top-p{
+  padding-top: 16px;
+}
+.tab-box{
+  height: 300px;
+  .paging-box{
+    //background:rgba(255,75,91,0);
+    border-left: 1px solid #E8EAEC;
+  }
+}
+//.ivu-tabs-tab{
+//  margin-right: 0px !important;
+//  padding: 8px 10px !important;
+//}
 //文字样式
 .redtext{
   color: #f3555e;
