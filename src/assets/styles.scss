@@ -181,8 +181,8 @@
 }
 .card-header{
   border-bottom: 1px solid  rgb(225, 228, 233);
-  margin-right: -7px;
-  margin-left: -7px;
+  margin-right: -10px;
+  margin-left: -10px;
   padding-top: 7px;
   padding-bottom: 7px;
   .card-title{
@@ -229,7 +229,6 @@ body{
 }
 /*表头*/
 .vehicle-icon{
-  /*float: left;*/
   position: absolute;
   color: #fff;
   left: 17px;
@@ -274,8 +273,8 @@ body{
   border-radius:4px 4px 10px 10px;
 
   position: relative;
-  padding-left: 7px;
-  padding-right: 7px;
+  padding-left: 10px;
+  padding-right: 10px;
   margin-left: 7px;
   margin-right: 7px;
   padding-bottom: 10px;
@@ -296,13 +295,14 @@ body{
 
 
 .bt-no-top{
-  font-size: 16px;
+  font-size: 15px;
   height: 40px;
   line-height: 40px;
-  /*float: left;*/
+  font-weight: bold;
+  color: #555555 !important;
 }
 .key_text{
-  color: #2B343A;
+  color: #000;
 }
 .ma-spacing{
   position: relative;
@@ -327,12 +327,18 @@ body{
 .top-p{
   padding-top: 16px;
 }
+.iconzanwu{
+  line-height: 1;
+}
 .tab-box{
   height: 300px;
   .paging-box{
     //background:rgba(255,75,91,0);
     border-left: 1px solid #E8EAEC;
   }
+}
+html{
+  font-family: sans-serif;
 }
 //.ivu-tabs-tab{
 //  margin-right: 0px !important;
