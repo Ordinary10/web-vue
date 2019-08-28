@@ -9,22 +9,6 @@
                 表格标题
               </div>
             </div>
-            <div class="ma-nomb-spacing">
-              <Table :columns="columns1" ></Table>
-            </div>
-          </Row>
-        </div>
-      </div>
-    </Col>
-    <Col span="8">
-      <div class="card-body">
-        <div class="card">
-          <Row class="ma-lr">
-            <div class="ma-nomb-spacing">
-              <div class="bt-top">
-                表格标题
-              </div>
-            </div>
             <Form :model="formLeft" label-position="right" :label-width="80">
               <Col span="12">
                 <div class="ma-nomb-spacing">
@@ -301,6 +285,10 @@
           </Row>
         </div>
       </div>
+    </Col>
+    <Col span="12">
+      <i class="iconfont iconzanwu" style="font-size: 100px"></i>
+      暂时没有记录哦
     </Col>
   </Row>
 
