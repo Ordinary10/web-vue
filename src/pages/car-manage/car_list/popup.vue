@@ -44,6 +44,20 @@
                       {{list.name}}：<span class="key_text">{{list.value}}</span>
                     </div>
                   </Col>
+                  <Col span="24" v-for="(list,index) in buy_img() ":key="list.id">
+                    <div class="ma-nomb-spacing">
+                      <div class="bt-no-top">
+                        {{list.name}}
+                      </div>
+                      <ImgUpload v-if="list.img_config.oldImg[0].url !='暂无'" :config="list.img_config"></ImgUpload>
+                      <div v-else>
+                        <i class="iconfont iconzanwu" style="font-size: 73px"></i>
+                        暂时没有{{list.name}}照片哦
+                      </div>
+                    </div>
+                  </Col>
+
+
                 </TabPane>
                 <TabPane label="GPS信息" name="name2">
                   <Row>
@@ -128,13 +142,6 @@ export default {
     return {
       addData: '',
       dis_no: [false, false],
-      gps_wx_type: {
-        oldImg: []
-      },
-      buy_img: {
-        oldImg: [],
-        onlyShow: true
-      },
       detailConfig: {
         fun: 'Order/getIllegalByOrder',
         columns: [
@@ -217,7 +224,6 @@ export default {
           buy_amount: '购车金额',
           tax_amount: '购置税金额'
         }
-        // this.buy_img.oldImg = this.clean_img(this.addData.buy_bill_img)
         return this.clean(data, this.addData)
       }
     },
@@ -264,15 +270,20 @@ export default {
       this.addData = res.data
     },
     basic_img:function(){
-      if (this.addData){
         let data_img = {
           license_img:'行驶证照片',
           certificate_img:'合格证照片',
           register_img:'登记照片',
           car_img:'车身照'
         }
+      return this.clean_img(this.addData,data_img)
+    },
+    buy_img:function(){
+        let data_img = {
+          buy_bill_img:'购车发票',
+          tax_bill_img:'购置税发票',
+        }
         return this.clean_img(this.addData,data_img)
-      }
     },
     clean (list, data) {
       if (data) {
@@ -283,24 +294,23 @@ export default {
         return newarray
       }
     },
-    // clean_img (img) {
-    //   let newarray = []
-    //   let img_list = img.split(',')
-    //   for (let k of img_list) {
-    //     newarray.push({url: k})
-    //   }
-    //   return newarray
-    // }
+
     clean_img (data,img) {
-      let newarray = []
-      for (let k in img){
-        let img_list = data[k].split(',')
-        for (let key of img_list ){
-          newarray.push({name:img[k],data_name:k,img_config:{oldImg:[{url:key}]}})
+      if (this.addData){
+        let newarray = []
+        for (let k in img){
+          let list=[];
+          let img_list = data[k].split(',')
+
+          for (let key in img_list){
+            list.push({url:img_list[key]})
+          }
+          newarray.push({name:img[k],data_name:k,img_config:{onlyShow:true,oldImg:list}})
+
         }
-      }
       console.log(newarray)
-      return newarray
+        return newarray
+      }
     }
   }
 }
