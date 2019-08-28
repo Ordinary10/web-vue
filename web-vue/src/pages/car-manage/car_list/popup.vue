@@ -56,8 +56,6 @@
                       </div>
                     </div>
                   </Col>
-
-
                 </TabPane>
                 <TabPane label="GPS信息" name="name2">
                   <Row>
