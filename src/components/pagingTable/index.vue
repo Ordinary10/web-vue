@@ -138,7 +138,7 @@ export default {
     justify-content: center;
     align-items: center;
     width: 100%;
-    border-top: 1px solid #E8EAEC;
+    border: 1px solid #E8EAEC;
   }
 }
 </style>
