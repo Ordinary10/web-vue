@@ -130,7 +130,6 @@ export default {
             title: '车牌',
             width: 250,
             render: (h, params) => {
-              console.log(params.row)
               return <div>
                 <license-plate row={params.row} key={'plate_no' + params.row.id}></license-plate>
               </div>
