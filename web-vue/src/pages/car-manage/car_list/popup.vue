@@ -2,7 +2,7 @@
   <Row v-if="this.addData">
     <Col span="12">
 
-      <div class="card-body">
+      <div class="card-body roll">
         <div class="card-header">
           <p class="card-title">基本信息</p>
         </div>
@@ -30,11 +30,10 @@
       </div>
     </Col>
     <Col span="12">
-      <div class="card-body">
+      <div class="card-body roll">
         <div class="card-header">
           <p class="card-title">车辆信息</p>
         </div>
-
         <div class="card">
           <Row class="ma-lr">
               <Tabs value="name1">
@@ -70,7 +69,7 @@
                           {{list.name}}：
                           <span class="key_text" v-if="list.data_name != 'status'">{{list.value}}</span>
                           <span class="normalText" v-else-if="list.value ==1">正常</span>
-                          <span class="warnText" v-else-if="list.value ==2">异常</span>
+                          <span class="warnText" v-else-if="list.value ==-1">异常</span>
                         </div>
                       </Col>
                     </Row>
@@ -87,7 +86,7 @@
                           {{list.name}}：
                           <span class="key_text" v-if="list.data_name != 'status'">{{list.value}}</span>
                           <span class="normalText" v-else-if="list.value ==1">正常</span>
-                          <span class="warnText" v-else-if="list.value ==2">异常</span>
+                          <span class="warnText" v-else-if="list.value ==-1">异常</span>
                         </div>
                       </Col>
                     </Row>
@@ -109,6 +108,18 @@
                   <Col span="12" v-for="(list,index) in keys" :key="list.id">
                     <div class="ma-spacing">
                       {{list.name}}：<span class="key_text">{{list.value}}</span>
+                    </div>
+                  </Col>
+                  <Col span="24" v-for="(list,index) in key_img() ":key="list.id">
+                    <div class="ma-nomb-spacing">
+                      <div class="bt-no-top">
+                        {{list.name}}
+                      </div>
+                      <ImgUpload v-if="list.img_config.oldImg[0].url !='暂无'" :config="list.img_config"></ImgUpload>
+                      <div v-else>
+                        <i class="iconfont iconzanwu" style="font-size: 73px"></i>
+                        暂时没有{{list.name}}照片哦
+                      </div>
                     </div>
                   </Col>
                 </TabPane>
@@ -246,6 +257,7 @@ export default {
             list.push(this.clean(data,gps_info[k]))
           }
         }
+      console.log(list)
       return list
     },
     keys: function () {
@@ -317,6 +329,12 @@ export default {
       let data_img = {
         gps_install_img:'GPS设备安装照',
         gps_status_img:'GPS设备状态照',
+      }
+      return this.clean_img(this.addData,data_img)
+    },
+    key_img:function(){
+      let data_img = {
+        key_img:'车钥匙图片',
       }
       return this.clean_img(this.addData,data_img)
     },
