@@ -1,5 +1,5 @@
 <template>
-  <Row>
+  <Row v-if="this.addData">
     <Col span="12">
 
       <div class="card-body">
@@ -57,18 +57,23 @@
                     </div>
                   </Col>
                 </TabPane>
-                <TabPane label="GPS信息" name="name2">
-                  <Row>
+                <TabPane label="GPS信息" name="name2" >
+                  <Row  >
                     <div class="ma-nomb-spacing">
                       <div class="bt-no-top">
                         无线设备
                       </div>
                     </div>
-                    <Col span="12" v-for="(list,index) in gps_wx" :key="list.id">
-                      <div class="ma-spacing">
-                        {{list.name}}：<span class="key_text">{{list.value}}</span>
-                      </div>
-                    </Col>
+                    <Row v-for="(list,index) in gps_wx" :key="list.id">
+                      <Col span="12" v-for="(list,index) in list" :key="list.id">
+                        <div class="ma-spacing">
+                          {{list.name}}：
+                          <span class="key_text" v-if="list.data_name != 'status'">{{list.value}}</span>
+                          <span class="normalText" v-else-if="list.value ==1">正常</span>
+                          <span class="warnText" v-else-if="list.value ==2">异常</span>
+                        </div>
+                      </Col>
+                    </Row>
                   </Row>
                   <Row>
                     <div class="ma-nomb-spacing">
@@ -76,27 +81,29 @@
                         有线设备
                       </div>
                     </div>
-                    <Col span="12" v-for="(list,index) in gps_yx" :key="list.id">
-                      <div class="ma-spacing">
-                        {{list.name}}：<span class="key_text">{{list.value}}</span>
-                      </div>
-                    </Col>
+                    <Row v-for="(list,index) in gps_yx" :key="list.id">
+                      <Col span="12" v-for="(list,index) in list" :key="list.id">
+                        <div class="ma-spacing">
+                          {{list.name}}：
+                          <span class="key_text" v-if="list.data_name != 'status'">{{list.value}}</span>
+                          <span class="normalText" v-else-if="list.value ==1">正常</span>
+                          <span class="warnText" v-else-if="list.value ==2">异常</span>
+                        </div>
+                      </Col>
+                    </Row>
                   </Row>
-                  <Row>
+                  <Col span="24" v-for="(list,index) in gps_img() ":key="list.id">
                     <div class="ma-nomb-spacing">
                       <div class="bt-no-top">
-                        GPS安装照
+                        {{list.name}}
+                      </div>
+                      <ImgUpload v-if="list.img_config.oldImg[0].url !='暂无'" :config="list.img_config"></ImgUpload>
+                      <div v-else>
+                        <i class="iconfont iconzanwu" style="font-size: 73px"></i>
+                        暂时没有{{list.name}}照片哦
                       </div>
                     </div>
-
-                  </Row>
-                  <Row>
-                    <div class="ma-nomb-spacing">
-                      <div class="bt-no-top">
-                        GPS设备状态照
-                      </div>
-                    </div>
-                  </Row>
+                  </Col>
                 </TabPane>
                 <TabPane label="车钥匙信息" name="name3">
                   <Col span="12" v-for="(list,index) in keys" :key="list.id">
@@ -226,16 +233,20 @@ export default {
       }
     },
     gps_wx: function () {
-      if (this.addData) {
         let data = {
           device_number: '设备编号',
           device_manufacturer: '厂商',
           ctime: '续费日',
           status: 'GPS状态'
         }
-
-        return this.clean(data, this.addData.gps_info[0])
-      }
+        let gps_info = this.addData.gps_info,
+            list = [];
+        for (let k in gps_info) {
+          if (gps_info[k].type== 2){
+            list.push(this.clean(data,gps_info[k]))
+          }
+        }
+      return list
     },
     keys: function () {
       let data = {
@@ -244,16 +255,21 @@ export default {
       return this.clean(data, this.addData)
     },
     gps_yx: function () {
-      if (this.addData) {
-        let data = {
-          device_number: '设备编号',
-          device_manufacturer: '厂商',
-          ctime: '续费日',
-          status: 'GPS状态'
-        }
-        return this.clean(data, this.addData.gps_info[0])
+      let data = {
+        device_number: '设备编号',
+        device_manufacturer: '厂商',
+        ctime: '续费日',
+        status: 'GPS状态'
       }
-    }
+      let gps_info = this.addData.gps_info,
+        list = [];
+      for (let k in gps_info) {
+        if (gps_info[k].type== 1){
+          list.push(this.clean(data,gps_info[k]))
+        }
+      }
+      return list
+    },
   },
   methods: {
     async getlinst () {
@@ -267,6 +283,20 @@ export default {
       }
       this.addData = res.data
     },
+    gps_clean(list,data){
+      let result =[]
+      for (let k in data){
+        result.push(this.clean(list,data[k]))
+      }
+    },
+    status:function(list){
+      for (let k in list){
+        if (list[k].data_name == "status" ){
+          list[k].value = list[k].status =1? '正常':'异常'
+        }
+      }
+      return list
+    },
     basic_img:function(){
         let data_img = {
           license_img:'行驶证照片',
@@ -277,11 +307,18 @@ export default {
       return this.clean_img(this.addData,data_img)
     },
     buy_img:function(){
-        let data_img = {
-          buy_bill_img:'购车发票',
-          tax_bill_img:'购置税发票',
-        }
-        return this.clean_img(this.addData,data_img)
+      let data_img = {
+        buy_bill_img:'购车发票',
+        tax_bill_img:'购置税发票',
+      }
+      return this.clean_img(this.addData,data_img)
+    },
+    gps_img:function(){
+      let data_img = {
+        gps_install_img:'GPS设备安装照',
+        gps_status_img:'GPS设备状态照',
+      }
+      return this.clean_img(this.addData,data_img)
     },
     clean (list, data) {
       if (data) {
@@ -304,9 +341,7 @@ export default {
             list.push({url:img_list[key]})
           }
           newarray.push({name:img[k],data_name:k,img_config:{onlyShow:true,oldImg:list}})
-
         }
-      console.log(newarray)
         return newarray
       }
     }
