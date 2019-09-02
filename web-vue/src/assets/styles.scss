@@ -203,7 +203,7 @@ body{
 
 }
 .ivu-modal-body{
-  overflow-y: auto;
+  //overflow-y: auto;
   max-height: 668px;
 }
 .vertical-center-modal{
@@ -213,6 +213,10 @@ body{
   .ivu-modal{
     top: 0;
   }
+}
+.roll {
+  height: 486px;
+  overflow-y: scroll;
 }
 .ivu-modal-body{
   font-size: 14px!important;
